@@ -89,7 +89,7 @@
           <li>Endpoint visibility across Linux and Windows systems</li>
           <li>Network and host event correlation (Suricata + Wazuh)</li>
           <li>Alert triage and classification workflow</li>
-          <li>File integrity monitoring and compliance concepts</li>
+          <li>File integrity monitoring and policy alerting</li>
           <li>SOC-style investigation documentation</li>
         </ul>
       </div>
@@ -105,24 +105,23 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Visibility</span>
         <h2>Agent-Based Endpoint Coverage</h2>
-        <p>Wazuh agents on Linux containers and Windows hosts collect authentication events, process creation, file integrity changes, and system-level activity. The manager correlates these against built-in and custom rules to surface meaningful alerts rather than raw log noise.</p>
+        <p>Wazuh agents on Linux containers and Windows hosts collect authentication events, process creation, file integrity changes, and system-level activity. The manager runs those events through built-in and custom rules — you get actual alerts, not a wall of raw log lines to dig through.</p>
       </article>
 
       <article class="detail-card glass-panel">
         <span class="mini-label">Workflow</span>
         <h2>Triage Practice Environment</h2>
-        <p>Real alerts from the homelab infrastructure — failed logins, config changes, unexpected processes — create a low-stakes environment to practice the analyst triage loop: identify, contextualize, classify, and document. The same workflow scales directly to production SOC work.</p>
+        <p>The homelab generates real alerts — failed logins, config changes, unexpected processes. I work through them the same way a SOC analyst would: pull the event, check the context, figure out if it's noise or something worth escalating, and write down what I found. That loop is the job.</p>
       </article>
     </section>
 
     <section class="section card callout">
-      <h2>What This Shows Employers</h2>
+      <h2>Why This Matters</h2>
       <p>
-        Wazuh is used in production SOC environments. I deployed it, wired it to real endpoints,
-        and connected it to a live IDS feed — not a classroom simulation. I understand how alerts
-        are generated, why correlation between network and host events matters, and what the
-        triage workflow looks like from inside the tool. That's day-one relevant for SOC analyst
-        and junior security operations roles.
+        Wazuh shows up in real SOC environments. I set it up myself, connected it to actual endpoints,
+        and fed it live IDS data from OPNsense. When an alert fires, I know where it came from,
+        what triggered it, and how to look at the surrounding context to decide if it means anything.
+        That's not something you pick up from reading about SIEM — you have to actually use it.
       </p>
     </section>
 

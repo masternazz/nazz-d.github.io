@@ -115,9 +115,12 @@
     </section>
 
     <section class="section card callout">
-      <h2>What This Shows Employers</h2>
+      <h2>Why This Matters</h2>
       <p>
-        I built two separate access layers — mesh VPN for admin, Cloudflare Tunnel for public services — because they solve different problems. I can explain why each path exists, what it protects, and where the trust boundaries are. That's the mindset network and security roles need on day one.
+        Admin access and public service access are two different problems — mixing them is how
+        management ports end up on the internet. Headscale handles the admin side over an
+        encrypted mesh. Cloudflare Tunnel handles public traffic from a DMZ that can't reach
+        the LAN directly. Each path exists for a specific reason, and I can explain both.
       </p>
     </section>
 
