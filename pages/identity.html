@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authentik Identity Lab | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Public-safe Authentik identity and SSO project by Nazeem Massoom Dickey.">
+  <meta name="description" content="Authentik identity and SSO project covering OIDC, LDAP, access policy, credential hygiene, and centralized account management.">
   <link rel="canonical" href="https://masternazz.com/pages/identity.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Authentik Identity Lab | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Public-safe identity project covering Authentik, SSO, OIDC, LDAP, access policy, and credential hygiene.">
+  <meta property="og:description" content="Identity project covering Authentik, SSO, OIDC, LDAP, access policy, and credential hygiene.">
   <meta property="og:url" content="https://masternazz.com/pages/identity.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -111,18 +111,17 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Policy</span>
         <h2>Centralized Access Control</h2>
-        <p>Users and groups are managed in one place. Granting or revoking access to a service is a policy change in Authentik, not a manual account change in every app — the same model enterprise IAM teams use at scale.</p>
+        <p>Users and groups are managed in one place. Granting or revoking access to a service is a policy change in Authentik, not a manual account change in every app.</p>
       </article>
     </section>
 
     <section class="section card callout">
       <h2>Why This Matters</h2>
       <p>
-        Most junior admin work involves identity in some form — provisioning accounts, resetting
-        passwords, adjusting group access. I've already built that system from scratch: Authentik
-        running as the IdP, OIDC wired to services that support it, LDAP for the ones that don't.
-        When someone needs access removed, it's one change in one place and it's done across
-        everything. That's how it should work.
+        Most junior admin work involves identity in some form: provisioning accounts, resetting
+        passwords, and adjusting group access. This lab uses Authentik as the IdP, OIDC for services
+        that support it, and LDAP where older protocols are needed. Access changes happen in one
+        place instead of being repeated manually across every app.
       </p>
     </section>
 

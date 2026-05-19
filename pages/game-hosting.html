@@ -137,9 +137,12 @@ mc-bot LXC
     </section>
 
     <section class="section card callout">
-      <h2>What This Shows Employers</h2>
+      <h2>Employer-Relevant Skills</h2>
       <p>
-        This isn't a "spin up a server and forget it" project. I built the monitoring layer myself — implemented a binary protocol, chained SSH through Proxmox to reach a Docker socket I didn't have direct access to, wrote async Python for the Discord API, and deployed it as a proper systemd service on dedicated infrastructure. It's the kind of pragmatic problem-solving and end-to-end ownership that infrastructure and DevOps roles expect.
+        This project covers more than hosting a game server. I built the monitoring layer, implemented
+        RCON communication, chained SSH through Proxmox to collect Docker metrics, wrote async Python
+        for the Discord API, and deployed the bot as a systemd service on dedicated infrastructure.
+        It demonstrates troubleshooting, automation, and service ownership.
       </p>
     </section>
 
@@ -161,7 +164,7 @@ mc-bot LXC
             <span class="project-type">Infrastructure</span>
           </div>
           <h3>Proxmox Infrastructure</h3>
-          <p>The cluster that hosts the game server and bot LXCs — three nodes, 22 VMs/containers, enterprise rack hardware.</p>
+          <p>The cluster that hosts the game server and bot LXCs — three nodes and 22 VMs/containers on rack hardware.</p>
           <span class="card-link">View project &rarr;</span>
         </a>
 

@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OPNsense Edge Firewall Project | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Public-safe OPNsense firewall project by Nazeem Massoom Dickey.">
+  <meta name="description" content="OPNsense firewall project covering VLANs, DNS filtering, Suricata IDS, ACME certificates, and Cloudflare ingress.">
   <link rel="canonical" href="https://masternazz.com/pages/opnsense.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="OPNsense Edge Firewall Project | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Public-safe firewall project covering OPNsense, VLANs, DNS filtering, Suricata IDS, ACME, and Cloudflare ingress.">
+  <meta property="og:description" content="Firewall project covering OPNsense, VLANs, DNS filtering, Suricata IDS, ACME, and Cloudflare ingress.">
   <meta property="og:url" content="https://masternazz.com/pages/opnsense.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="OPNsense Edge Firewall Project | Nazeem Massoom Dickey">
-  <meta name="twitter:description" content="OPNsense edge firewall, DNS filtering, IDS, VLANs, and public-safe ingress design.">
+  <meta name="twitter:description" content="OPNsense edge firewall, DNS filtering, IDS, VLANs, and Cloudflare ingress design.">
   <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
@@ -119,11 +119,10 @@
     <section class="section card callout">
       <h2>Why This Matters</h2>
       <p>
-        This is a real firewall on real hardware — it handles all traffic in and out of the lab.
-        I know how a packet gets from the internet to a service, where each VLAN boundary is,
-        and why the Cloudflare tunnel lives in a separate network segment. The IDS runs on live
-        traffic, the DNS filters are active, and the wildcard cert renews itself. None of it is
-        set-and-forget — I've had to fix it when it broke.
+        This firewall handles traffic in and out of the lab. I can trace how a packet reaches a
+        service, where each VLAN boundary sits, and why the Cloudflare tunnel lives in a separate
+        network segment. The IDS runs on live traffic, DNS filtering is active, and wildcard
+        certificates renew automatically.
       </p>
     </section>
 

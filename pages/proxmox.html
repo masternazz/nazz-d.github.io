@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proxmox Infrastructure Project | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Public-safe Proxmox infrastructure project by Nazeem Massoom Dickey.">
+  <meta name="description" content="Proxmox infrastructure project covering a three-node cluster, VMs, LXCs, HA/quorum behavior, backups, and service documentation.">
   <link rel="canonical" href="https://masternazz.com/pages/proxmox.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Proxmox Infrastructure Project | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Public-safe Proxmox cluster project covering VMs, LXCs, HA/quorum behavior, backups, and service documentation.">
+  <meta property="og:description" content="Proxmox cluster project covering VMs, LXCs, HA/quorum behavior, backups, and service documentation.">
   <meta property="og:url" content="https://masternazz.com/pages/proxmox.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -97,7 +97,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Compute</span>
         <h2>Rackmount + SFF Cluster</h2>
-        <p>Three physical nodes — IBM M4, Dell R610, Dell R410 — give the cluster realistic failure domains and hardware diversity. All production workloads run on enterprise rack hardware, not a single desktop box.</p>
+        <p>Three physical nodes — IBM M4, Dell R610, Dell R410 — give the cluster realistic failure domains and hardware diversity instead of relying on one desktop host.</p>
       </article>
 
       <article class="detail-card glass-panel">
@@ -116,10 +116,9 @@
     <section class="section card callout">
       <h2>Why This Matters</h2>
       <p>
-        Three physical nodes, 22 running services, and a real backup strategy — this isn't
-        a single desktop running VirtualBox. When something breaks, I can't just reset a snapshot
-        and call it done. I have to know what's down, what depends on it, and how to bring it
-        back without taking out something else. That's what cluster management actually looks like.
+        Three physical nodes, 22 running services, and a backup strategy make the lab useful for
+        practicing operational thinking. When something breaks, I have to identify what is down,
+        what depends on it, and how to recover without disrupting another service.
       </p>
     </section>
 

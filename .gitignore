@@ -1,2 +1,10 @@
 node_modules/
 screenshots/
+
+# Local visual/check artifacts generated during site QA
+tools/check-pdf.js
+tools/check-print-height.js
+tools/print-*.png
+tools/screenshot-*.js
+tools/screenshot-*.png
+tools/ss-*.png

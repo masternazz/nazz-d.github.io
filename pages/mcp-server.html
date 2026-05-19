@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Homelab MCP Server — AI Infrastructure Control | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Custom Model Context Protocol server on a Proxmox LXC exposing 55 homelab tools to any AI assistant — OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and more. Node.js, stdio transport over SSH.">
+  <meta name="description" content="Custom Model Context Protocol server on a Proxmox LXC exposing 55 validated homelab tools for OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and more over SSH.">
   <link rel="canonical" href="https://masternazz.com/pages/mcp-server.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Homelab MCP Server — AI Infrastructure Control | Nazeem Massoom Dickey">
-  <meta property="og:description" content="55-tool MCP server giving any AI assistant direct API control over the homelab. OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh — callable from Claude Code, Gemini CLI, VS Code, Cursor.">
+  <meta property="og:description" content="55-tool MCP server for controlled homelab operations across OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, and Wazuh from MCP-compatible clients.">
   <meta property="og:url" content="https://masternazz.com/pages/mcp-server.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Homelab MCP Server | Nazeem Massoom Dickey">
-  <meta name="twitter:description" content="55-tool MCP server on a Proxmox LXC — full homelab API access for any MCP-compatible AI assistant.">
+  <meta name="twitter:description" content="55-tool MCP server on a Proxmox LXC with approved service actions for MCP-compatible clients over SSH.">
   <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
@@ -51,10 +51,9 @@
       <p class="eyebrow">Project | AI Automation &amp; Infrastructure</p>
       <h1>Homelab MCP Server</h1>
       <p class="lead">
-        Built a custom Model Context Protocol server running on a dedicated Proxmox LXC
-        that gives any MCP-compatible AI assistant direct API control over the entire homelab.
-        55 callable tools across 7 integrations — manage infrastructure, troubleshoot networks,
-        and operate services without ever leaving the AI chat interface.
+        Built a custom Model Context Protocol server running on a dedicated Proxmox LXC.
+        It exposes 55 validated tools across the homelab so MCP-compatible clients can run
+        approved checks and service actions over SSH.
       </p>
       <div class="chip-row">
         <span class="chip">Node.js</span>
@@ -72,10 +71,10 @@
       <div class="card">
         <h2>What It Does</h2>
         <ul class="list-clean">
-          <li>Runs on a dedicated Debian 12 LXC (64 MB RAM idle) connected to the management VLAN — reachable by any AI client over SSH.</li>
+          <li>Runs on a dedicated Debian 12 LXC (64 MB RAM idle) connected to the management VLAN and reached over SSH.</li>
           <li>Exposes 55 structured tools across AdGuard, Proxmox, OPNsense, NPMplus, Mailcow, Wazuh, Uptime Kuma, Authentik, Headscale, Jellyfin, and Home Assistant.</li>
-          <li>Any MCP-compatible client — Claude Code, Gemini CLI, VS Code Copilot, Cursor — connects via stdio transport over SSH and calls tools natively.</li>
-          <li>Every tool is a typed, validated function. The AI reasons about what to call, calls it, and gets a structured result back — no copy-pasting, no manual API calls.</li>
+          <li>MCP-compatible clients — Claude Code, Gemini CLI, VS Code Copilot, Cursor — connect via stdio transport over SSH and call tools natively.</li>
+          <li>Every tool is a typed, validated function that returns a structured result — no copy-pasting or manual API formatting.</li>
           <li>Credentials stay on the server in a local <code>.env</code> file — never passed over the MCP connection itself.</li>
         </ul>
       </div>
@@ -95,8 +94,8 @@
     <section class="section">
       <div class="section-header">
         <div>
-          <h2>55 Tools — Full Coverage</h2>
-          <p>Every major homelab service is callable from the AI chat interface.</p>
+          <h2>55 Validated Tools</h2>
+          <p>Major homelab services are exposed through typed MCP functions.</p>
         </div>
       </div>
 
@@ -200,17 +199,17 @@
       <div class="section-header">
         <div>
           <h2>Real Infrastructure Tasks Completed With It</h2>
-          <p>Things the AI called tools to fix directly — no terminal, no manual API calls.</p>
+          <p>Infrastructure tasks completed through controlled MCP tool calls.</p>
         </div>
       </div>
       <div class="skill-grid four">
         <div class="skill-box glass-panel">
           <h3>NIC Swap Recovery</h3>
-          <p>Hardware swap broke all 11 VLANs (driver rename em0 → igc0). Used OPNsense tools to migrate VLAN parents and fix all 11 scrambled DHCP ranges end-to-end without manual API calls.</p>
+          <p>Hardware swap broke all 11 VLANs after a driver rename from em0 to igc0. Used OPNsense tools to migrate VLAN parents and correct all 11 DHCP ranges.</p>
         </div>
         <div class="skill-box glass-panel">
           <h3>Proxy Host Audit</h3>
-          <p>Listed all 28 NPMplus hosts, tested every backend, diagnosed two failures (wrong path, firewall block), and fixed both — completely through tool calls in a single session.</p>
+          <p>Listed all 28 NPMplus hosts, tested every backend, diagnosed two failures (wrong path and firewall block), and corrected both through tool calls in a single session.</p>
         </div>
         <div class="skill-box glass-panel">
           <h3>Firewall Debugging</h3>
@@ -218,7 +217,7 @@
         </div>
         <div class="skill-box glass-panel">
           <h3>DNS + Service Ops</h3>
-          <p>Add DNS rewrites, check DHCP leases, restart services, query Wazuh alerts, check Uptime Kuma monitor status — all directly from the AI chat without opening a terminal.</p>
+          <p>Added DNS rewrites, checked DHCP leases, restarted services, queried Wazuh alerts, and checked Uptime Kuma monitor status through the MCP server.</p>
         </div>
       </div>
     </section>
@@ -244,14 +243,13 @@ MCP Server (Node.js, LXC on Management VLAN)
     </section>
 
     <section class="section card callout">
-      <h2>What This Shows Employers</h2>
+      <h2>Employer-Relevant Skills</h2>
       <p>
-        This isn't a demo project — it's running infrastructure I depend on for homelab management. I
-        identified a real workflow problem (manual API calls across 7 different services), designed a
-        solution using an emerging protocol (MCP), implemented it in Node.js with proper auth handling
-        for each service's auth model, deployed it on dedicated LXC infrastructure, and use it daily.
-        The engineering problems it surfaces — cookie auth vs Bearer, GET body rejection, firewall rule
-        ordering — are exactly the kind of integration friction that shows up in real IT environments.
+        This server runs on infrastructure I use for homelab management. I identified a workflow
+        problem across multiple service APIs, designed an MCP-based solution, implemented it in Node.js
+        with separate authentication handling for each service, and deployed it on dedicated LXC
+        infrastructure. The issues it surfaced — cookie auth versus Bearer tokens, GET body rejection,
+        and firewall rule ordering — are the same kind of integration friction that shows up in IT work.
       </p>
     </section>
 

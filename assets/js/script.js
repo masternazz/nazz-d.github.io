@@ -30,24 +30,33 @@ async function copyEmail() {
 }
 
 function setupProjectFilters() {
-  const buttons = document.querySelectorAll("[data-filter]");
-  const cards = document.querySelectorAll("[data-tags]");
+  const groups = document.querySelectorAll(".project-toolbar");
 
-  if (!buttons.length || !cards.length) {
+  if (!groups.length) {
     return;
   }
 
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const filter = button.dataset.filter;
+  groups.forEach((group) => {
+    const scope = group.closest(".project-directory") || group.closest("section") || document;
+    const buttons = group.querySelectorAll("[data-filter]");
+    const cards = scope.querySelectorAll("[data-tags]");
 
-      buttons.forEach((item) => item.classList.remove("is-active"));
-      button.classList.add("is-active");
+    if (!buttons.length || !cards.length) {
+      return;
+    }
 
-      cards.forEach((card) => {
-        const tags = card.dataset.tags.split(" ");
-        const show = filter === "all" || tags.includes(filter);
-        card.classList.toggle("is-hidden", !show);
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        buttons.forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+
+        cards.forEach((card) => {
+          const tags = card.dataset.tags.split(" ");
+          const show = filter === "all" || tags.includes(filter);
+          card.classList.toggle("is-hidden", !show);
+        });
       });
     });
   });
@@ -178,42 +187,42 @@ const INDEX = [
     "title": "Enterprise Homelab Architecture",
     "url": "pages/homelab.html",
     "icon": "🖥️",
-    "desc": "Public-safe overview of Nazeem Massoom Dickey's enterprise-style homelab architecture.",
+    "desc": "Documented homelab architecture covering Proxmox, OPNsense, Wazuh, Authentik, switching, storage, and remote access.",
     "keywords": "homelab enterprise architecture lab rack cisco netgear sg300 gs728tp proxmox opnsense synology wazuh authentik remote access vlan switching identity monitoring infrastructure overview"
   },
   {
     "title": "Authentik Identity Lab",
     "url": "pages/identity.html",
     "icon": "👤",
-    "desc": "Public-safe Authentik identity and SSO project by Nazeem Massoom Dickey.",
+    "desc": "Authentik identity and SSO project covering OIDC, LDAP, access policy, and centralized account management.",
     "keywords": "identity authentik sso single sign-on oidc ldap oauth mfa access control iam idp provider saml application proxy forward auth homelab"
   },
   {
     "title": "Journey &amp; Timeline",
     "url": "pages/journey.html",
     "icon": "🗺️",
-    "desc": "How Nazeem Massoom Dickey went from zero IT background to enterprise homelab, CompTIA trifecta, and SkillsUSA Florida 1st Place in under two years.",
-    "keywords": "journey timeline story background southtech academy zero to enterprise ibm server proxmox sg300 gs728tp rack comptia trifecta skillsusa florida first place failed ccst came back cybersecurity networking"
+    "desc": "How Nazeem Massoom Dickey went from zero IT background to a documented homelab, CompTIA trifecta, and SkillsUSA Florida 1st Place.",
+    "keywords": "journey timeline story background southtech academy documented homelab ibm server proxmox sg300 gs728tp rack comptia trifecta skillsusa florida first place failed ccst came back cybersecurity networking"
   },
   {
     "title": "OPNsense Edge Firewall Project",
     "url": "pages/opnsense.html",
     "icon": "🛡️",
-    "desc": "Public-safe OPNsense firewall project by Nazeem Massoom Dickey.",
+    "desc": "OPNsense firewall project covering VLANs, DNS filtering, Suricata IDS, ACME certificates, and Cloudflare ingress.",
     "keywords": "opnsense firewall gateway router vlan dhcp dns adguard suricata ids tls acme cloudflare dot dmz segmentation edge network security"
   },
   {
     "title": "Proxmox Infrastructure Project",
     "url": "pages/proxmox.html",
     "icon": "⚙️",
-    "desc": "Public-safe Proxmox infrastructure project by Nazeem Massoom Dickey.",
+    "desc": "Proxmox infrastructure project covering a three-node cluster, VMs, LXCs, quorum behavior, backups, and documentation.",
     "keywords": "proxmox virtualization cluster ibm dell r610 r410 lxc vm containers pbs backup 3-2-1 wazuh authentik ollama home assistant pelican synology nas ha quorum"
   },
   {
     "title": "Secure Remote Access Project",
     "url": "pages/remote-access.html",
     "icon": "🔐",
-    "desc": "Public-safe secure remote access project by Nazeem Massoom Dickey.",
+    "desc": "Secure remote access project using Headscale, Cloudflare Tunnel, DMZ isolation, NPMplus, and wildcard TLS.",
     "keywords": "remote access headscale wireguard vpn mesh cloudflare tunnel zero trust dmz vlan public ingress headplane tailscale-compatible no open ports admin access"
   },
   {
@@ -252,12 +261,33 @@ const INDEX = [
     "keywords": "status uptime kuma monitoring live services proxmox lxc cloudflare tunnel public dashboard masternazz homelab services online"
   },
   {
+    "title": "Operations &amp; Alerting Stack",
+    "url": "pages/operations-alerting.html",
+    "icon": "bell",
+    "desc": "Centralized homelab alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and media services.",
+    "keywords": "operations alerting mailcow opnsense monit wazuh uptime kuma proxmox authentik notifications smtp tls runbooks monitoring rollback"
+  },
+  {
     "title": "Gigabit Switching &amp; PoE+ Deployment",
     "url": "pages/switching.html",
     "icon": "network",
     "desc": "Full Gigabit fabric using Cisco SG300 and Netgear GS728TP with PoE+ support and VLAN 50 DMZ isolation.",
     "keywords": "gigabit switching cisco sg300 netgear gs728tp poe+ vlan 50 dmz trunk ports stp core access hierarchy opnsense proxmox ssh administration"
-    },
+  },
+  {
+    "title": "Game Hosting &amp; Discord Automation",
+    "url": "pages/game-hosting.html",
+    "icon": "gamepad",
+    "desc": "Game server hosting project using Pelican Panel, Docker, RCON, Discord API automation, and Proxmox LXC infrastructure.",
+    "keywords": "game hosting discord bot pelican panel docker rcon python discord api minecraft server proxmox lxc systemd metrics automation"
+  },
+  {
+    "title": "Enterprise VLAN Segmentation",
+    "url": "pages/vlan-segmentation.html",
+    "icon": "network",
+    "desc": "10-VLAN segmentation project with OPNsense default-deny firewalling, Cisco SG300 switching, DMZ isolation, and service migration.",
+    "keywords": "vlan segmentation opnsense default deny firewall cisco sg300 netgear gs728tp dmz 10.226 flat network migration firewall rules"
+  },
   {
     "title": "Wazuh SIEM/XDR Lab",
     "url": "pages/wazuh.html",
@@ -287,11 +317,46 @@ const INDEX = [
     "keywords": "vlan50 trunking vlan 50 fix troubleshooting switchport trunk allowed vlan opnsense dmz cloudflare tunnel sg300 gs728tp networking"
   },
   {
+    "title": "Self-Hosted Email on Residential Internet",
+    "url": "pages/writeup-mailcow-email.html",
+    "icon": "mail",
+    "desc": "Writeup on running mailcow behind residential ISP limits with Cloudflare Email Workers and SMTP relay constraints.",
+    "keywords": "mailcow email residential isp port 25 cloudflare email worker smtp relay smtp2go opnsense nat mail server"
+  },
+  {
+    "title": "Self-Hosted MCP Server for AI Homelab Control",
+    "url": "pages/writeup-mcp-server.html",
+    "icon": "server",
+    "desc": "Writeup on a 55-tool MCP server for controlled homelab operations across OPNsense, Proxmox, AdGuard, Mailcow, and Wazuh.",
+    "keywords": "mcp model context protocol homelab node.js opnsense proxmox adguard npmplus mailcow wazuh claude code gemini cli automation"
+  },
+  {
+    "title": "OPNsense OIDC SSO Fix &amp; DNS Migration",
+    "url": "pages/writeup-opnsense-oidc.html",
+    "icon": "shield",
+    "desc": "Writeup on fixing an OPNsense OIDC plugin issue, restoring Authentik SSO, and moving service configs from IPs to DNS names.",
+    "keywords": "opnsense oidc authentik sso simplexml php plugin dns migration adguard configd freebsd service configs"
+  },
+  {
+    "title": "Enterprise VLAN Segmentation Migration",
+    "url": "pages/writeup-vlan-migration.html",
+    "icon": "network",
+    "desc": "Writeup on migrating from a flat 192.168.1.0/24 network to 10 VLANs, restoring Proxmox quorum, and moving 30+ services.",
+    "keywords": "vlan migration flat network 192.168.1.0 10 vlans proxmox quorum cisco sg300 gs728tp opnsense firewall dns nat npmplus"
+  },
+  {
+    "title": "Homelab MCP Server",
+    "url": "pages/mcp-server.html",
+    "icon": "server",
+    "desc": "MCP server project exposing 55 validated homelab tools for controlled operations over SSH.",
+    "keywords": "homelab mcp server model context protocol node.js opnsense proxmox adguard npmplus mailcow wazuh uptime kuma ssh automation"
+  },
+  {
     "title": "AI Automation & Agent Research",
     "url": "pages/ai-automation.html",
     "icon": "🤖",
-    "desc": "Research into agentic AI tools — Claude Code, Gemini CLI, OpenAI Codex — and how they apply to IT operations, SOC workflows, and infrastructure automation.",
-    "keywords": "ai automation claude code gemini cli openai codex ab-900 agentic workflows microsoft copilot agent administration it operations soc automation homelab"
+    "desc": "AI-assisted IT operations using Claude Code, Gemini CLI, Codex, and a self-hosted MCP server for documented homelab automation.",
+    "keywords": "ai automation claude code gemini cli openai codex ab-900 mcp microsoft copilot agent administration it operations soc automation homelab"
   }
 ];
 
@@ -1166,6 +1231,130 @@ function setupNationalsCountdown() {
   setInterval(tick, 1000);
 }
 
+function setupPageJumpNav() {
+  const body = document.querySelector(".writeup-body");
+  if (!body) return;
+
+  const headings = [...body.querySelectorAll("h2")]
+    .filter((heading) => heading.textContent.trim().length > 0);
+
+  if (headings.length < 3) return;
+
+  const used = new Set();
+  const nav = document.createElement("nav");
+  nav.className = "jump-nav glass-panel";
+  nav.setAttribute("aria-label", "Writeup section links");
+
+  const label = document.createElement("span");
+  label.textContent = "Jump to";
+  nav.appendChild(label);
+
+  headings.slice(0, 8).forEach((heading, index) => {
+    if (!heading.id) {
+      const base = heading.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "") || `section-${index + 1}`;
+      let id = base;
+      let suffix = 2;
+      while (used.has(id) || document.getElementById(id)) {
+        id = `${base}-${suffix}`;
+        suffix++;
+      }
+      heading.id = id;
+      used.add(id);
+    }
+
+    const link = document.createElement("a");
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent.trim();
+    nav.appendChild(link);
+  });
+
+  body.parentNode.insertBefore(nav, body);
+}
+
+function setupDiagramLightbox() {
+  const images = document.querySelectorAll(".diagram-card img, .diagram-container img");
+  if (!images.length) return;
+
+  let modal = null;
+  let keyHandler = null;
+
+  function close() {
+    if (modal) {
+      modal.remove();
+      modal = null;
+      document.body.classList.remove("search-lock");
+    }
+    if (keyHandler) {
+      document.removeEventListener("keydown", keyHandler);
+      keyHandler = null;
+    }
+  }
+
+  function open(img) {
+    close();
+    modal = document.createElement("div");
+    modal.className = "diagram-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", "Expanded diagram");
+
+    const src = img.currentSrc || img.getAttribute("src");
+    const alt = img.getAttribute("alt") || "Expanded diagram";
+
+    const inner = document.createElement("div");
+    inner.className = "diagram-modal-inner";
+
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "diagram-modal-close";
+    closeBtn.setAttribute("aria-label", "Close expanded diagram");
+    closeBtn.textContent = "x";
+
+    const expanded = document.createElement("img");
+    expanded.src = src;
+    expanded.alt = alt;
+
+    inner.appendChild(closeBtn);
+    inner.appendChild(expanded);
+    modal.appendChild(inner);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal || event.target.closest(".diagram-modal-close")) {
+        close();
+      }
+    });
+
+    keyHandler = (event) => {
+      if (event.key === "Escape") {
+        close();
+      }
+    };
+    document.addEventListener("keydown", keyHandler);
+
+    document.body.appendChild(modal);
+    document.body.classList.add("search-lock");
+    closeBtn.focus();
+  }
+
+  images.forEach((img) => {
+    img.classList.add("is-zoomable");
+    img.setAttribute("role", "button");
+    img.setAttribute("tabindex", "0");
+    img.setAttribute("aria-label", "Open diagram at full size");
+    img.addEventListener("click", () => open(img));
+    img.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open(img);
+      }
+    });
+  });
+}
+
 function setupPageTransitions() {
   // iOS/Safari back-swipe can restore from BFCache with stale fade-out styles.
   // Always clear transition styles when the page is shown again.
@@ -1274,6 +1463,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSectionDividers();
   setupHeroScrollFade();
   setupActiveNav();
+  setupPageJumpNav();
+  setupDiagramLightbox();
   setupOpenToWork();
   setupBackToTop();
   setupSkillBars();

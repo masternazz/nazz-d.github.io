@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nazeem Massoom Dickey | Junior Network Admin & SOC Analyst Portfolio</title>
-  <meta name="description" content="Florida SkillsUSA Internetworking State Champion. Junior Network Admin and SOC Analyst candidate with an enterprise homelab, CompTIA Trifecta, and hands-on infrastructure experience.">
+  <meta name="description" content="Junior Network Admin and SOC Analyst candidate with a documented Proxmox/OPNsense homelab, CompTIA Trifecta + CySA+, and SkillsUSA Florida Internetworking 1st Place.">
   <link rel="canonical" href="https://masternazz.com/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Nazeem Massoom Dickey | Junior Network Admin & SOC Analyst Portfolio">
-  <meta property="og:description" content="Florida SkillsUSA State Champion. Junior Network Admin and SOC Analyst candidate with 31 certs and a real enterprise homelab.">
+  <meta property="og:description" content="Junior networking and security candidate with 31 certifications, a documented homelab, and SkillsUSA Florida Internetworking 1st Place.">
   <meta property="og:url" content="https://masternazz.com/">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Nazeem Massoom Dickey | Junior Network Admin & SOC Analyst Portfolio">
-  <meta name="twitter:description" content="Florida State Champion in Internetworking. 31 certs, production homelab, and hands-on IT infrastructure proof.">
+  <meta name="twitter:description" content="31 certifications, a documented Proxmox/OPNsense homelab, and SkillsUSA Florida Internetworking 1st Place.">
   <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
@@ -56,17 +56,15 @@
 
     <section class="hero">
       <p class="status-dot">Open to internships &amp; entry-level IT roles</p>
-      <p class="eyebrow">SkillsUSA Florida Internetworking — 1st Place, Gold Medal &mdash; May 2026 graduate building real enterprise infrastructure</p>
+      <p class="eyebrow">SkillsUSA Florida Internetworking — 1st Place, Gold Medal &mdash; May 2026 graduate focused on networking, infrastructure, and security operations</p>
 
-      <h1 class="hero-name-wrap" aria-label="Nazeem Massoom Dickey">
-        <canvas id="heroNameCanvas" class="hero-name-canvas"></canvas>
-      </h1>
-      <h2>IT &amp; Cybersecurity candidate &mdash; <span id="roleRotator" class="role-rotator" aria-live="polite"></span></h2>
+      <h1>Nazeem Massoom Dickey</h1>
+      <h2>IT &amp; Cybersecurity candidate &mdash; Junior Network Admin / SOC / NOC</h2>
 
       <p class="lead">
-        I've built real infrastructure: Proxmox cluster, OPNsense firewall, secure
-        remote access, identity management, and security monitoring — all documented
-        like a real environment, not a school project.
+        I build and maintain a documented homelab with a Proxmox cluster, OPNsense firewall,
+        secure remote access, identity management, and Wazuh monitoring. The work maps directly
+        to junior networking, NOC, SOC, and IT support roles.
       </p>
 
       <div class="hero-actions">
@@ -103,8 +101,8 @@
       <article class="snapshot-card glass-panel">
         <h2>What Makes Me Different</h2>
         <p>
-          I graduated from SouthTech Academy in May 2026, but my projects look closer to a small business
-          environment than a basic classroom lab.
+          I graduated from SouthTech Academy in May 2026 and built my learning around operating
+          a small production-style lab with real dependencies, outages, and documentation.
         </p>
       </article>
 
@@ -150,13 +148,197 @@
       </div>
     </section>
 
+    <section class="section architecture-glance">
+      <div class="section-header">
+        <div>
+          <h2>Architecture At A Glance</h2>
+          <p>The short version of how the lab is operated: segmented networks, controlled ingress, identity, monitoring, and backups.</p>
+        </div>
+        <a href="pages/homelab.html" class="button secondary">Full architecture -&gt;</a>
+      </div>
+
+      <div class="architecture-flow glass-panel">
+        <div class="flow-lane">
+          <span>Public Services</span>
+          <strong>Internet -&gt; Cloudflare -&gt; cloudflared DMZ -&gt; NPMplus -&gt; approved backend</strong>
+          <p>No management ports are exposed directly to the internet.</p>
+        </div>
+        <div class="flow-lane">
+          <span>Admin Access</span>
+          <strong>Remote device -&gt; Tailscale subnet router -&gt; filtered internal VLANs</strong>
+          <p>Remote management enters through a defined network-services path.</p>
+        </div>
+        <div class="flow-lane">
+          <span>Operations</span>
+          <strong>Wazuh, Uptime Kuma, mailcow alerts, and OPNsense Monit</strong>
+          <p>Monitoring is tied to alerting so issues do not stay hidden in dashboards.</p>
+        </div>
+        <div class="flow-lane">
+          <span>Recovery</span>
+          <strong>Proxmox Backup Server, Synology NAS, and storage VLAN isolation</strong>
+          <p>Backup targets are treated as high-value infrastructure, not general servers.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lab-media">
+      <div class="section-header">
+        <div>
+          <h2>The Lab In Practice</h2>
+          <p>Physical rack work backs the diagrams: servers, switching, NAS units, cabling, and console access.</p>
+        </div>
+      </div>
+
+      <div class="rack-gallery compact">
+        <figure>
+          <img src="assets/images/rack-full.jpg" alt="Full enclosed rack cabinet with monitor and keyboard on top" loading="lazy">
+          <figcaption>Enclosed rack with direct console access.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/images/rack-interior.jpg" alt="Rack interior with firewall, switches, NAS units, and servers" loading="lazy">
+          <figcaption>Firewall, SG300 core, GS728TP access switch, NAS, and servers.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/images/rack-back-cables.jpg" alt="Back of the rack with cabling and wireless hardware" loading="lazy">
+          <figcaption>Cabling and wireless edge hardware.</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section id="projects" class="section">
       <div class="section-header">
         <div>
           <h2>Featured Projects</h2>
-          <p>Public-safe project pages built from the homelab documentation and resume.</p>
+          <p>The strongest project stories first, with the full project directory available below.</p>
         </div>
       </div>
+
+      <div class="project-grid priority-project-grid">
+        <a href="pages/writeup-vlan-migration.html" class="project-card glass-panel priority-card" data-tags="all network security infrastructure">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="9" height="4" rx="1"/><rect x="13" y="10" width="9" height="4" rx="1"/><rect x="2" y="17" width="5" height="4" rx="1"/><rect x="9" y="17" width="5" height="4" rx="1"/><rect x="16" y="17" width="6" height="4" rx="1"/></svg>
+            </span>
+            <span class="project-type">Network Migration</span>
+            <span class="status-badge active">Active</span>
+          </div>
+          <h3>10-VLAN Production Migration</h3>
+          <p>Moved the lab from one flat network to a segmented production design, recovered Proxmox quorum during a switch swap, migrated 30+ services, and enforced default-deny firewalling.</p>
+          <div class="chip-row">
+            <span class="chip">OPNsense</span>
+            <span class="chip">Cisco SG300</span>
+            <span class="chip">80+ Rules</span>
+            <span class="chip">30+ Services</span>
+          </div>
+          <span class="card-link">Read case study -&gt;</span>
+        </a>
+
+        <a href="pages/mcp-server.html" class="project-card glass-panel priority-card" data-tags="all automation infrastructure">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </span>
+            <span class="project-type">AI Operations</span>
+            <span class="status-badge active">Active</span>
+          </div>
+          <h3>Homelab MCP Server</h3>
+          <p>Custom Node.js MCP server exposing 55 validated tools for controlled operations across OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other services.</p>
+          <div class="chip-row">
+            <span class="chip">Node.js</span>
+            <span class="chip">MCP</span>
+            <span class="chip">55 Tools</span>
+            <span class="chip">SSH</span>
+          </div>
+          <span class="card-link">View project -&gt;</span>
+        </a>
+
+        <a href="pages/operations-alerting.html" class="project-card glass-panel priority-card" data-tags="all monitoring security infrastructure">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </span>
+            <span class="project-type">Operations</span>
+            <span class="status-badge active">Active</span>
+          </div>
+          <h3>Operations &amp; Alerting Stack</h3>
+          <p>Centralized email alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and media services, with TLS cleanup and documented rollback paths.</p>
+          <div class="chip-row">
+            <span class="chip">mailcow</span>
+            <span class="chip">Monit</span>
+            <span class="chip">Wazuh</span>
+            <span class="chip">Runbooks</span>
+          </div>
+          <span class="card-link">View project -&gt;</span>
+        </a>
+
+        <a href="pages/writeup-opnsense-oidc.html" class="project-card glass-panel priority-card" data-tags="all security identity network">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+            <span class="project-type">Identity Fix</span>
+            <span class="status-badge done">Documented</span>
+          </div>
+          <h3>OPNsense OIDC &amp; DNS Fix</h3>
+          <p>Diagnosed an OIDC login issue, restored Authentik SSO behavior, and moved infrastructure configuration away from stale hardcoded IP references.</p>
+          <div class="chip-row">
+            <span class="chip">OPNsense</span>
+            <span class="chip">Authentik</span>
+            <span class="chip">DNS</span>
+            <span class="chip">FreeBSD</span>
+          </div>
+          <span class="card-link">Read writeup -&gt;</span>
+        </a>
+      </div>
+
+      <div class="project-domain-grid">
+        <article class="domain-card glass-panel">
+          <span class="mini-label">Network Core</span>
+          <h3>Routing, VLANs, Switching</h3>
+          <p>OPNsense, Cisco SG300, Netgear GS728TP, DMZ isolation, guest network isolation, and storage VLAN design.</p>
+          <div class="domain-links">
+            <a href="pages/opnsense.html">Firewall</a>
+            <a href="pages/vlan-segmentation.html">Segmentation</a>
+            <a href="pages/switching.html">Switching</a>
+          </div>
+        </article>
+
+        <article class="domain-card glass-panel">
+          <span class="mini-label">Security &amp; Identity</span>
+          <h3>Access Control</h3>
+          <p>Authentik SSO, OIDC/LDAP, Wazuh monitoring, Suricata concepts, and remote access through controlled paths.</p>
+          <div class="domain-links">
+            <a href="pages/identity.html">Identity</a>
+            <a href="pages/wazuh.html">Wazuh</a>
+            <a href="pages/remote-access.html">Remote Access</a>
+          </div>
+        </article>
+
+        <article class="domain-card glass-panel">
+          <span class="mini-label">Operations</span>
+          <h3>Monitoring, Alerts, Recovery</h3>
+          <p>Uptime Kuma, mailcow alerts, OPNsense Monit, Proxmox backups, Synology storage, and documented rollback plans.</p>
+          <div class="domain-links">
+            <a href="pages/operations-alerting.html">Alerting</a>
+            <a href="pages/status.html">Live Status</a>
+            <a href="pages/proxmox.html">Backups</a>
+          </div>
+        </article>
+
+        <article class="domain-card glass-panel">
+          <span class="mini-label">Automation</span>
+          <h3>AI, APIs, Game Hosting</h3>
+          <p>MCP tooling, API-driven monitor provisioning, CLI-based AI workflows, Pelican Panel, and Discord automation.</p>
+          <div class="domain-links">
+            <a href="pages/mcp-server.html">MCP Server</a>
+            <a href="pages/ai-automation.html">AI Research</a>
+            <a href="pages/game-hosting.html">Game Hosting</a>
+          </div>
+        </article>
+      </div>
+
+      <details class="project-directory">
+        <summary>Open full project card directory</summary>
 
       <div class="project-toolbar" role="group" aria-label="Project filters">
         <button type="button" class="filter-button is-active" data-filter="all">All</button>
@@ -393,7 +575,32 @@
           <span class="card-link">View project -&gt;</span>
         </a>
 
-        <div class="project-card glass-panel" data-tags="all infrastructure automation">
+        <a href="pages/operations-alerting.html" class="project-card glass-panel" data-tags="all monitoring infrastructure security">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </span>
+            <span class="project-type">Operations</span>
+            <span class="status-badge active">Active</span>
+          </div>
+
+          <h3>Operations &amp; Alerting Stack</h3>
+          <p>
+            Centralized service alerting through mailcow for Proxmox, Wazuh, Uptime Kuma,
+            Authentik, OPNsense Monit, and media services.
+          </p>
+
+          <div class="chip-row">
+            <span class="chip">mailcow</span>
+            <span class="chip">Monit</span>
+            <span class="chip">TLS</span>
+            <span class="chip">Runbooks</span>
+          </div>
+
+          <span class="card-link">View project -&gt;</span>
+        </a>
+
+        <a href="pages/game-hosting.html" class="project-card glass-panel" data-tags="all infrastructure automation">
           <div class="project-top">
             <span class="project-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M7 12h.01"/><path d="M17 12h.01"/><path d="M12 8v8"/></svg>
@@ -414,8 +621,8 @@
             <span class="chip">Discord API</span>
           </div>
 
-          <span class="card-link" style="opacity:0.4">Page coming soon</span>
-        </div>
+          <span class="card-link">View project -&gt;</span>
+        </a>
 
         <a href="pages/mcp-server.html" class="project-card glass-panel" data-tags="all automation">
           <div class="project-top">
@@ -428,7 +635,7 @@
 
           <h3>Homelab MCP Server</h3>
           <p>
-            Custom Node.js MCP server on a Proxmox LXC exposing 55 tools — OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and more. Any AI assistant connects over SSH and gets full homelab API access.
+            Custom Node.js MCP server on a Proxmox LXC exposing 55 approved tools for OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other lab services over SSH.
           </p>
 
           <div class="chip-row">
@@ -452,7 +659,7 @@
 
           <h3>AI Automation Research</h3>
           <p>
-            Researching and applying agentic AI tools — Claude Code, Gemini CLI, OpenAI Codex — to IT infrastructure tasks. AB-900 certified in AI governance.
+            Testing CLI-based AI tools — Claude Code, Gemini CLI, and OpenAI Codex — against documented IT infrastructure tasks. AB-900 certified in AI governance.
           </p>
 
           <div class="chip-row">
@@ -465,6 +672,49 @@
           <span class="card-link">View project -&gt;</span>
         </a>
 
+      </div>
+      </details>
+    </section>
+
+    <section class="section recent-operations">
+      <div class="section-header">
+        <div>
+          <h2>Recent Operations</h2>
+          <p>Selected field notes from the homelab docs, rewritten as public-safe operations summaries.</p>
+        </div>
+        <a href="pages/writeups.html" class="button secondary">More writeups -&gt;</a>
+      </div>
+
+      <div class="ops-timeline">
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
+          <h3>Email Alerts Rolled Out</h3>
+          <p>Configured service alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and the media stack, then documented rollback steps.</p>
+        </article>
+
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
+          <h3>Scoped UPnP for One Workstation</h3>
+          <p>Restricted UPnP/PCP to a single approved workstation, corrected daemon startup behavior, and removed broad manual game-port forwarding.</p>
+        </article>
+
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
+          <h3>OIDC DNS Self-Resolution Fixed</h3>
+          <p>Updated service DNS so OPNsense could reliably resolve the Authentik service endpoint internally without depending on stale IP references.</p>
+        </article>
+
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
+          <h3>Guest Network Captive Portal</h3>
+          <p>Validated OPNsense captive portal behavior, DNS handling, DHCP scope, and switch trunking for an internet-only guest VLAN.</p>
+        </article>
+
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
+          <h3>Storage VLAN Cutover</h3>
+          <p>Migrated backup and NAS services into the storage VLAN, confirmed Proxmox backup connectivity, and kept storage access limited to approved clients.</p>
+        </article>
       </div>
     </section>
 
@@ -506,8 +756,8 @@
     <section class="section achievements">
       <div class="section-header">
         <div>
-          <h2>Proof Points</h2>
-          <p>Short signals that help the resume stand out fast.</p>
+          <h2>Highlights</h2>
+          <p>Quick context for the resume.</p>
         </div>
       </div>
 
@@ -518,7 +768,7 @@
         <div class="skillsusa-body">
           <p class="skillsusa-eyebrow">April 2026 &mdash; Florida State Competition</p>
           <h3>SkillsUSA Internetworking<br><span>1st Place — Gold Medal</span></h3>
-          <p class="skillsusa-desc">Outcompeted every networking student in Florida to claim 1st Place and the Gold Medal — the only placement that qualifies for SkillsUSA NLSC Nationals in Atlanta, GA.</p>
+          <p class="skillsusa-desc">Placed 1st in SkillsUSA Florida Internetworking and advanced to SkillsUSA NLSC Nationals in Atlanta, GA.</p>
           <span class="skillsusa-link">Read full writeup &rarr;</span>
         </div>
       </a>
@@ -533,7 +783,7 @@
         <article class="achievement-card glass-panel">
           <span>SouthTech Academy</span>
           <strong>Honor Roll &bull; Esports Team Captain</strong>
-          <p>Leading the esports team while running 20+ VMs, 6 architecture projects, and freelance tech support simultaneously.</p>
+          <p>Balancing esports leadership, 20+ VMs, 6 architecture projects, and freelance tech support.</p>
         </article>
 
         <article class="achievement-card glass-panel">
@@ -548,7 +798,7 @@
       <div class="section-header">
         <div>
           <h2>Journey &amp; Timeline</h2>
-          <p>Zero IT background to enterprise homelab, CompTIA trifecta, and SkillsUSA FL Gold Medal — in under two years.</p>
+          <p>Started IT midway through junior year; built a documented homelab, earned the CompTIA trifecta, and placed 1st in SkillsUSA Florida Internetworking within two years.</p>
         </div>
         <a href="pages/journey.html" class="button secondary">Full timeline -&gt;</a>
       </div>
@@ -557,8 +807,8 @@
 
         <div class="timeline-item glass-panel">
           <span>Late 2025 — Turning Point</span>
-          <h3>All-In After Loss</h3>
-          <p>After my grandmother passed, I put everything into IT. Passed CCST Networking — which I needed to qualify for SkillsUSA. Started the CompTIA track immediately after.</p>
+          <h3>Committed to IT</h3>
+          <p>After my grandmother passed, I focused heavily on IT. Passed CCST Networking — which I needed to qualify for SkillsUSA — and started the CompTIA track immediately after.</p>
         </div>
 
         <div class="timeline-item glass-panel">
@@ -570,7 +820,7 @@
         <div class="timeline-item glass-panel">
           <span>April 2026 — State Level</span>
           <h3>SkillsUSA Florida Internetworking — 1st Place, Gold Medal</h3>
-          <p>Claimed 1st Place and the Gold Medal at the SkillsUSA Florida State Competition — outcompeting every networking student in the state. Qualified for SkillsUSA NLSC Nationals in Atlanta, GA.</p>
+          <p>Placed 1st at the SkillsUSA Florida State Competition and qualified for SkillsUSA NLSC Nationals in Atlanta, GA.</p>
         </div>
 
         <div class="timeline-item glass-panel">
@@ -622,7 +872,7 @@
       <div class="section-header">
         <div>
           <h2>Currently Learning</h2>
-          <p>Active certifications and skills in progress — not waiting around.</p>
+          <p>Active certification goals and skills in progress.</p>
         </div>
       </div>
       <div class="in-progress-strip">
@@ -654,7 +904,7 @@
       <div class="section-header">
         <div>
           <h2>Latest Writeups</h2>
-          <p>Technical writeups and competition recaps — proof of real troubleshooting thinking.</p>
+          <p>Technical writeups and competition recaps from troubleshooting and project work.</p>
         </div>
         <a href="pages/writeups.html" class="button secondary">All writeups &rarr;</a>
       </div>
@@ -731,7 +981,7 @@
   </main>
 
   <footer class="footer">
-    <p>Built by hand with HTML, CSS, and GitHub Pages — same discipline I apply to the homelab.</p>
+    <p>Built with HTML, CSS, and GitHub Pages.</p>
   </footer>
 
   <script src="assets/js/script.js"></script>

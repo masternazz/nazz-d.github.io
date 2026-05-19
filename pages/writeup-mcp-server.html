@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Built a custom Model Context Protocol server on a Proxmox LXC that gives any AI assistant direct API control over 55 homelab tools — OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and more.">
+  <meta name="description" content="Built a custom Model Context Protocol server on a Proxmox LXC exposing 55 validated homelab tools for OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and more.">
   <link rel="canonical" href="https://masternazz.com/pages/writeup-mcp-server.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Custom MCP server on a Proxmox LXC exposing 55 tools — OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, NPMplus. Any MCP-compatible AI client gets full homelab API access over SSH.">
+  <meta property="og:description" content="Custom MCP server on a Proxmox LXC exposing 55 tools for controlled homelab operations across OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and NPMplus.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-mcp-server.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey">
-  <meta name="twitter:description" content="55-tool MCP server on a Proxmox LXC — OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, NPMplus all callable by any AI assistant.">
+  <meta name="twitter:description" content="55-tool MCP server on a Proxmox LXC for controlled service actions across OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and NPMplus.">
   <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
@@ -51,11 +51,10 @@
       <p class="eyebrow">Writeup | AI Automation &amp; Infrastructure</p>
       <h1>Self-Hosted MCP Server for AI Homelab Control</h1>
       <p class="lead">
-        Built a custom Model Context Protocol server running on a dedicated Proxmox LXC that
-        gives any MCP-compatible AI assistant direct API control over the homelab — 55 callable
-        tools covering OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, Jellyfin, and more.
-        Any AI client connects over SSH and gets full infrastructure management without
-        ever needing SSH gymnastics, manual API calls, or context switching.
+        Built a custom Model Context Protocol server running on a dedicated Proxmox LXC.
+        It exposes 55 validated tools for OPNsense, Proxmox, AdGuard, NPMplus, Mailcow,
+        Wazuh, Jellyfin, and other lab services so MCP-compatible clients can run approved
+        checks and service actions over SSH.
       </p>
       <div class="chip-row">
         <span class="chip">MCP</span>
@@ -77,18 +76,16 @@
       </div>
       <div class="card">
         <p>
-          When an AI assistant needs to interact with homelab infrastructure — check DHCP leases,
-          restart a service, add a DNS rewrite — the workflow is painful: context-switch to a terminal,
-          SSH to the right host, find the right API endpoint, format the right JSON body, parse the
-          response, go back to the AI, paste in the output. Every task has 4–6 manual steps between
-          the AI and the answer.
+          When an assistant needs to interact with homelab infrastructure — check DHCP leases,
+          restart a service, add a DNS rewrite — the normal workflow is slow: open a terminal,
+          SSH to the right host, find the right API endpoint, format the JSON body, parse the
+          response, and bring the output back into the working context.
         </p>
         <p style="margin-top:1rem;">
           MCP (Model Context Protocol) solves this at the protocol level. An MCP server exposes
-          tools as structured functions. Any MCP-compatible client — Claude Code, Gemini CLI,
-          VS Code Copilot, Cursor — calls those tools natively. The AI reasons about what to
-          call, calls it, and gets a structured result back. No copy-pasting, no terminal switching,
-          no manually formatting API requests.
+          tools as structured functions. MCP-compatible clients — Claude Code, Gemini CLI,
+          VS Code Copilot, Cursor — call those tools natively and receive structured results.
+          That removes copy-pasting, repeated terminal switching, and manually formatted API requests.
         </p>
         <p style="margin-top:1rem;">
           The goal: one server, one SSH connection, the AI calls what it needs.
@@ -115,7 +112,7 @@
           <li>MCP server calls the handler, which POSTs to AdGuard's REST API at <code>http://[adguard-internal-ip]:3001</code> with Basic auth.</li>
           <li>Handler returns a plain-text result: <code>"Added rewrite: test.lab → [internal-ip]"</code></li>
           <li>AI client gets structured <code>content: [{type: "text", text: "..."}]</code> back and reasons on the result.</li>
-          <li>From the AI's perspective: ask a question, get an answer. No terminal, no copy-paste, no auth dance.</li>
+          <li>From the client perspective: call the tool, receive the result, and keep the workflow in one place.</li>
         </ul>
       </div>
     </section>
@@ -124,7 +121,7 @@
       <div class="section-header">
         <div>
           <h2>Tools Exposed — 55 Total</h2>
-          <p>Grouped by service. All callable by any MCP-compatible AI client.</p>
+          <p>Grouped by service. Each tool is callable by MCP-compatible clients over SSH.</p>
         </div>
       </div>
 
@@ -288,7 +285,7 @@
       <div class="section-header">
         <div>
           <h2>Real Tasks Completed With the MCP Server</h2>
-          <p>Things the AI called tools to do directly — no terminal switching.</p>
+          <p>Operational tasks completed through controlled MCP tool calls.</p>
         </div>
       </div>
       <div class="skill-grid four">
@@ -298,7 +295,7 @@
         </div>
         <div class="skill-box glass-panel">
           <h3>Proxy Host Audit</h3>
-          <p>Called <code>npmplus_list_proxyhosts</code>, tested all 28 backends, identified two broken ones (headplane 404, firstwing 401), diagnosed root causes, and fixed both without leaving the chat.</p>
+          <p>Called <code>npmplus_list_proxyhosts</code>, tested all 28 backends, identified two broken ones (headplane 404, firstwing 401), diagnosed root causes, and corrected both through the MCP workflow.</p>
         </div>
         <div class="skill-box glass-panel">
           <h3>Firewall Debugging</h3>
@@ -306,7 +303,7 @@
         </div>
         <div class="skill-box glass-panel">
           <h3>DNS + Service Ops</h3>
-          <p>Add DNS rewrites, check DHCP leases, restart services, query Wazuh for recent alerts, check Uptime Kuma monitor statuses — all directly from the AI assistant without a terminal.</p>
+          <p>Added DNS rewrites, checked DHCP leases, restarted services, queried Wazuh for recent alerts, and checked Uptime Kuma monitor statuses through the MCP server.</p>
         </div>
       </div>
     </section>

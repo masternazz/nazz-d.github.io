@@ -111,17 +111,16 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Workflow</span>
         <h2>Triage Practice Environment</h2>
-        <p>The homelab generates real alerts — failed logins, config changes, unexpected processes. I work through them the same way a SOC analyst would: pull the event, check the context, figure out if it's noise or something worth escalating, and write down what I found. That loop is the job.</p>
+        <p>The homelab generates alerts for failed logins, config changes, and unexpected processes. I work through them with a SOC-style triage loop: pull the event, check the surrounding context, classify it, and document the finding or next step.</p>
       </article>
     </section>
 
     <section class="section card callout">
       <h2>Why This Matters</h2>
       <p>
-        Wazuh shows up in real SOC environments. I set it up myself, connected it to actual endpoints,
-        and fed it live IDS data from OPNsense. When an alert fires, I know where it came from,
-        what triggered it, and how to look at the surrounding context to decide if it means anything.
-        That's not something you pick up from reading about SIEM — you have to actually use it.
+        Wazuh is common in SOC environments, so I built a working deployment, connected it to
+        endpoints, and fed it IDS data from OPNsense. When an alert fires, I can trace where it came
+        from, what triggered it, and what surrounding context matters for classification.
       </p>
     </section>
 
