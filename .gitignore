@@ -5,6 +5,9 @@ screenshots/
 tools/check-pdf.js
 tools/check-print-height.js
 tools/print-*.png
-tools/screenshot-*.js
+tools/screenshot-full.js
+tools/screenshot-pages.js
+tools/screenshot-pdfs.js
+tools/screenshot-print.js
 tools/screenshot-*.png
 tools/ss-*.png
