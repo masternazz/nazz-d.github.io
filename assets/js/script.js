@@ -360,6 +360,15 @@ const INDEX = [
   }
 ];
 
+const SEARCH_ICON_SVG = {
+  bell: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>',
+  gamepad: '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/><path d="M17.3 6H6.7a4 4 0 00-3.9 3.2L2 14a4 4 0 006.9 3.4L10.6 16h2.8l1.7 1.4A4 4 0 0022 14l-.8-4.8A4 4 0 0017.3 6z"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+  network: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="9" height="4" rx="1"/><rect x="13" y="10" width="9" height="4" rx="1"/><rect x="2" y="17" width="5" height="4" rx="1"/><rect x="9" y="17" width="5" height="4" rx="1"/><rect x="16" y="17" width="6" height="4" rx="1"/></svg>',
+  server: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
+};
+
 function setupSearch() {
   // Detect depth: pages/ subdir has root at ../
   const isSubpage = location.pathname.includes("/pages/");
@@ -411,23 +420,87 @@ function setupSearch() {
     }[char]));
   }
 
+  function escapeRegex(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function normalizeSearchText(text) {
+    return String(text)
+      .toLowerCase()
+      .replace(/&amp;/g, " and ")
+      .replace(/[^a-z0-9+#]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function queryTokens(query) {
+    return normalizeSearchText(query)
+      .split(" ")
+      .filter(token => token.length > 1 || /\d/.test(token));
+  }
+
+  function textTokens(text) {
+    return normalizeSearchText(text)
+      .split(" ")
+      .filter(Boolean);
+  }
+
+  function tokenScore(words, token, exactScore, prefixScore) {
+    if (words.some(word => word === token)) return exactScore;
+    if (words.some(word => word.startsWith(token))) return prefixScore;
+    return 0;
+  }
+
+  function renderSearchIcon(icon) {
+    const key = String(icon || "").trim().toLowerCase();
+    return SEARCH_ICON_SVG[key] || escapeHtml(icon || "page");
+  }
+
   function highlight(text, query) {
-    if (!query) return text;
-    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return text.replace(new RegExp("(" + escaped + ")", "gi"), "<mark>$1</mark>");
+    const tokens = queryTokens(query);
+    if (!tokens.length) return text;
+    const pattern = tokens.map(escapeRegex).join("|");
+    return text.replace(new RegExp("(" + pattern + ")", "gi"), "<mark>$1</mark>");
   }
 
   function rank(item, q) {
-    const ql = q.toLowerCase();
-    const title = item.title.toLowerCase();
-    const desc = item.desc.toLowerCase();
-    const kw = item.keywords.toLowerCase();
-    if (title === ql) return 100;
-    if (title.startsWith(ql)) return 80;
-    if (title.includes(ql)) return 60;
-    if (desc.includes(ql)) return 40;
-    if (kw.includes(ql)) return 20;
-    return 0;
+    const query = normalizeSearchText(q);
+    const tokens = queryTokens(q);
+    const title = normalizeSearchText(item.title);
+    const desc = normalizeSearchText(item.desc);
+    const kw = normalizeSearchText(item.keywords);
+    const titleWords = textTokens(item.title);
+    const descWords = textTokens(item.desc);
+    const kwWords = textTokens(item.keywords);
+    let score = 0;
+
+    if (!query || !tokens.length) return 0;
+
+    if (title === query) score += 120;
+    if (tokens.length > 1) {
+      if (title.startsWith(query)) score += 90;
+      if (title.includes(query)) score += 70;
+      if (desc.includes(query)) score += 42;
+      if (kw.includes(query)) score += 24;
+    }
+
+    let matchedTokens = 0;
+    tokens.forEach((token) => {
+      const scoreForToken =
+        tokenScore(titleWords, token, 24, 18) ||
+        tokenScore(descWords, token, 10, 8) ||
+        tokenScore(kwWords, token, 6, 4);
+      if (!scoreForToken) return;
+      matchedTokens += 1;
+      score += scoreForToken;
+    });
+
+    if (matchedTokens !== tokens.length) return 0;
+    if (tokens.length > 1) score += 12 + (matchedTokens * 4);
+    if (tokens.includes("project") && !item.url.includes("writeup-")) score += 16;
+    if (tokens.includes("vlan") && item.url.endsWith("vlan-segmentation.html")) score += 10;
+
+    return score;
   }
 
   function render(q) {
@@ -447,7 +520,7 @@ function setupSearch() {
 
     results.innerHTML = items.map((item, i) => `
       <a class="search-result" href="${item.url}" role="option" data-idx="${i}" tabindex="-1">
-        <span class="search-result-icon">${item.icon}</span>
+        <span class="search-result-icon">${renderSearchIcon(item.icon)}</span>
         <span class="search-result-body">
           <span class="search-result-title">${highlight(item.title, trimmed)}</span>
           <span class="search-result-desc">${highlight(item.desc, trimmed)}</span>
@@ -457,9 +530,13 @@ function setupSearch() {
 
   function setActive(idx) {
     const items = results.querySelectorAll(".search-result");
-    items.forEach(el => el.classList.remove("is-active"));
+    items.forEach((el) => {
+      el.classList.remove("is-active");
+      el.removeAttribute("aria-selected");
+    });
     if (idx >= 0 && idx < items.length) {
       items[idx].classList.add("is-active");
+      items[idx].setAttribute("aria-selected", "true");
       items[idx].scrollIntoView({ block: "nearest" });
     }
     activeIdx = idx;

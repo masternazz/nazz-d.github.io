@@ -276,7 +276,7 @@ p { color: var(--muted); line-height: 1.72; }
   color: inherit;
 }
 
-.search-result:hover, .search-result.is-selected { background: rgba(var(--accent-rgb), 0.1); }
+.search-result:hover, .search-result.is-active, .search-result.is-selected { background: rgba(var(--accent-rgb), 0.1); }
 
 .search-result-icon {
   width: 32px; height: 32px; display: grid; place-items: center;
@@ -285,8 +285,20 @@ p { color: var(--muted); line-height: 1.72; }
   color: var(--accent); font-size: 0.95rem;
 }
 
-.search-result-title { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 1px; }
-.search-result-desc { font-size: 0.78rem; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-result-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.search-result-body { display: block; min-width: 0; }
+
+.search-result-title { display: block; font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 1px; }
+.search-result-desc { display: block; font-size: 0.78rem; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .search-result-desc mark { background: none; color: var(--accent); font-weight: 700; }
 
 .search-footer {
