@@ -115,7 +115,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Public Ingress</span>
         <h2>DMZ-Only Internet Exposure</h2>
-        <p>All public-facing services reach the internet exclusively through Cloudflare Tunnel in VLAN 7. No management ports, no Proxmox UI, no direct SSH — none of it is reachable from the WAN. The only path from the internet into the lab is cloudflared → NPMplus → approved backend IP.</p>
+        <p>Web-facing services use Cloudflare Tunnel and NPMplus in VLAN 7 where possible. Game servers, mail flow, VPN/relay traffic, and remote-support services use documented operational WAN forwards. Management ports, Proxmox UI, and direct SSH stay off the public WAN.</p>
       </article>
     </section>
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -98,7 +98,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Public Ingress</span>
         <h2>Cloudflare Tunnel in DMZ</h2>
-        <p>The Cloudflare Tunnel connector LXC lives in VLAN 7 (DMZ), separated from the LAN. Public requests hit Cloudflare's edge, traverse the tunnel to the DMZ host, then reach internal services through the reverse proxy — no direct WAN port forwards needed.</p>
+        <p>The Cloudflare Tunnel connector LXC lives in VLAN 7 (DMZ), separated from the LAN. Public web requests hit Cloudflare's edge, traverse the tunnel to the DMZ host, then reach internal services through the reverse proxy. Non-web services such as games, mail, and relays use separate documented operational WAN forwards.</p>
       </article>
 
       <article class="detail-card glass-panel">

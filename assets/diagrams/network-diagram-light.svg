@@ -53,7 +53,7 @@
   <text x="136" y="179" fill="#102033" font-size="13" font-weight="700">OPNsense Firewall / Router</text>
   <text x="136" y="196" fill="#38506d" font-size="10">Edge firewall · WAN uplink · LAN segment · Public DMZ (VLAN 50) · explicit firewall rules</text>
   <text x="136" y="212" fill="#38506d" font-size="10">AdGuard DNS · Suricata IDS/IPS (WAN netmap) · ACME Wildcard SSL · NAT</text>
-  <text x="136" y="224" fill="#7890aa" font-size="9">Encrypted management access only · deny-by-default · no raw ports exposed to internet</text>
+  <text x="136" y="224" fill="#7890aa" font-size="9">Encrypted management access only · deny-by-default · no raw management ports on internet</text>
 
   <!-- OPNsense → DMZ (right arrow) -->
   <line x1="780" y1="189" x2="858" y2="189" stroke="#c2410c" stroke-width="1.5" opacity="0.7" marker-end="url(#arrOrange)"/>
@@ -245,6 +245,6 @@
   <text x="40" y="862" fill="#38506d" font-size="9">ACME wildcard SSL (*.masternazz.com) via Cloudflare DNS-01 · Deny-by-default firewall · No raw management ports on internet</text>
 
   <text x="40" y="888" fill="#58708a" font-size="9" font-weight="700" letter-spacing="1">ACCESS PATHS</text>
-  <text x="40" y="906" fill="#38506d" font-size="9">Admin access → Headscale mesh VPN (WireGuard) — encrypted, zero exposed ports · Public services → Cloudflare Tunnel (VLAN 50 DMZ) → NPMplus reverse proxy</text>
+  <text x="40" y="906" fill="#38506d" font-size="9">Admin access → Headscale mesh VPN (WireGuard) — no exposed admin ports · Public services → Cloudflare Tunnel/NPMplus plus documented operational forwards</text>
   <text x="40" y="922" fill="#7890aa" font-size="9">Proxmox Backup Server (PBS) · Synology NAS backup target · 3-2-1 backup strategy for all VMs and LXC containers</text>
 </svg>

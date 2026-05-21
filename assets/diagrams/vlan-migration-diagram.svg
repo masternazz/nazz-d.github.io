@@ -66,7 +66,7 @@
   <text x="735" y="200" fill="#5ba89f" font-size="9">cloudflared LXC 116 .50 (outbound only)</text>
   <text x="735" y="214" fill="#5ba89f" font-size="9">NPMplus LXC 123 .51 (TLS termination)</text>
   <text x="735" y="228" fill="#5ba89f" font-size="9">cloudflared → NPMplus → approved backends</text>
-  <text x="735" y="244" fill="#0d9488" font-size="8" font-style="italic">Tunnel-only ingress · no inbound WAN ports</text>
+  <text x="735" y="244" fill="#0d9488" font-size="8" font-style="italic">Tunneled web ingress · operational ports documented</text>
 
   <!-- ── VLAN 6 — Internal Services ── -->
   <rect x="60" y="290" width="310" height="130" rx="7" fill="url(#vmcard)" stroke="#8b5cf6" stroke-width="1.5"/>

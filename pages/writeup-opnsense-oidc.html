@@ -174,7 +174,7 @@ content = content.replace(
 # OIDC provider URL
 content = content.replace(
     "http://[authentik-vlan6-ip]:9000/application/o/opnsense-oidc/",
-    "http://authentik-svc.masternazz.com:9000/application/o/opnsense-oidc/"
+    "https://auth.masternazz.com/application/o/opnsense-oidc/.well-known/openid-configuration"
 )
 # SFTP backup URL
 content = content.replace(

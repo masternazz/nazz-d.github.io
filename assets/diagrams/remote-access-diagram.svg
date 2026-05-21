@@ -33,7 +33,7 @@
 
   <!-- Title -->
   <text x="450" y="30" text-anchor="middle" fill="#c084fc" font-size="15" font-weight="700" letter-spacing="2">Zero-Trust Remote Access Architecture</text>
-  <text x="450" y="48" text-anchor="middle" fill="#4b4266" font-size="10" letter-spacing="1">masternazz.com homelab · no WAN ports exposed</text>
+  <text x="450" y="48" text-anchor="middle" fill="#4b4266" font-size="10" letter-spacing="1">masternazz.com homelab · operational ports documented</text>
 
   <!-- Left side header -->
   <rect x="40" y="58" width="370" height="28" rx="6" fill="#0d9488" opacity="0.15"/>
@@ -86,7 +86,7 @@
   <!-- LEFT: Bottom label -->
   <rect x="72" y="420" width="306" height="36" rx="6" fill="#110d22" stroke="#0d9488" stroke-width="0.8" opacity="0.8"/>
   <text x="225" y="436" text-anchor="middle" fill="#0d9488" font-size="10" font-weight="600">Encrypted WireGuard mesh</text>
-  <text x="225" y="450" text-anchor="middle" fill="#4b4266" font-size="9">Zero exposed ports · P2P encrypted tunnels</text>
+  <text x="225" y="450" text-anchor="middle" fill="#4b4266" font-size="9">No exposed admin ports · P2P encrypted tunnels</text>
 
   <!-- RIGHT: Public Internet -->
   <rect x="522" y="100" width="306" height="56" rx="8" fill="url(#card)" stroke="#d97706" stroke-width="1.8"/>
@@ -125,8 +125,8 @@
 
   <!-- RIGHT: Bottom label -->
   <rect x="522" y="420" width="306" height="36" rx="6" fill="#110d22" stroke="#d97706" stroke-width="0.8" opacity="0.8"/>
-  <text x="675" y="436" text-anchor="middle" fill="#d97706" font-size="10" font-weight="600">No WAN port forwards</text>
-  <text x="675" y="450" text-anchor="middle" fill="#4b4266" font-size="9">Tunnel-only ingress · LAN fully isolated</text>
+  <text x="675" y="436" text-anchor="middle" fill="#d97706" font-size="10" font-weight="600">No management WAN forwards</text>
+  <text x="675" y="450" text-anchor="middle" fill="#4b4266" font-size="9">Tunneled web ingress · LAN isolated</text>
 
   <!-- Bottom callout spanning full width -->
   <rect x="80" y="476" width="740" height="46" rx="8" fill="#110d22" stroke="#9333ea" stroke-width="1" opacity="0.9"/>

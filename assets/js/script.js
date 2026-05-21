@@ -223,7 +223,7 @@ const INDEX = [
     "url": "pages/remote-access.html",
     "icon": "🔐",
     "desc": "Secure remote access project using Headscale, Cloudflare Tunnel, DMZ isolation, NPMplus, and wildcard TLS.",
-    "keywords": "remote access headscale wireguard vpn mesh cloudflare tunnel zero trust dmz vlan public ingress headplane tailscale-compatible no open ports admin access"
+    "keywords": "remote access headscale wireguard vpn mesh cloudflare tunnel zero trust dmz vlan public ingress headplane tailscale-compatible no management ports admin access operational forwards"
   },
   {
     "title": "Nazeem Massoom Dickey — Resume (ATS)",

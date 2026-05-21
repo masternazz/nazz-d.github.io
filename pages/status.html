@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -190,7 +190,7 @@
           <li>Socket.io API automation for bulk service provisioning</li>
           <li>SQLite schema navigation and direct database management</li>
           <li>Reverse proxy configuration with TLS termination</li>
-          <li>Secure public exposure via Cloudflare Tunnel (zero open inbound ports)</li>
+          <li>Secure public exposure via Cloudflare Tunnel while management ports stay off WAN</li>
           <li>Operational security — sanitizing public-facing data to avoid info leakage</li>
         </ul>
       </div>
@@ -212,7 +212,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Security</span>
         <h2>Public Without Exposure</h2>
-        <p>The status page is publicly reachable at status.masternazz.com but reveals nothing about the internal network. Service names are generic ("Media Streaming", "Authentication"), no internal IPs or hostnames appear, and the page is served through Cloudflare Tunnel — meaning there are zero open inbound ports on the firewall. The monitoring backend itself is only accessible from inside the LAN.</p>
+        <p>The status page is publicly reachable at status.masternazz.com but reveals nothing about the internal network. Service names are generic ("Media Streaming", "Authentication"), no internal IPs or hostnames appear, and this status path is served through Cloudflare Tunnel. Other operational services may use documented WAN forwards, but the monitoring backend itself is only accessible from inside the LAN.</p>
       </article>
     </section>
 
@@ -231,7 +231,7 @@
           <tbody>
             <tr><td>Monitor</td><td>Uptime Kuma 2.x</td><td>HTTP &amp; ping checks every 60s, SQLite storage</td></tr>
             <tr><td>Reverse Proxy</td><td>NPMplus</td><td>TLS termination, routes status.masternazz.com → Kuma LXC</td></tr>
-            <tr><td>Public Ingress</td><td>Cloudflare Tunnel</td><td>Exposes NPMplus externally with no open firewall ports</td></tr>
+            <tr><td>Public Ingress</td><td>Cloudflare Tunnel</td><td>Publishes the status path without exposing management ports</td></tr>
             <tr><td>DNS</td><td>AdGuard Home + Cloudflare</td><td>Internal rewrites for LAN, public DNS via Cloudflare</td></tr>
             <tr><td>Compute</td><td>Proxmox LXC</td><td>Lightweight container hosting the Node.js app</td></tr>
           </tbody>
