@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enterprise VLAN Segmentation Migration | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Technical writeup on migrating from a flat 192.168.1.0/24 network to 10 VLANs, restoring Proxmox quorum, and moving 30+ services.">
+  <meta name="description" content="Technical writeup on migrating from a flat single-subnet network to 10 VLANs, restoring Proxmox quorum, and moving 30+ services.">
   <link rel="canonical" href="https://masternazz.com/pages/writeup-vlan-migration.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Enterprise VLAN Segmentation Migration | Nazeem Massoom Dickey">
-  <meta property="og:description" content="From a flat 192.168.1.0/24 homelab to 10 production VLANs with firewall enforcement — switch hardware swap, Proxmox quorum recovery, DNS/NAT cutover, and 30+ services migrated.">
+  <meta property="og:description" content="From a flat single-subnet homelab to 10 production VLANs with firewall enforcement — switch hardware swap, Proxmox quorum recovery, DNS/NAT cutover, and 30+ services migrated.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-vlan-migration.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/vlan-migration-diagram.svg">
   <meta name="twitter:card" content="summary_large_image">
@@ -51,9 +51,9 @@
       <p class="eyebrow">Writeup | Networking &amp; Infrastructure</p>
       <h1>Enterprise VLAN Segmentation Migration</h1>
       <p class="lead">
-        Taking a flat homelab network from every device on a single 192.168.1.0/24 broadcast domain
+        Taking a flat homelab network from every device on a single broadcast domain
         to a fully segmented 10-VLAN production design — with a hardware swap mid-migration that broke
-        25+ services, a Proxmox cluster quorum failure, and 30+ services needing IP and config updates
+        25+ services, a Proxmox cluster quorum failure, and 30+ services needing network and config updates
         before anything came back online.
       </p>
       <div class="chip-row">
@@ -73,16 +73,16 @@
       <div class="card star-callout">
         <h3>STAR Breakdown</h3>
         <ul class="list-clean">
-          <li><strong>Situation:</strong> The entire homelab ran on a flat <code>192.168.1.0/24</code> network — Proxmox nodes, game servers, SIEM, storage, IoT devices, and DMZ services all on the same broadcast domain with no traffic isolation. A hardware swap from legacy Cisco 3750V2 switches to a Cisco SG300-20 + Netgear GS728TP immediately took down 25+ services and left the Proxmox cluster without quorum.</li>
-          <li><strong>Task:</strong> Design a production VLAN architecture, restore connectivity after the switch swap, migrate every service to its correct VLAN and IP, enforce per-VLAN firewall rules in OPNsense, and update all DNS, NAT, NPMplus, and application configs to point to the new IPs.</li>
-          <li><strong>Action:</strong> Designed a 10-VLAN segmentation scheme, restored Proxmox corosync quorum via SG300 trunk configuration, migrated 30+ services with IP reservations, rewrote 25 DNS host overrides, updated 7 NAT port-forward rules, reconfigured 18 NPMplus proxy backends, migrated storage to VLAN 20, and deployed 80+ explicit OPNsense firewall rules.</li>
+          <li><strong>Situation:</strong> The entire homelab ran on a flat network — Proxmox nodes, game servers, SIEM, storage, IoT devices, and DMZ services all on the same broadcast domain with no traffic isolation. A hardware swap from legacy Cisco 3750V2 switches to a Cisco SG300-20 + Netgear GS728TP immediately took down 25+ services and left the Proxmox cluster without quorum.</li>
+          <li><strong>Task:</strong> Design a production VLAN architecture, restore connectivity after the switch swap, migrate every service to its correct VLAN and addressing plan, enforce per-VLAN firewall rules in OPNsense, and update DNS, NAT, NPMplus, and application configs to point to the new locations.</li>
+          <li><strong>Action:</strong> Designed a 10-VLAN segmentation scheme, restored Proxmox corosync quorum via SG300 trunk configuration, migrated 30+ services with DHCP reservations, rewrote DNS host overrides, updated NAT policy, reconfigured NPMplus proxy backends, migrated storage to a dedicated storage VLAN, and deployed explicit OPNsense firewall rules.</li>
           <li><strong>Result:</strong> Fully segmented production network — 10 active VLANs, Proxmox cluster healthy (3/3 quorum), all services reachable, firewall default-deny enforced, and zero unnecessary cross-VLAN exposure.</li>
         </ul>
       </div>
 
       <h2>Where It Started</h2>
       <p>
-        When the homelab was first built, everything lived on <code>192.168.1.0/24</code>. That's fine
+        When the homelab was first built, everything lived on one flat private subnet. That's fine
         when you're getting started — one switch, one subnet, one gateway. But at some point the lab had
         grown to 22 VMs and LXC containers plus physical switches, NAS units, APs, and OOB management
         cards all on the same network. A guest device on the WiFi could technically reach the Proxmox
@@ -92,10 +92,10 @@
       </p>
       <p>
         The plan: redesign the network around 10 VLANs, each with a purpose, each enforced at the
-        OPNsense firewall with explicit rules. The addressing scheme would follow
-        <code>10.226.X.0/24</code> where X is the VLAN ID, with <code>.1</code> as the gateway,
-        <code>.2–.49</code> static infrastructure, <code>.50–.99</code> reserved static for services,
-        and <code>.100–.200</code> DHCP pool.
+        OPNsense firewall with explicit rules. The addressing scheme uses a consistent private
+        pattern for gateways, static infrastructure, service reservations, DHCP clients, and spare
+        capacity. The exact subnet values stay private, but the operational goal was predictable
+        addressing with clear firewall boundaries.
       </p>
 
       <hr class="section-divider">
@@ -106,19 +106,19 @@
       </p>
 
       <div class="diagram-container">
-        <img src="../assets/diagrams/vlan-migration-diagram.svg" alt="VLAN segmentation diagram" class="diagram-img" loading="lazy">
+        <img src="../assets/diagrams/vlan-migration-diagram.svg" alt="Public-safe VLAN migration diagram" class="diagram-img" loading="lazy">
       </div>
 
       <p>The key security decisions built into the design:</p>
       <ul>
         <li><strong>VLAN 2 (Game Servers)</strong> — internet yes, internal blocked. Pelican Panel needed to reach Pelican Wings on the same VLAN, but nothing in VLAN 2 should reach storage, SIEM, or Proxmox.</li>
-        <li><strong>VLAN 3 (Servers)</strong> — Wazuh receives syslog and agent traffic from all other VLANs. Every VLAN has rules allowing outbound to the Wazuh manager IP on ports 1514/1515/514. VLAN 3 itself can't reach other VLANs beyond what's needed.</li>
+        <li><strong>VLAN 3 (Servers)</strong> — Wazuh receives syslog and agent traffic from all other VLANs. Every VLAN has scoped rules allowing outbound monitoring traffic to Wazuh. VLAN 3 itself can't reach other VLANs beyond what's needed.</li>
         <li><strong>VLAN 4 (Testing)</strong> — fully isolated sandbox. Lab VMs and Kali instances get internet access but are hard-blocked from all production VLANs.</li>
         <li><strong>VLAN 5 (IoT)</strong> — internet only, RFC1918 blocked. Smart home devices and cameras cannot reach any infrastructure VLAN under any circumstance.</li>
         <li><strong>VLAN 6 (Services)</strong> — internal services gated by Authentik SSO. Jellyfin, Headscale, and AI inference run here. NPMplus in VLAN 7 is the only external entry point.</li>
         <li><strong>VLAN 7 (DMZ)</strong> — cloudflared and NPMplus only. cloudflared talks to NPMplus. NPMplus only reaches approved backend IPs and ports. Nothing in the DMZ can initiate to management.</li>
         <li><strong>VLAN 8 (Guest)</strong> — internet only, hard block on all RFC1918 destinations, captive portal via OPNsense.</li>
-        <li><strong>VLAN 9 (OOB Mgmt)</strong> — IPMI, iDRAC, and IMM2 cards. Reachable from VLAN 10 only. No internet access, no lateral movement possible.</li>
+        <li><strong>VLAN 9 (Network Services)</strong> — Tailscale subnet router and Scanopy network scanner. Tailscale provides remote admin access to all VLANs; Scanopy is scoped to VLAN 10 access only so broad discovery isn't open to all VLAN 9 traffic.</li>
         <li><strong>VLAN 10 (Management)</strong> — admin PC, OPNsense, Proxmox nodes, switches. The only VLAN allowed to initiate connections to everything else. No service VLANs can reach VLAN 10 unless explicitly allowed.</li>
         <li><strong>VLAN 20 (Storage)</strong> — no internet initiation. VLAN 10 and Proxmox nodes reach storage ports; storage devices get DNS and NTP but can't initiate back into the lab.</li>
       </ul>
@@ -132,53 +132,52 @@
         access switch, both gigabit. The physical swap was quick. The aftermath wasn't.
       </p>
       <p>
-        The new switches came up with default configs. VLAN 50 (the legacy cloudflared DMZ) wasn't
-        trunked anywhere. The Proxmox nodes were plugged into the SG300 but VLAN 10 wasn't configured
+        The new switches came up with default configs. The legacy cloudflared DMZ VLAN wasn't
+        trunked anywhere. The Proxmox nodes were plugged into the SG300 but the management VLAN wasn't configured
         on those ports yet. Every service that depended on the network came down immediately.
       </p>
 
       <h3>Restoring cloudflared first</h3>
       <p>
-        The first priority was getting public ingress back. cloudflared was on VLAN 50 at
-        <code>192.168.50.2</code> — but VLAN 50 wasn't tagged on any SG300 port. Fix: add VLAN 50
-        to the SG300 VLAN database, tag it on <code>gi19</code> (OPNsense) and <code>gi1</code>
-        (Proxmox), confirm the LXC gets its DHCP lease, and verify the Cloudflare tunnel registers:
+        The first priority was getting public ingress back. cloudflared was on the legacy DMZ
+        VLAN, but that VLAN wasn't tagged on the required SG300 ports. Fix: add the DMZ VLAN
+        to the SG300 VLAN database, tag it on the OPNsense and Proxmox-facing trunks,
+        confirm the LXC gets its DHCP lease, and verify the Cloudflare tunnel registers:
       </p>
-      <pre><code>! Cisco SG300 — restore VLAN 50 path for cloudflared
+      <pre><code>! Cisco SG300 — restore legacy DMZ path for cloudflared
 vlan database
- vlan 50
+ vlan [legacy-dmz-vlan]
  exit
-interface gi1
- switchport trunk allowed vlan add 50
-interface gi19
- switchport trunk allowed vlan add 50
+interface [proxmox-facing-trunk]
+ switchport trunk allowed vlan add [legacy-dmz-vlan]
+interface [opnsense-facing-trunk]
+ switchport trunk allowed vlan add [legacy-dmz-vlan]
 copy running-config startup-config</code></pre>
       <p>
-        After applying: cloudflared at <code>192.168.50.2</code> could ping OPNsense at
-        <code>192.168.50.1</code>, the Cloudflare tunnel registered, and public services
+        After applying: cloudflared could reach its DMZ gateway, the Cloudflare tunnel registered, and public services
         came back online.
       </p>
 
       <h3>Proxmox quorum failure</h3>
       <p>
-        The bigger problem: Proxmox corosync had already been configured to use the VLAN 10 addresses
-        (static IPs in VLAN 10 for the three Proxmox nodes) but VLAN 10 wasn't tagged
-        on the SG300 ports facing nodes 2 and 3 — only gi1 (node 1) had it. Corosync
-        uses multicast on a shared VLAN to maintain quorum. Without VLAN 10 reachability, the cluster
+        The bigger problem: Proxmox corosync had already been configured to use the management VLAN addresses
+        (static management addresses for the three Proxmox nodes) but the management VLAN wasn't tagged
+        on the SG300 ports facing nodes 2 and 3 — only one node trunk had it. Corosync
+        uses multicast on a shared VLAN to maintain quorum. Without management VLAN reachability, the cluster
         showed 1/3 nodes and all cluster operations were blocked.
       </p>
       <p>
         The fix required identifying exactly which physical switch ports connected to each Proxmox node
-        using CDP/LLDP, then adding VLAN 10 tagged to those ports:
+        using CDP/LLDP, then adding the management VLAN tag to those ports:
       </p>
       <pre><code>! Confirm ports via LLDP
 show lldp neighbors detail
 
-! gi1 = pve-node-1, gi2 = pve-node-2, gi3 = pve-node-3
-interface range gi1-3
- switchport trunk allowed vlan add 10
-interface gi19
- switchport trunk allowed vlan add 10
+! Public-safe labels: Proxmox trunks and OPNsense trunk
+interface range [proxmox-node-trunks]
+ switchport trunk allowed vlan add [management-vlan]
+interface [opnsense-facing-trunk]
+ switchport trunk allowed vlan add [management-vlan]
 copy running-config startup-config
 
 ! Verify quorum restored
@@ -193,10 +192,10 @@ pvecm status
 
       <h2>Phase 2 — VLAN Cutover: 30+ Services</h2>
       <p>
-        With the cluster healthy and public services restored on the legacy IPs, the actual VLAN
-        migration could begin. Every service needed to move from its <code>192.168.1.x</code> address
-        to its new <code>10.226.X.Y</code> address. This wasn't just changing IPs — every dependency
-        had to be updated at the same time or services would break the moment the IP changed.
+        With the cluster healthy and public services restored on the legacy addresses, the actual VLAN
+        migration could begin. Every service needed to move from its old flat-network address
+        to its new role-based VLAN address. This wasn't just changing addresses — every dependency
+        had to be updated at the same time or services would break the moment the network location changed.
       </p>
 
       <h3>The dependency chain</h3>
@@ -204,11 +203,11 @@ pvecm status
         For each service the update chain was:
       </p>
       <ol>
-        <li>Set DHCP reservation in OPNsense with the new VLAN IP</li>
+        <li>Set DHCP reservation in OPNsense with the new VLAN address</li>
         <li>Update the LXC/VM network config in Proxmox (VLAN tag on the bridge interface)</li>
-        <li>Reboot or reconfigure the container to pick up the new IP</li>
-        <li>Update OPNsense Unbound DNS host override to point the subdomain to the new IP</li>
-        <li>Update NPMplus proxy host backend to the new IP</li>
+        <li>Reboot or reconfigure the container to pick up the new address</li>
+        <li>Update OPNsense Unbound DNS host override to point the subdomain to the new service location</li>
+        <li>Update NPMplus proxy host backend to the new service location</li>
         <li>Update any service-to-service configs (Authentik URLs, Jellyfin NFS mounts, etc.)</li>
         <li>Verify via firewall logs that the rule allowing that traffic existed</li>
       </ol>
@@ -217,50 +216,50 @@ pvecm status
         and been error-prone. Instead, the DNS overrides and NPMplus backends were updated in bulk
         via the OPNsense API:
       </p>
-      <pre><code># Update all 25 Unbound DNS host overrides via OPNsense API
-# Each subdomain (auth, jellyfin, status, opnsense, etc.) gets its new IP
+      <pre><code># Update Unbound DNS host overrides via OPNsense API
+# Each service subdomain gets a sanitized private target
 
 curl -sk -u "$KEY:$SECRET" -X POST \
   https://[opnsense-mgmt-ip]/api/unbound/settings/addHostOverride \
   -H "Content-Type: application/json" \
   -d '{"host":{"enabled":"1","hostname":"auth","domain":"masternazz.com",
-       "rr":"A","server":"[service-ip]","description":"Authentik SSO"}}'
+       "rr":"A","server":"[sanitized-service-target]","description":"Authentik SSO"}}'
 
-# Repeat for all 25 subdomains, then apply:
+# Repeat for approved service subdomains, then apply:
 curl -sk -u "$KEY:$SECRET" -X POST \
   https://[opnsense-mgmt-ip]/api/unbound/service/reconfigure</code></pre>
 
       <h3>Services that needed special handling</h3>
       <p>
-        Most LXC containers were straightforward — change VLAN tag, reboot, pick up new IP, update
+        Most LXC containers were straightforward — change VLAN tag, reboot, pick up the new address, update
         DNS. A few required more work:
       </p>
       <p>
-        <strong>Authentik (VLAN 6, .50):</strong> OPNsense had Authentik configured as both an LDAP
-        auth server and an OIDC provider. Both configs had hardcoded IPs. Updated via the
+        <strong>Authentik:</strong> OPNsense had Authentik configured as both an LDAP
+        auth server and an OIDC provider. Both configs had hardcoded service addresses. Updated via the
         <code>diag_backup.php</code> config restore mechanism (since direct writes to
         <code>/conf/config.xml</code> require root access that the API account doesn't have).
       </p>
       <p>
-        <strong>Jellyfin media stack (VLAN 6, .55):</strong> The NFS mount from Synology was still
-        pointed at the old VLAN 1 IP. After Synology moved to VLAN 20, the NFS export had to be
+        <strong>Jellyfin media stack:</strong> The NFS mount from Synology was still
+        pointed at the old flat-network address. After Synology moved to the storage VLAN, the NFS export had to be
         re-added, and the Proxmox storage definition updated. The Docker bind mounts inside the LXC
         then picked up the correct path.
       </p>
       <p>
-        <strong>Proxmox Backup Server (VLAN 20, .10):</strong> The Thecus NAS running
-        PBS needed its network interface reconfigured from <code>192.168.1.xxx/24</code> to
-        a static IP on <code>10.226.20.0/24</code>, the SG300 port set to access VLAN 20,
-        and the PBS storage target in Proxmox updated to the new IP.
+        <strong>Proxmox Backup Server:</strong> The Thecus NAS running
+        PBS needed its network interface reconfigured from the legacy flat subnet to
+        a static address on the storage VLAN, the SG300 port set to the storage access VLAN,
+        and the PBS storage target in Proxmox updated to the new private address.
       </p>
       <p>
-        <strong>Wazuh SIEM (VLAN 3, .50):</strong> Every other VLAN needed firewall rules allowing
-        outbound to Wazuh's IP on ports 1514 (agent), 1515 (registration), and 514 (syslog). These
+        <strong>Wazuh SIEM:</strong> Every other VLAN needed firewall rules allowing
+        outbound to Wazuh for agent registration and log forwarding. These
         rules were added per-interface so each VLAN could reach Wazuh without having general
         inter-VLAN access.
       </p>
       <p>
-        <strong>Windows Server 2025 (VLAN 3, .120):</strong> Moved to VLAN 3 and the Wazuh agent
+        <strong>Windows Server 2025:</strong> Moved to the server VLAN and the Wazuh agent
         was installed via WinRM to start forwarding Windows event logs into the SIEM.
       </p>
 
@@ -273,29 +272,29 @@ curl -sk -u "$KEY:$SECRET" -X POST \
       </p>
       <ul>
         <li>Allow DNS to the OPNsense gateway (AdGuard Home on the management interface)</li>
-        <li>Allow Wazuh agent/syslog traffic to the Wazuh manager IP in VLAN 3</li>
+        <li>Allow Wazuh agent/syslog traffic to the Wazuh manager</li>
         <li>Allow outbound internet where appropriate</li>
         <li>Block RFC1918 destinations for untrusted VLANs (game, guest, IoT, testing)</li>
         <li>Explicit allow rules for specific service-to-service paths</li>
       </ul>
       <p>
-        The most important rules are the inter-VLAN paths for DMZ egress. NPMplus in VLAN 7 needs
-        to reach backends in VLAN 6, VLAN 2, and VLAN 10:
+        The most important rules are the inter-VLAN paths for DMZ egress. NPMplus in the DMZ needs
+        to reach only the approved backend groups:
       </p>
-      <pre><code>! OPNsense firewall rules — VLAN 7 DMZ egress
-# NPMplus -> VLAN 6 internal services (all backends)
-pass  interface=VLAN7  src=[npmplus-ip]  dst=10.226.6.0/24   [NPMplus -> VLAN6]
+      <pre><code>! Public-safe OPNsense firewall rule model — DMZ egress
+# NPMplus -> approved internal-service backends only
+allow  src=[reverse-proxy-host]  dst=[approved-service-backends]
 
-# NPMplus -> VLAN 2 game server backends
-pass  interface=VLAN7  src=[npmplus-ip]  dst=10.226.2.0/24   [NPMplus -> VLAN2]
+# NPMplus -> approved game-server backends only
+allow  src=[reverse-proxy-host]  dst=[approved-game-backends]
 
-# NPMplus -> VLAN 10 management backends (Proxmox, OPNsense)
-pass  interface=VLAN7  src=[npmplus-ip]  dst=10.226.10.0/24  [NPMplus -> VLAN10]
+# NPMplus -> approved management web backends only
+allow  src=[reverse-proxy-host]  dst=[approved-management-web-backends]
 
 # cloudflared can ONLY talk to NPMplus — nothing else in DMZ
-pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> NPMplus]</code></pre>
+allow  src=[tunnel-host]  dst=[reverse-proxy-host]</code></pre>
       <p>
-        The VLAN 7 implicit deny catches anything NPMplus tries to reach that wasn't explicitly
+        The DMZ implicit deny catches anything NPMplus tries to reach that wasn't explicitly
         whitelisted. If a new backend service is added, it needs a matching firewall rule before
         NPMplus can proxy to it.
       </p>
@@ -306,28 +305,28 @@ pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> N
 
       <h3>Proxmox routing conflict</h3>
       <p>
-        After VLAN 10 was configured, some connections to legacy <code>192.168.1.x</code> devices
+        After the management VLAN was configured, some connections to legacy flat-network devices
         (Cisco switch, AP) started failing from Proxmox. Root cause: a stale manual IP in the
-        <code>192.168.1.0/24</code> range had been added to <code>vmbr0.10</code> (the VLAN 10 bridge
+        legacy flat-network range had been added to the management VLAN bridge
         interface) during earlier testing. This caused Proxmox to route all traffic destined for
-        <code>192.168.1.0/24</code> out the VLAN 10 interface instead of the native bridge,
+        legacy management devices out the management VLAN interface instead of the native bridge,
         where the physical legacy devices actually were.
-        Fix: remove the stale address from the VLAN 10 interface.
+        Fix: remove the stale address from the management VLAN interface.
       </p>
 
       <h3>Synology NAS — didn't survive port move</h3>
       <p>
-        Moving the Synology NAS switch port from VLAN 1 to VLAN 20 required the DSM network
-        settings to already be configured with the target VLAN 20 IP <em>before</em> the port
+        Moving the Synology NAS switch port from the legacy network to the storage VLAN required the DSM network
+        settings to already be configured with the target storage VLAN address <em>before</em> the port
         move — otherwise the NAS goes silent the moment the port VLAN changes. The lesson: update
-        the device IP first (while still reachable on VLAN 1), then move the switch port. The
-        Synology migration required logging into DSM while still on VLAN 1, configuring the static
-        IP for VLAN 20, and only then moving the SG300 port.
+        the device address first (while still reachable on the legacy network), then move the switch port. The
+        Synology migration required logging into DSM while still on the legacy network, configuring the static
+        address for the storage VLAN, and only then moving the SG300 port.
       </p>
 
       <h3>NPMplus backend updates</h3>
       <p>
-        NPMplus stores proxy host configs as nginx conf files on disk. When every service IP
+        NPMplus stores proxy host configs as nginx conf files on disk. When every service address
         changed, all 18+ proxy host backends needed updating. Rather than editing each one through
         the NPMplus UI, the nginx configs were patched via sed and nginx reloaded — but NPMplus
         regenerates configs on changes, so the correct approach was updating through the NPMplus
@@ -338,8 +337,8 @@ pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> N
       <p>
         Even after most services migrated, VLAN 1 stayed live because of out-of-band management
         hardware — the IBM M4 IMM2 (IPMI/remote console for firstmoon) was still on
-        <code>192.168.1.x</code> and needed physical access to reconfigure. Legacy VLAN 1 remains
-        as a migration zone until OOB cards are moved to VLAN 10.
+        the legacy flat network and needed physical access to reconfigure. Legacy VLAN 1 remains
+        as a migration zone until OOB cards are moved to the management VLAN.
       </p>
 
       <hr class="section-divider">
@@ -350,15 +349,15 @@ pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> N
         The final production state:
       </p>
       <ul>
-        <li>10 active VLANs, each on its own <code>10.226.X.0/24</code> subnet</li>
-        <li>Proxmox 3-node cluster healthy — 3/3 quorum on VLAN 10</li>
-        <li>All 22 VMs and LXCs assigned to their correct VLANs with production IPs</li>
-        <li>25 DNS host overrides updated — all <code>*.masternazz.com</code> subdomains resolve to correct VLAN IPs</li>
-        <li>7 NAT port-forward rules updated (MC server ports, Headscale STUN, TeamSpeak voice)</li>
-        <li>18 NPMplus proxy backends updated to new IPs</li>
-        <li>80+ OPNsense firewall rules — default-deny, explicit allows per path</li>
+        <li>10 active VLANs, each on its own private role-based subnet</li>
+        <li>Proxmox 3-node cluster healthy — 3/3 quorum on the management VLAN</li>
+        <li>All 22 VMs and LXCs assigned to their correct VLANs with production addresses</li>
+        <li>DNS host overrides updated — all <code>*.masternazz.com</code> subdomains resolve to correct private targets</li>
+        <li>NAT and remote-service policy updated where required</li>
+        <li>NPMplus proxy backends updated to new private targets</li>
+        <li>OPNsense firewall rules — default-deny, explicit allows per path</li>
         <li>Wazuh receiving logs from every VLAN via per-VLAN agent rules</li>
-        <li>Storage fully on VLAN 20 — Synology, QNAP, Thecus/PBS all isolated</li>
+        <li>Storage fully isolated in a dedicated storage VLAN — Synology, QNAP, Thecus/PBS all isolated</li>
         <li>Switching at 1 Gbps — SG300-20 core, Netgear GS728TP PoE access</li>
       </ul>
 
@@ -367,9 +366,9 @@ pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> N
       <h2>Key Takeaways</h2>
       <p>
         <strong>Map dependencies before cutting over.</strong> Every service has at least 3–5 things
-        that need updating when its IP changes: DHCP reservation, DNS, reverse proxy backend, any
-        application configs that reference it by IP, and firewall rules. Missing one keeps the service
-        broken even after the IP is right.
+        that need updating when its network location changes: DHCP reservation, DNS, reverse proxy backend, any
+        application configs that reference it by address, and firewall rules. Missing one keeps the service
+        broken even after the addressing is right.
       </p>
       <p>
         <strong>Bulk API updates beat the UI.</strong> Updating 25 DNS overrides and 18 proxy backends
@@ -379,14 +378,14 @@ pass  interface=VLAN7  src=[cloudflared-ip]  dst=[npmplus-ip]  [cloudflared -> N
       </p>
       <p>
         <strong>Hardware swaps during a migration are risky.</strong> Replacing the switches mid-migration
-        added a full extra phase of work — re-trunking all VLANs, recovering quorum, restoring VLAN 50 for
+        added a full extra phase of work — re-trunking all VLANs, recovering quorum, restoring the DMZ path for
         cloudflared. If the switch hardware had been swapped <em>after</em> the VLAN design was validated
         on the old hardware, the transition would have been cleaner. Order matters.
       </p>
       <p>
         <strong>Device-by-device NAS migrations.</strong> Network devices that don't have a console
-        (switches excepted) need their IP changed in software before the switch port moves. The Synology
-        NAS taught this lesson the hard way — configure the target IP in DSM first, then move the port.
+        (switches excepted) need their address changed in software before the switch port moves. The Synology
+        NAS taught this lesson the hard way — configure the target address in DSM first, then move the port.
       </p>
       <p>
         <strong>Default-deny firewall forces you to document traffic flows.</strong> Every path that needs

@@ -8,8 +8,13 @@
   <link rel="canonical" href="https://masternazz.com/pages/writeup-mailcow-email.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Self-Hosted Email on Residential Internet | Nazeem Massoom Dickey">
-  <meta property="og:description" content="ISP blocks port 25. No VPS. Built a Cloudflare Email Worker using the TCP sockets API as an SMTP bridge — email lands directly in a self-hosted mailcow inbox.">
+  <meta property="og:description" content="Residential ISP blocks standard inbound SMTP. No VPS. Built a Cloudflare Email Worker using the TCP sockets API as an SMTP bridge — email lands directly in a self-hosted mailcow inbox.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-mailcow-email.html">
+  <meta property="og:image" content="https://masternazz.com/assets/diagrams/mailcow-email-diagram.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Self-Hosted Email on Residential Internet | Nazeem Massoom Dickey">
+  <meta name="twitter:description" content="Cloudflare Email Worker SMTP bridge for self-hosted mailcow behind a residential ISP.">
+  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/mailcow-email-diagram.svg">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
@@ -46,7 +51,7 @@
       <p class="eyebrow">Writeup | Email &amp; Infrastructure</p>
       <h1>Self-Hosted Email on Residential Internet</h1>
       <p class="lead">
-        The ISP blocks port 25 inbound. The obvious workarounds either cost money or don't
+        The ISP blocks standard inbound SMTP. The obvious workarounds either cost money or don't
         deliver raw SMTP to a custom port. Ended up writing a Cloudflare Email Worker using
         the TCP sockets API as a zero-cost SMTP bridge — no VPS, no third-party relay, email
         lands directly in a self-hosted mailcow inbox.
@@ -63,28 +68,34 @@
       </div>
     </section>
 
+    <section class="section">
+      <div class="diagram-card">
+        <img src="../assets/diagrams/mailcow-email-diagram.svg" alt="Public-safe self-hosted mailcow email routing diagram" loading="lazy">
+      </div>
+    </section>
+
     <section class="section card writeup-body">
 
       <div class="card star-callout">
         <h3>STAR Breakdown</h3>
         <ul class="list-clean">
-          <li><strong>Situation:</strong> Running mailcow-dockerized on a residential ISP connection that hard-blocks port 25 inbound — standard policy across most residential providers with no exceptions. A self-hosted email stack is useless if it can't receive mail.</li>
+          <li><strong>Situation:</strong> Running mailcow-dockerized on a residential ISP connection that hard-blocks standard inbound SMTP — common policy across most residential providers with no exceptions. A self-hosted email stack is useless if it can't receive mail.</li>
           <li><strong>Task:</strong> Get inbound email delivering directly into mailcow's SOGo webmail interface for <code>admin@masternazz.com</code>, with working outbound relay — using only free infrastructure already in the stack.</li>
-          <li><strong>Action:</strong> Evaluated 8+ options including paid relays, webhook services, and Cloudflare Tunnel TCP (blocked on port 25). Landed on Cloudflare Email Workers with the <code>cloudflare:sockets</code> TCP API — wrote a Worker that receives email on Cloudflare's MX servers and opens a raw SMTP connection to home on a non-standard port. Fixed OPNsense NAT destination aliasing bug that blocked all inbound. Configured SMTP2GO for outbound relay, set up full SPF/DKIM/DMARC authentication, and resolved SOGo sending config.</li>
-          <li><strong>Result:</strong> End-to-end email working: inbound via Cloudflare Worker → mailcow:10026 → dovecot inbox, outbound via SMTP2GO with <code>dkim=pass</code>, <code>spf=pass</code>, <code>dmarc=pass</code> — zero cost beyond existing infrastructure.</li>
+          <li><strong>Action:</strong> Evaluated 8+ options including paid relays, webhook services, and Cloudflare Tunnel TCP. Landed on Cloudflare Email Workers with the <code>cloudflare:sockets</code> TCP API — wrote a Worker that receives email on Cloudflare's MX servers and opens a raw SMTP connection to home on a non-standard listener. Fixed OPNsense NAT destination aliasing bug that blocked all inbound. Configured SMTP2GO for outbound relay, set up full SPF/DKIM/DMARC authentication, and resolved SOGo sending config.</li>
+          <li><strong>Result:</strong> End-to-end email working: inbound via Cloudflare Worker → mailcow internal SMTP listener → dovecot inbox, outbound via SMTP2GO with <code>dkim=pass</code>, <code>spf=pass</code>, <code>dmarc=pass</code> — zero cost beyond existing infrastructure.</li>
         </ul>
       </div>
 
       <h2>The Constraint</h2>
       <p>
-        Residential ISPs block port 25 inbound. Not throttled — blocked. No exceptions. This is
+        Residential ISPs block standard inbound SMTP. Not throttled — blocked. No exceptions. This is
         standard practice across most residential providers to prevent residential IPs from being
         used as spam sources. For self-hosted
         email it means you can run the full stack — postfix, dovecot, rspamd, SOGo — but no external
         mail server in the world will be able to deliver to you directly.
       </p>
       <p>
-        The naive fix is rent a $4/month VPS with port 25 open and use it as a relay. That works but
+        The naive fix is rent a small VPS with standard SMTP open and use it as a relay. That works but
         introduces a dependency and recurring cost. The interesting constraint: can it be solved for
         free using infrastructure that's already running?
       </p>
@@ -98,17 +109,17 @@
       <ul>
         <li><strong>SMTP2GO inbound routing</strong> — free plan doesn't include inbound. Paid tier only.</li>
         <li><strong>Cloudflare Email Routing forward rules</strong> — can only forward to email addresses, not to a raw SMTP host:port.</li>
-        <li><strong>Cloudflare Tunnel TCP</strong> — tunnels support arbitrary TCP, but Cloudflare blocks outbound port 25 on their network to prevent abuse. The tunnel registers fine, but mail never flows.</li>
+        <li><strong>Cloudflare Tunnel TCP</strong> — tunnels support arbitrary TCP, but Cloudflare blocks standard outbound SMTP on their network to prevent abuse. The tunnel registers fine, but mail never flows.</li>
         <li><strong>Mailgun / Resend inbound</strong> — free tiers exist, but both deliver via HTTP webhook, not raw SMTP relay. Would require a separate listener to consume the webhook and re-inject into mailcow.</li>
         <li><strong>ImprovMX / Forward Email</strong> — free tiers only forward to email addresses. Custom SMTP relay is paid.</li>
         <li><strong>Dynu Email Store/Forward</strong> — $9.99/year, supports custom ports natively. Viable if free wasn't an option.</li>
         <li><strong>Hetzner VPS</strong> — ~€3.29/month. Clean and simple but recurring cost.</li>
-        <li><strong>Cloudflare Email Workers + TCP socket API</strong> — Cloudflare Workers can open outbound TCP connections to arbitrary hosts and ports using the <code>cloudflare:sockets</code> <code>connect()</code> API. Port 25 outbound is blocked, but port 10026 is not.</li>
+        <li><strong>Cloudflare Email Workers + TCP socket API</strong> — Cloudflare Workers can open outbound TCP connections to arbitrary hosts and ports using the <code>cloudflare:sockets</code> <code>connect()</code> API. Standard outbound SMTP is blocked, but a non-standard listener can be reached.</li>
       </ul>
       <p>
         The last option is the only free path that delivers raw SMTP to a custom port. Cloudflare
-        handles port 25 reception on their global network, and the Worker opens a TCP socket to home
-        on port 10026 — a non-standard port the ISP doesn't block.
+        handles standard SMTP reception on their global network, and the Worker opens a TCP socket to home
+        on a non-standard listener the ISP doesn't block.
       </p>
 
       <hr class="section-divider">
@@ -117,23 +128,23 @@
 
       <h3>Inbound path</h3>
       <pre><code>Sender
-  → Cloudflare MX (route1/2/3.mx.cloudflare.net) — receives on port 25
+  → Cloudflare MX (route1/2/3.mx.cloudflare.net) — receives standard SMTP
   → Cloudflare Email Routing triggers Worker
-  → Worker opens TCP socket to mail.masternazz.com:10026
+  → Worker opens TCP socket to [mail-host]:[nonstandard-smtp-listener]
   → Worker performs full SMTP handshake (EHLO / MAIL FROM / RCPT TO / DATA)
-  → mailcow postfix receives on port 10026 (plain SMTP, no proxy protocol)
+  → mailcow postfix receives on a plain-SMTP listener
   → postfix delivers via LMTP to dovecot
   → Email lands in SOGo inbox</code></pre>
 
       <h3>Outbound path</h3>
       <pre><code>SOGo webmail
-  → postfix:587 (authenticated submission)
-  → SMTP2GO relay at mail.smtp2go.com:2525
+  → postfix authenticated submission
+  → SMTP2GO authenticated relay
   → Delivered to recipient</code></pre>
 
       <p>
-        Port 2525 is used for SMTP2GO because port 587 egress is also commonly filtered on residential
-        connections. Port 2525 is SMTP2GO's standard alternative submission port and is unrestricted.
+        SMTP2GO's alternative TLS submission endpoint is used because standard submission egress can
+        also be filtered on residential connections.
       </p>
 
       <hr class="section-divider">
@@ -154,11 +165,11 @@
       <p>
         The modem is in DMZ mode, so all traffic passes through. The fix: change the destination in
         every NAT rule from <code>wanip</code> to <code>""</code> (any). After the change, nmap
-        immediately showed ports 25, 587, 993, and 10026 all as <code>open</code>.
+        immediately showed the expected public mail and submission endpoints as <code>open</code>.
       </p>
       <pre><code># OPNsense d_nat MVC API — correct destination for NAT behind CGNAT/DMZ
 # destination.network must be "" (any), NOT "wanip"
-# wanip = modem-side LAN IP (e.g. 10.0.0.x), NOT the public IP
+# wanip = modem-side private address, NOT the public IP
 # Traffic from internet arrives destined for the public IP — wanip never matches
 
 POST /api/firewall/d_nat/addRule
@@ -166,28 +177,28 @@ POST /api/firewall/d_nat/addRule
   "rule": {
     "interface": "wan",
     "protocol": "tcp",
-    "destination": { "network": "", "port": "10026" },
+    "destination": { "network": "", "port": "[nonstandard-smtp-listener]" },
     "target": "[mailcow-internal-ip]",
-    "local-port": "10026"
+    "local-port": "[nonstandard-smtp-listener]"
   }
 }</code></pre>
 
       <hr class="section-divider">
 
-      <h2>Port 10026 — Why a New Port</h2>
+      <h2>Plain SMTP Listener</h2>
       <p>
-        mailcow's postfix already listens on port 10025, but that port uses the HAProxy protocol
+        mailcow's postfix already has an internal listener for proxy traffic, but that listener uses the HAProxy protocol
         (<code>postscreen_upstream_proxy_protocol=haproxy</code>). A Cloudflare Worker speaking
         plain SMTP to a HAProxy-protocol listener gets rejected immediately because the connection
         doesn't start with a HAProxy header.
       </p>
       <p>
-        The fix is a new listener in <code>master.cf</code> for plain SMTP on port 10026, with
+        The fix is a new listener in <code>master.cf</code> for plain SMTP on a non-standard port, with
         rspamd/milter disabled (the Worker is relaying already-scanned mail from Cloudflare's
         infrastructure) and a permissive recipient restriction that accepts mail for local domains:
       </p>
       <pre><code># /opt/mailcow-dockerized/data/conf/postfix/master.cf
-10026      inet  n       -       n       -       -       smtpd
+[nonstandard-smtp-listener]      inet  n       -       n       -       -       smtpd
   -o smtpd_sasl_auth_enable=no
   -o smtpd_client_restrictions=permit_mynetworks,permit_inet_interfaces,reject_unauth_pipelining
   -o smtpd_recipient_restrictions=permit_mynetworks,reject_unauth_destination
@@ -204,7 +215,7 @@ version: '2.1'
 services:
   postfix-mailcow:
     ports:
-      - "10026:10026"</code></pre>
+      - "[nonstandard-smtp-listener]:[nonstandard-smtp-listener]"</code></pre>
 
       <hr class="section-divider">
 
@@ -217,8 +228,8 @@ services:
       </p>
       <p>
         The <code>cloudflare:sockets</code> module provides a <code>connect()</code> function that
-        opens a TCP socket to any host and port. Port 25 outbound is blocked by Cloudflare (anti-spam
-        policy), but 10026 is unrestricted. The Worker opens the socket, reads the SMTP banner,
+        opens a TCP socket to any host and port. Standard outbound SMTP is blocked by Cloudflare
+        for anti-spam reasons, but the private listener can be reached. The Worker opens the socket, reads the SMTP banner,
         and implements a minimal SMTP client:
       </p>
       <pre><code>import { connect } from "cloudflare:sockets";
@@ -231,7 +242,7 @@ export default {
 };
 
 async function relayToMailcow(from, to, rawEmail) {
-  const socket = connect({ hostname: "mail.masternazz.com", port: 10026 });
+  const socket = connect({ hostname: env.SMTP_HOST, port: Number(env.SMTP_PORT) });
   const writer = socket.writable.getWriter();
   const reader = socket.readable.getReader();
   // ... SMTP handshake: read banner, EHLO, MAIL FROM, RCPT TO, DATA, body, QUIT
@@ -255,7 +266,7 @@ async function relayToMailcow(from, to, rawEmail) {
       <p>
         For outbound, mailcow's postfix is configured with an SMTP relay pointing to
         SMTP2GO. The relay credentials are stored in mailcow's MySQL <code>relayhosts</code> table.
-        SMTP2GO's free tier allows 1,000 emails/month on port 2525 with TLS — enough for personal use.
+        SMTP2GO's free tier allows 1,000 emails/month over authenticated TLS submission — enough for personal use.
       </p>
       <p>
         Before SMTP2GO will accept outbound mail from a domain, it requires sender domain verification.
@@ -303,8 +314,8 @@ async function relayToMailcow(from, to, rawEmail) {
         <strong>Missing SOGoSMTPServer.</strong> SOGo's config file had
         <code>SOGoMailingMechanism = smtp</code> and <code>SOGoSMTPAuthenticationType = plain</code>
         but no <code>SOGoSMTPServer</code> directive. Without it, SOGo doesn't know where to hand
-        off outbound mail. Added: <code>SOGoSMTPServer = "smtp://postfix:587"</code> — postfix
-        is the internal Docker hostname, port 587 is submission.
+        off outbound mail. Added the internal postfix submission endpoint so SOGo knows where
+        to hand mail back into the stack.
       </p>
       <p>
         <strong>Missing MailIdentities.</strong> SOGo requires at least one sending identity
@@ -319,7 +330,7 @@ async function relayToMailcow(from, to, rawEmail) {
       <h2>Key Takeaways</h2>
       <p>
         <strong>Evaluate the constraint, not the standard solution.</strong> The standard answer
-        to "ISP blocks port 25" is "rent a VPS." That's correct and simple — but mapping out all
+        to "residential ISP blocks inbound SMTP" is "rent a VPS." That's correct and simple — but mapping out all
         alternatives first revealed a free path using infrastructure already running. The CF Workers
         TCP socket API is not well-known as an SMTP relay mechanism; it's documented for database
         connections. Recognizing it as general-purpose TCP was the insight that unlocked this.

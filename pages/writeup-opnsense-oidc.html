@@ -10,11 +10,11 @@
   <meta property="og:title" content="OPNsense OIDC SSO Fix &amp; DNS Migration | Nazeem Massoom Dickey">
   <meta property="og:description" content="Finding a PHP SimpleXML bug in an open-source OPNsense plugin that caused the Authentik SSO button to disappear — and the rootless package install trick used to fix it.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-opnsense-oidc.html">
-  <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta property="og:image" content="https://masternazz.com/assets/diagrams/opnsense-oidc-diagram.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="OPNsense OIDC SSO Fix &amp; DNS Migration | Nazeem Massoom Dickey">
   <meta name="twitter:description" content="PHP SimpleXML bug, rootless package patching via configd, and hardcoded IP elimination in a homelab firewall.">
-  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/opnsense-oidc-diagram.svg">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
@@ -173,7 +173,7 @@ content = content.replace(
 )
 # OIDC provider URL
 content = content.replace(
-    "http://[authentik-vlan6-ip]:9000/application/o/opnsense-oidc/",
+    "[authentik-backend-url]/application/o/opnsense-oidc/",
     "https://auth.masternazz.com/application/o/opnsense-oidc/.well-known/openid-configuration"
 )
 # SFTP backup URL

@@ -117,7 +117,7 @@
           <thead>
             <tr>
               <th>Switch</th>
-              <th>Port</th>
+              <th>Public Label</th>
               <th>Connected To</th>
               <th>Mode</th>
               <th>Allowed VLANs</th>
@@ -126,35 +126,35 @@
           <tbody>
             <tr>
               <td>Cisco SG300</td>
-              <td>gi1</td>
+              <td>Proxmox trunk</td>
               <td>Proxmox Cluster</td>
               <td>Trunk</td>
-              <td>2-10, 20</td>
+              <td>Role VLANs + storage</td>
             </tr>
             <tr>
               <td>Cisco SG300</td>
-              <td>gi19</td>
+              <td>OPNsense trunk</td>
               <td>OPNsense LAN</td>
               <td>Trunk</td>
-              <td>2-10, 20</td>
+              <td>Role VLANs + storage</td>
             </tr>
             <tr>
               <td>Cisco SG300</td>
-              <td>gi20</td>
-              <td>Netgear g23 (Uplink)</td>
+              <td>Access uplink</td>
+              <td>Netgear access switch</td>
               <td>Trunk</td>
-              <td>2-10, 20</td>
+              <td>Role VLANs + storage</td>
             </tr>
             <tr>
               <td>Netgear</td>
-              <td>g23</td>
-              <td>Cisco gi20 (Downlink)</td>
+              <td>Core uplink</td>
+              <td>Cisco core switch</td>
               <td>Trunk</td>
-              <td>2-10, 20</td>
+              <td>Role VLANs + storage</td>
             </tr>
             <tr>
               <td>Netgear</td>
-              <td>g19-21</td>
+              <td>Client access range</td>
               <td>Access / Client Ports</td>
               <td>Access</td>
               <td>10 (Native, Mgmt)</td>

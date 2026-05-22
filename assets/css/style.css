@@ -1834,6 +1834,8 @@ body.page-fade-out {
 }
 
 @media (max-width: 768px) {
+  .section[id] { scroll-margin-top: 118px; }
+  .nav { flex-wrap: nowrap; justify-content: space-between; }
   .hamburger { display: flex; }
   .nav-links { display: none; }
 }

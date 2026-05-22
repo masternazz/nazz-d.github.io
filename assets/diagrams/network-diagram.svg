@@ -51,17 +51,17 @@
   <rect x="100" y="148" width="680" height="5" rx="4" fill="url(#purpleBar)"/>
   <rect x="116" y="162" width="3" height="56" rx="2" fill="#9333ea"/>
   <text x="136" y="179" fill="#f6f3ff" font-size="13" font-weight="700">OPNsense Firewall / Router</text>
-  <text x="136" y="196" fill="#9488ad" font-size="10">Edge firewall · WAN uplink · LAN segment · Public DMZ (VLAN 50) · explicit firewall rules</text>
+  <text x="136" y="196" fill="#9488ad" font-size="10">Edge firewall · WAN uplink · private LAN zones · dedicated DMZ · explicit firewall rules</text>
   <text x="136" y="212" fill="#9488ad" font-size="10">AdGuard DNS · Suricata IDS/IPS (WAN netmap) · ACME Wildcard SSL · NAT</text>
   <text x="136" y="224" fill="#4b4266" font-size="9">Encrypted management access only · deny-by-default · no raw management ports on internet</text>
 
   <!-- OPNsense → DMZ (right arrow) -->
   <line x1="780" y1="189" x2="858" y2="189" stroke="#d97706" stroke-width="1.5" opacity="0.7" marker-end="url(#arrOrange)"/>
 
-  <!-- ═══════════════ DMZ / VLAN 50 ═══════════════ -->
+  <!-- DMZ zone -->
   <rect x="858" y="148" width="320" height="82" rx="8" fill="url(#card)" stroke="#d97706" stroke-width="1.5"/>
   <rect x="858" y="148" width="320" height="5" rx="4" fill="#d97706"/>
-  <text x="1018" y="179" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="700">VLAN 50 — Public DMZ</text>
+  <text x="1018" y="179" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="700">Dedicated Public DMZ</text>
   <text x="1018" y="197" text-anchor="middle" fill="#9488ad" font-size="10">Isolated subnet · separated from LAN</text>
   <text x="1018" y="213" text-anchor="middle" fill="#9488ad" font-size="10">Cloudflared Tunnel connector</text>
   <text x="1018" y="225" text-anchor="middle" fill="#4b4266" font-size="9">Public-facing services · no direct LAN access</text>

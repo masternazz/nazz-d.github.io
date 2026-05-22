@@ -51,7 +51,7 @@
       <h1>OPNsense Edge Firewall</h1>
       <p class="lead">
         OPNsense 26.1 deployed on a Dell Optiplex 5040 SFF as the sole edge device:
-        routing, DHCP, DNS filtering, VLAN segmentation, wildcard TLS, IDS on WAN, and
+        routing, DHCP, DNS filtering, 10-VLAN segmentation with default-deny enforcement, wildcard TLS, IDS on WAN, and
         a DMZ-isolated Cloudflare Tunnel for public ingress — no raw management ports on the internet.
       </p>
       <div class="chip-row">
@@ -75,7 +75,7 @@
         <h2>What I Built</h2>
         <ul class="list-clean">
           <li>Deployed OPNsense 26.1 on a Dell Optiplex 5040 SFF as the dedicated edge router and firewall.</li>
-          <li>Segmented the network into LAN and a Public DMZ VLAN for Cloudflare Tunnel isolation.</li>
+          <li>Designed and enforced a 10-VLAN production architecture (Management, Game Servers, Servers, Testing, IoT, Services, DMZ, Guest, Network Services, Storage) with default-deny firewall rules across every VLAN interface.</li>
           <li>Replaced the default Unbound DNS resolver with AdGuard Home (OPNsense plugin) with Cloudflare DoT upstream for encrypted, filtered DNS.</li>
           <li>Deployed Suricata IDS on the WAN interface in netmap mode for intrusion detection.</li>
           <li>Automated wildcard TLS certificate issuance for *.masternazz.com using ACME with Cloudflare DNS-01 challenge.</li>
@@ -155,7 +155,7 @@
             <span class="project-type">Virtualization</span>
           </div>
           <h3>Proxmox Cluster Management</h3>
-          <p>Three-node cluster — IBM M4, Dell R610, Dell R410 — running 22 VMs and LXC containers.</p>
+          <p>Three-node cluster — IBM M4, Dell R610, Dell R410 — running 25+ VMs and LXC containers.</p>
           <span class="card-link">View project -&gt;</span>
         </a>
 

@@ -10,11 +10,11 @@
   <meta property="og:title" content="VLAN 50 Trunking Path Fix | Nazeem Massoom Dickey">
   <meta property="og:description" content="Fixing the path: How I resolved a VLAN trunking mismatch between OPNsense and the switching fabric to restore DMZ services.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-vlan50.html">
-  <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta property="og:image" content="https://masternazz.com/assets/diagrams/vlan50-trunking-diagram.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="VLAN 50 Trunking Path Fix | Nazeem Massoom Dickey">
   <meta name="twitter:description" content="Troubleshooting VLAN 50 trunking and validating DMZ pathing after switch migration.">
-  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/vlan50-trunking-diagram.svg">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
@@ -67,7 +67,13 @@
     </section>
 
     <section class="section card callout" style="border-color: var(--line-strong); margin-bottom: 0;">
-      <p style="margin:0; font-size: 0.9rem;"><strong>Historical note:</strong> This writeup describes an incident on the legacy VLAN 50 (Public_DMZ). In the current production network, the DMZ is <strong>VLAN 7</strong> (10.226.7.0/24) — see the <a href="vlan-segmentation.html">Enterprise VLAN Segmentation</a> project for the full design.</p>
+      <p style="margin:0; font-size: 0.9rem;"><strong>Historical note:</strong> This writeup describes an incident on the legacy VLAN 50 (Public_DMZ). In the current production network, the DMZ is a separate dedicated VLAN — see the <a href="vlan-segmentation.html">Enterprise VLAN Segmentation</a> project for the full design.</p>
+    </section>
+
+    <section class="section">
+      <div class="diagram-card">
+        <img src="../assets/diagrams/vlan50-trunking-diagram.svg" alt="Public-safe legacy DMZ trunking path fix diagram" loading="lazy">
+      </div>
     </section>
 
     <section class="section card writeup-body">
@@ -77,8 +83,8 @@
         <ul class="list-clean">
           <li><strong>Situation:</strong> The Cloudflare Tunnel LXC, isolated in a dedicated Public_DMZ (VLAN 50), was unreachable and failing to receive a DHCP lease from the OPNsense gateway.</li>
           <li><strong>Task:</strong> Verify the full VLAN 50 path across OPNsense, Proxmox, and switching during two phases: legacy Catalyst 3750V2 fabric, then post-migration SG300/GS728TP fabric.</li>
-          <li><strong>Action:</strong> Audited trunks and VLAN membership end-to-end. In the legacy phase, found trunks allowing only VLAN 1 and added VLAN 50 across the path. In the migration phase, validated SG300 trunk membership (including Proxmox-facing <code>gi1</code> and OPNsense-facing <code>gi19</code>) and confirmed DMZ continuity through the new core/access design.</li>
-          <li><strong>Result:</strong> Restored and retained L2/L3 pathing through migration. Cloudflared received lease <code>192.168.50.2</code>, reached gateway <code>192.168.50.1</code>, and public status/web ingress returned to normal.</li>
+          <li><strong>Action:</strong> Audited trunks and VLAN membership end-to-end. In the legacy phase, found trunks allowing only the native VLAN and added the legacy DMZ VLAN across the path. In the migration phase, validated SG300 trunk membership across the Proxmox-facing, OPNsense-facing, and access-uplink paths, then confirmed DMZ continuity through the new core/access design.</li>
+          <li><strong>Result:</strong> Restored and retained L2/L3 pathing through migration. Cloudflared received a DMZ lease, reached its gateway, and public status/web ingress returned to normal.</li>
         </ul>
       </div>
 
@@ -87,32 +93,32 @@
         The <code>cloudflared</code> service is critical to my infrastructure—it's how my public status page 
         and secure web ingress function without opening ports on my WAN. During an update, the 
         container lost connectivity. <code>nmap</code> from the LAN couldn't reach it, and it was 
-        failing to get a DHCP lease on the 192.168.50.0/24 segment.
+        failing to get a DHCP lease on the legacy DMZ segment.
       </p>
 
       <hr class="section-divider">
 
       <h2>The Topology Audit</h2>
       <p>
-        My network uses a Router-on-a-Stick style model with multiple VLANs. The VLAN 50 path was audited in two snapshots:
+        My network uses a Router-on-a-Stick style model with multiple VLANs. The legacy DMZ path was audited in two snapshots:
       </p>
       <p><strong>Legacy snapshot (Catalyst era):</strong></p>
       <ol>
-        <li><strong>OPNsense ( em0.50 )</strong> -> Gateway</li>
-        <li><strong>Cisco 3750V2 Main ( Fa5/0/47 )</strong> -> Trunk to OPNsense</li>
-        <li><strong>Cisco 3750V2 Main ( Fa5/0/48 )</strong> -> Trunk to Sub Switch</li>
-        <li><strong>Cisco 3750V2 Sub ( Fa2/0/47 )</strong> -> Trunk back to Main</li>
-        <li><strong>Cisco 3750V2 Main ( Fa5/0/1 )</strong> -> Trunk to Proxmox Node</li>
+        <li><strong>OPNsense DMZ subinterface</strong> -> Gateway</li>
+        <li><strong>Cisco 3750V2 Main</strong> -> Trunk to OPNsense</li>
+        <li><strong>Cisco 3750V2 Main</strong> -> Trunk to Sub Switch</li>
+        <li><strong>Cisco 3750V2 Sub</strong> -> Trunk back to Main</li>
+        <li><strong>Cisco 3750V2 Main</strong> -> Trunk to Proxmox Node</li>
       </ol>
       <p><strong>Current snapshot (SG300/Netgear era):</strong></p>
       <ol>
-        <li><strong>OPNsense ( em0.50 )</strong> -> Gateway</li>
-        <li><strong>Cisco SG300 ( gi19 )</strong> -> Trunk to OPNsense LAN</li>
-        <li><strong>Cisco SG300 ( gi1 )</strong> -> Trunk to Proxmox / cloudflared path</li>
-        <li><strong>Cisco SG300 ( gi20 )</strong> -> Trunk uplink to Netgear GS728TP ( g23 )</li>
+        <li><strong>OPNsense DMZ subinterface</strong> -> Gateway</li>
+        <li><strong>Cisco SG300</strong> -> Trunk to OPNsense LAN</li>
+        <li><strong>Cisco SG300</strong> -> Trunk to Proxmox / cloudflared path</li>
+        <li><strong>Cisco SG300</strong> -> Trunk uplink to Netgear GS728TP</li>
       </ol>
       <p>
-        If any link in either path does not carry VLAN 50, the L2 broadcast domain breaks and DHCP Discover never reaches OPNsense.
+        If any link in either path does not carry the DMZ VLAN, the L2 broadcast domain breaks and DHCP Discover never reaches OPNsense.
       </p>
 
       <hr class="section-divider">
@@ -121,15 +127,15 @@
 
       <h3>1. Verifying OPNsense & Proxmox</h3>
       <p>
-        I first checked the OPNsense interfaces. VLAN 50 was active on <code>em0</code>, and the 
-        DHCP server was running. In Proxmox, the LXC was correctly tagged with bridge <code>vmbr0</code> 
-        and tag <code>50</code>. The issue wasn't at the endpoints.
+        I first checked the OPNsense interfaces. The DMZ VLAN was active on the parent trunk, and the
+        DHCP server was running. In Proxmox, the LXC was correctly tagged on its bridge with the legacy DMZ VLAN.
+        The issue wasn't at the endpoints.
       </p>
 
       <h3>2. Legacy Discovery (Catalyst)</h3>
       <p>
         I logged into the main switch and ran <code>show interfaces trunk</code>.
-        The results were clear: <strong>VLAN 50 was missing from the "Vlans allowed on trunk" list.</strong> 
+        The results were clear: <strong>the DMZ VLAN was missing from the "Vlans allowed on trunk" list.</strong>
         The ports were trunking, but they were effectively filtering out the DMZ traffic.
       </p>
 
@@ -137,21 +143,21 @@
       <p>
         I moved systematically through the fabric to apply the fix:
       </p>
-      <pre><code>! On Cisco_Catalyst_3750_V2_Main
-interface range Fa5/0/1, Fa5/0/47, Fa5/0/48
- switchport trunk allowed vlan add 50
+      <pre><code>! On the legacy core switch
+interface range [opnsense-trunk], [switch-uplink], [proxmox-trunk]
+ switchport trunk allowed vlan add [legacy-dmz-vlan]
  exit
 wr mem
 
-! On Cisco_Catalyst_3750_V2_Sub
-interface Fa2/0/47
- switchport trunk allowed vlan add 50
+! On the legacy downstream switch
+interface [core-uplink]
+ switchport trunk allowed vlan add [legacy-dmz-vlan]
  exit
 wr mem</code></pre>
 
       <h3>4. Migration Validation (SG300 + GS728TP)</h3>
       <p>
-        After replacing the 3750 pair with a Cisco SG300-20 core and Netgear GS728TP access switch (both managed on VLAN 10), I revalidated VLAN 50 continuity. The critical correction was ensuring VLAN 50 remained tagged on the Proxmox-facing SG300 trunk (<code>gi1</code>) while preserving tagged pathing on <code>gi19</code> (OPNsense) and uplink to Netgear.
+        After replacing the 3750 pair with a Cisco SG300-20 core and Netgear GS728TP access switch, I revalidated DMZ continuity. The critical correction was ensuring the DMZ VLAN remained tagged on the Proxmox-facing SG300 trunk while preserving tagged pathing toward OPNsense and the Netgear uplink.
       </p>
 
       <hr class="section-divider">
@@ -159,7 +165,7 @@ wr mem</code></pre>
       <h2>The Result (Across Both Phases)</h2>
       <p>
         In both the initial fix and post-migration validation, <code>cloudflared</code> received
-        DHCP lease <code>192.168.50.2</code>, successfully pinged gateway <code>192.168.50.1</code>,
+        a DMZ lease, successfully reached its gateway,
         and restored Cloudflare Tunnel health. Public status/web services resumed without exposing
         management ports to WAN.
       </p>

@@ -50,9 +50,9 @@
       <p class="eyebrow">Project | Infrastructure</p>
       <h1>Proxmox Infrastructure</h1>
       <p class="lead">
-        Three-node Proxmox cluster — IBM M4, Dell R610, Dell R410 — running 22 VMs and LXC
+        Three-node Proxmox cluster — IBM M4, Dell R610, Dell R410 — running 25+ VMs and LXC
         containers across SIEM, identity, media automation, AI inference, home automation,
-        game servers, and network tooling. Backed by a Proxmox Backup Server and Synology NAS.
+        game servers, email, remote support, and network tooling. Backed by a Proxmox Backup Server and Synology NAS.
       </p>
       <div class="chip-row">
         <span class="chip">Proxmox VE</span>
@@ -75,7 +75,7 @@
         <h2>What I Built</h2>
         <ul class="list-clean">
           <li>Built a 3-node Proxmox cluster on IBM M4, Dell R610, and Dell R410 hardware with sanitized public node labels.</li>
-          <li>Deployed 22 running VMs and LXC containers covering SIEM (Wazuh), SSO (Authentik), self-hosted media server, AI inference (Ollama + Open WebUI), home automation (Home Assistant), game servers (Pelican Panel + Wings), and network tooling (Unifi controller, netboot-xyz, Headplane).</li>
+          <li>Deployed 25+ running VMs and LXC containers covering SIEM (Wazuh), SSO (Authentik), self-hosted media stack (Jellyfin + Sonarr/Radarr/Prowlarr), AI inference (Ollama + Open WebUI), home automation (Home Assistant), game servers (Pelican Panel + Wings, 3 active game servers), self-hosted email (mailcow), remote support (RustDesk/BetterDesk), and network tooling (Unifi controller, netboot-xyz, Headplane).</li>
           <li>Implemented a 3-2-1 backup strategy: Proxmox Backup Server for deduplicated incremental backups, with a secondary Synology NAS target for redundancy.</li>
           <li>Maintained a full host inventory with IPs, service roles, ports, and dependencies.</li>
         </ul>
@@ -84,7 +84,7 @@
       <div class="card">
         <h2>Operational Habits</h2>
         <ul class="list-clean">
-          <li>Document every host: IP, MAC, role, and dependencies before making changes.</li>
+          <li>Document every host role, management path, and dependency before making changes.</li>
           <li>Use PBS deduplicated backups so restores are fast and storage-efficient.</li>
           <li>Separate production services (identity, reverse proxy) from experimental workloads.</li>
           <li>Use LXC containers for lightweight services, QEMU VMs for OS-level isolation needs.</li>
@@ -109,14 +109,14 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Workloads</span>
         <h2>Production-Like Diversity</h2>
-        <p>Security tools (Wazuh, Authentik), a self-hosted media server, AI inference (Ollama), home automation (Home Assistant), and game server infrastructure (Pelican) create realistic cross-service dependencies that mirror what a junior admin encounters in the field.</p>
+        <p>Security tools (Wazuh, Authentik), a self-hosted media stack (Jellyfin), self-hosted email (mailcow), AI inference (Ollama), home automation (Home Assistant), remote support (RustDesk), and game server infrastructure (Pelican) create realistic cross-service dependencies that mirror what a junior admin encounters in the field.</p>
       </article>
     </section>
 
     <section class="section card callout">
       <h2>Why This Matters</h2>
       <p>
-        Three physical nodes, 22 running services, and a backup strategy make the lab useful for
+        Three physical nodes, 25+ running services, and a backup strategy make the lab useful for
         practicing operational thinking. When something breaks, I have to identify what is down,
         what depends on it, and how to recover without disrupting another service.
       </p>

@@ -10,11 +10,11 @@
   <meta property="og:title" content="Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey">
   <meta property="og:description" content="Custom MCP server on a Proxmox LXC exposing 55 tools for controlled homelab operations across OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and NPMplus.">
   <meta property="og:url" content="https://masternazz.com/pages/writeup-mcp-server.html">
-  <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta property="og:image" content="https://masternazz.com/assets/diagrams/mcp-server-diagram.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey">
   <meta name="twitter:description" content="55-tool MCP server on a Proxmox LXC for controlled service actions across OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and NPMplus.">
-  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/mcp-server-diagram.svg">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
@@ -225,9 +225,9 @@
           <span>AdGuard binding issue</span>
           <h3>Service bound to old IP</h3>
           <p>
-            AdGuard Home was configured with <code>address: 192.168.1.1:3001</code> from before the VLAN migration.
+            AdGuard Home was still bound to a legacy management address from before the VLAN migration.
             After migration, AdGuard's management interface was unreachable from the MCP LXC.
-            Fix: edited <code>AdGuardHome.yaml</code> via SSH to bind to <code>0.0.0.0:3001</code> and restarted.
+            Fix: edited <code>AdGuardHome.yaml</code> via SSH to bind to all local interfaces and restarted.
             Also updated the NPMplus proxy host that was still pointing at the old address.
           </p>
         </div>
@@ -291,7 +291,7 @@
       <div class="skill-grid four">
         <div class="skill-box glass-panel">
           <h3>NIC Swap Recovery</h3>
-          <p>After a hardware swap broke all VLANs (em0 → igc0 driver change), used OPNsense API tools to migrate 11 VLAN parent interfaces and fix all 11 scrambled DHCP ranges in a single session.</p>
+          <p>After a hardware swap broke all VLANs by changing firewall interface names, used OPNsense API tools to migrate VLAN parent interfaces and fix scrambled DHCP ranges in a single session.</p>
         </div>
         <div class="skill-box glass-panel">
           <h3>Proxy Host Audit</h3>
