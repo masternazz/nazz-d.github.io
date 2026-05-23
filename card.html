@@ -14,7 +14,7 @@
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous"></script>
   <style>
     /* ── Page shell ── */
     main.card-page {
@@ -173,12 +173,33 @@
       background: #ffffff;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .qr-wrap svg, .qr-wrap canvas { display: block; }
+    /* qrcodejs renders at 2× then we scale down for crisp output */
+    .qr-wrap canvas, .qr-wrap img {
+      width: 160px !important;
+      height: 160px !important;
+      display: block;
+    }
+
+    /* ND overlay logo in center of QR */
+    .qr-logo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: #7c3aed;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 0.68rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      pointer-events: none;
+      z-index: 2;
+    }
 
     .qr-label {
       font-size: 0.65rem;
@@ -352,13 +373,10 @@
         align-items: flex-start;
       }
 
-      .card-mobile-top .qr-wrap {
-        width: 100px; height: 100px;
-        padding: 6px;
-        flex-shrink: 0;
-      }
-
       .card-mobile-top .qr-wrap { width: 100px; height: 100px; }
+      .card-mobile-top .qr-wrap canvas,
+      .card-mobile-top .qr-wrap img { width: 100px !important; height: 100px !important; }
+      .card-mobile-top .qr-logo { width: 24px; height: 24px; font-size: 0.55rem; border-radius: 5px; }
 
       /* hide the standalone QR block on mobile (shown in top row instead) */
       .qr-block-standalone { display: none; }
@@ -416,7 +434,10 @@
 
           <!-- Mobile: identity + small QR side by side -->
           <div class="card-mobile-top">
-            <div class="qr-wrap" id="qr-wrap-mobile"></div>
+            <div class="qr-wrap" id="qr-wrap-mobile">
+              <div id="qr-canvas-mobile"></div>
+              <div class="qr-logo">ND</div>
+            </div>
             <div class="card-mobile-top-identity">
               <div class="card-avatar" style="margin-bottom:8px;">ND</div>
               <h1 class="card-name">Nazeem Massoom Dickey</h1>
@@ -449,7 +470,10 @@
 
           <!-- QR (desktop standalone) -->
           <div class="qr-block qr-block-standalone">
-            <div class="qr-wrap" id="qr-wrap-desktop"></div>
+            <div class="qr-wrap" id="qr-wrap-desktop">
+              <div id="qr-canvas-desktop"></div>
+              <div class="qr-logo">ND</div>
+            </div>
             <p class="qr-label">Scan to open portfolio</p>
           </div>
 
@@ -580,53 +604,36 @@
 
   <script src="assets/js/script.js"></script>
   <script>
-    // ND logo as inline SVG data URI for the QR center
-    const ND_LOGO = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#7c3aed"/><text x="20" y="27" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-weight="900" font-size="16" fill="#ffffff" letter-spacing="-0.5">ND</text></svg>`);
-
-    function makeQRConfig(dark, size) {
-      const dot   = dark ? "#c084fc" : "#7c3aed";
-      const dot2  = dark ? "#818cf8" : "#2563eb";
-      const bg    = "#ffffff";
-      const logoSize = Math.round(size * 0.22);
-      return {
-        width: size, height: size,
-        type: "svg",
-        data: "https://masternazz.com/card",
-        image: ND_LOGO,
-        qrOptions: { errorCorrectionLevel: "H" },
-        imageOptions: { crossOrigin: "anonymous", margin: 2, imageSize: 0.28 },
-        dotsOptions: {
-          type: "extra-rounded",
-          gradient: { type: "linear", rotation: 45,
-            colorStops: [{ offset: 0, color: dot }, { offset: 1, color: dot2 }] }
-        },
-        backgroundOptions: { color: bg },
-        cornersSquareOptions: { type: "extra-rounded", color: dot },
-        cornersDotOptions: { type: "dot", color: dot2 }
-      };
-    }
-
-    let qrDesktop = null;
-    let qrMobile  = null;
-
     document.addEventListener("DOMContentLoaded", () => {
       const isDark = document.documentElement.getAttribute("data-theme") !== "light";
       buildQR(isDark);
     });
 
     function buildQR(dark) {
-      const wrapD = document.getElementById("qr-wrap-desktop");
-      const wrapM = document.getElementById("qr-wrap-mobile");
+      const colorDark  = dark ? "#1a0a2e" : "#1e293b";
+      const colorLight = "#ffffff";
 
-      if (wrapD) {
-        wrapD.innerHTML = "";
-        qrDesktop = new QRCodeStyling(makeQRConfig(dark, 160));
-        qrDesktop.append(wrapD);
+      // Render at 2× pixel density inside each container, CSS scales it down to crisp display
+      const desktop = document.getElementById("qr-canvas-desktop");
+      if (desktop) {
+        desktop.innerHTML = "";
+        new QRCode(desktop, {
+          text: "https://masternazz.com/card",
+          width: 320, height: 320,
+          colorDark, colorLight,
+          correctLevel: QRCode.CorrectLevel.H
+        });
       }
-      if (wrapM) {
-        wrapM.innerHTML = "";
-        qrMobile = new QRCodeStyling(makeQRConfig(dark, 100));
-        qrMobile.append(wrapM);
+
+      const mobile = document.getElementById("qr-canvas-mobile");
+      if (mobile) {
+        mobile.innerHTML = "";
+        new QRCode(mobile, {
+          text: "https://masternazz.com/card",
+          width: 200, height: 200,
+          colorDark, colorLight,
+          correctLevel: QRCode.CorrectLevel.H
+        });
       }
     }
 
