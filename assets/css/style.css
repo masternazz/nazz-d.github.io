@@ -408,7 +408,7 @@ p { color: var(--muted); line-height: 1.72; }
 
 .snapshot-grid, .achievement-grid, .project-grid, .skill-grid, .proof-grid, .two-column, .three-column, .cert-columns { display: grid; gap: 18px; }
 .snapshot-grid, .achievement-grid, .three-column { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.project-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .two-column, .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cert-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .skill-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -1135,7 +1135,7 @@ p { color: var(--muted); line-height: 1.72; }
 @media (max-width: 980px) {
   .tech-row { grid-template-columns: repeat(3, 1fr); }
   .signal-strip, .skill-grid.four, .snapshot-grid, .achievement-grid, .cert-columns, .three-column { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .architecture-flow, .architecture-flow.compact-flow, .project-domain-grid, .ops-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .flow-lane:nth-child(2n) { border-right: 0; }
   .flow-lane:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -1163,7 +1163,8 @@ p { color: var(--muted); line-height: 1.72; }
   .hero, .page-hero { min-height: auto; padding: 34px 28px; }
   .hero h1, .page-hero h1 { font-size: 3rem; }
   .hero h2, .page-hero h2 { font-size: 1.42rem; }
-  .signal-strip, .project-grid, .skill-grid, .skill-grid.four, .snapshot-grid, .achievement-grid, .proof-grid, .two-column, .three-column, .cert-columns, .architecture-flow, .architecture-flow.compact-flow, .project-domain-grid, .ops-timeline { grid-template-columns: 1fr; }
+  .signal-strip, .skill-grid, .skill-grid.four, .snapshot-grid, .achievement-grid, .proof-grid, .two-column, .three-column, .cert-columns, .architecture-flow, .architecture-flow.compact-flow, .project-domain-grid, .ops-timeline { grid-template-columns: 1fr; }
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .flow-lane { border-right: 0; border-bottom: 1px solid var(--line); }
   .flow-lane:last-child { border-bottom: 0; }
   .rack-gallery { grid-template-columns: repeat(2, 1fr); }
@@ -1176,6 +1177,7 @@ p { color: var(--muted); line-height: 1.72; }
 }
 
 @media (max-width: 520px) {
+  .project-grid { grid-template-columns: 1fr; }
   .page, .nav, .footer { width: min(100% - 20px, 1180px); }
   .nav-links { gap: 10px; }
   .search-trigger kbd { display: none; }
