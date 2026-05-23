@@ -250,13 +250,15 @@ MCP Server (Node.js, LXC on Management VLAN)
     </section>
 
     <section class="section card callout">
-      <h2>Employer-Relevant Skills</h2>
+      <h2>What Building It Taught Me</h2>
       <p>
-        This server runs on infrastructure I use for homelab management. I identified a workflow
-        problem across multiple service APIs, designed an MCP-based solution, implemented it in Node.js
-        with separate authentication handling for each service, and deployed it on dedicated LXC
-        infrastructure. The issues it surfaced — cookie auth versus Bearer tokens, GET body rejection,
-        and firewall rule ordering — are the same kind of integration friction that shows up in IT work.
+        Every service had different auth — AdGuard uses Basic, OPNsense uses an API key pair,
+        NPMplus uses a session cookie it refreshes on login, Mailcow uses a header token. Getting
+        all of them working in the same Node.js process without any leaking credentials across the
+        MCP connection took some care. The NPMplus cookie approach in particular was annoying — it
+        rejects GET requests with a body, which isn't obvious from the docs. Figuring out that the
+        firewall rule sequence number matters (not just whether a rule exists) came from the same
+        kind of trial and error you'd hit on any real network.
       </p>
     </section>
 

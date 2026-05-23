@@ -138,12 +138,14 @@ mc-bot LXC
     </section>
 
     <section class="section card callout">
-      <h2>Employer-Relevant Skills</h2>
+      <h2>What Wasn't Straightforward</h2>
       <p>
-        This project covers more than hosting a game server. I built the monitoring layer, implemented
-        RCON communication, chained SSH through Proxmox to collect Docker metrics, wrote async Python
-        for the Discord API, and deployed the bot as a systemd service on dedicated infrastructure.
-        It demonstrates troubleshooting, automation, and service ownership.
+        The hosting part was easy. The hard part was getting the bot to pull real resource data
+        from inside a Docker container it has no direct access to. The SSH chain through Proxmox
+        using <code>pct exec</code> was the only path that worked without loosening container
+        isolation. Writing the RCON client from scratch instead of using a library also took a
+        bit — the binary packet framing and auth handshake aren't complicated, but you have to
+        get the struct packing exactly right or the server just drops the connection.
       </p>
     </section>
 

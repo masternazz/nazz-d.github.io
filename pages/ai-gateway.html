@@ -52,9 +52,9 @@
       <p class="eyebrow">Project | AI Automation &amp; Infrastructure</p>
       <h1>AI Gateway</h1>
       <p class="lead">
-        A self-hosted Node.js service that routes Telegram messages and emails to Claude,
-        Gemini CLI, or OpenAI Codex — with built-in git operations, live streaming replies,
-        shared memory, and per-channel conversation history.
+        Node.js service running on a Proxmox LXC that takes Telegram messages and emails,
+        routes them to Claude, Gemini CLI, or Codex, and sends the reply back. Supports git
+        ops inline, streams Claude and Codex replies live, and keeps shared memory across sessions.
       </p>
       <div class="chip-row">
         <span class="chip">Node.js</span>
@@ -254,14 +254,15 @@ Reply → Telegram editMessageText / SMTP sendMail
     </section>
 
     <section class="section card callout">
-      <h2>Employer-Relevant Skills</h2>
+      <h2>GitHub</h2>
       <p>
-        This project required working at the edge of what AI CLIs actually support: diagnosing
-        silent hang behavior in Gemini's agentic mode, fixing race conditions in concurrent git
-        operations, and debugging SSH auth failures in simple-git's subprocess layer. The result
-        is a system that routes messages across three AI runtimes with real git integration,
-        streaming output, and persistent context — all deployed on self-managed infrastructure.
+        The full source is public. It includes the Node.js gateway, all three AI CLI integrations,
+        git op handling, streaming, and the memory system.
       </p>
+      <div class="contact-actions callout-actions" style="margin-top:1rem;">
+        <a href="https://github.com/masternazz/ai-gateway" class="button secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        <a href="writeup-ai-gateway.html" class="button secondary">Read the Writeup</a>
+      </div>
     </section>
 
     <section id="contact" class="section card callout">
