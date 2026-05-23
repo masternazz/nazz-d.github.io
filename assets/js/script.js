@@ -357,6 +357,20 @@ const INDEX = [
     "icon": "🤖",
     "desc": "AI-assisted IT operations using Claude Code, Gemini CLI, Codex, and a self-hosted MCP server for documented homelab automation.",
     "keywords": "ai automation claude code gemini cli openai codex ab-900 mcp microsoft copilot agent administration it operations soc automation homelab"
+  },
+  {
+    "title": "AI Gateway",
+    "url": "pages/ai-gateway.html",
+    "icon": "🤖",
+    "desc": "Self-hosted Node.js gateway routing Telegram messages and emails to Claude, Gemini CLI, or Codex — with git integration, live streaming replies, and persistent conversation memory.",
+    "keywords": "ai gateway node.js telegram email claude gemini cli openai codex git integration streaming conversation memory self-hosted automation llm routing"
+  },
+  {
+    "title": "Digital Card",
+    "url": "card.html",
+    "icon": "📇",
+    "desc": "Digital business card for Nazeem Massoom Dickey — QR code, contact links, and certifications at a glance.",
+    "keywords": "digital card business card qr code contact nazeem massoom dickey linkedin github email phone vcard certifications"
   }
 ];
 

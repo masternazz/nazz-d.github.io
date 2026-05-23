@@ -215,6 +215,25 @@
       </div>
 
       <div class="project-grid priority-project-grid">
+        <a href="pages/skillsusa.html" class="project-card glass-panel priority-card" data-tags="all network security">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </span>
+            <span class="project-type">Competition</span>
+            <span class="status-badge active">1st Place</span>
+          </div>
+          <h3>SkillsUSA Florida — Internetworking</h3>
+          <p>Gold Medal, 1st Place at SkillsUSA Florida State Championships in Internetworking. Competed in live network build, troubleshooting, and configuration under timed conditions.</p>
+          <div class="chip-row">
+            <span class="chip">Cisco</span>
+            <span class="chip">Networking</span>
+            <span class="chip">Gold Medal</span>
+            <span class="chip">2026</span>
+          </div>
+          <span class="card-link">View project -&gt;</span>
+        </a>
+
         <a href="pages/vlan-segmentation.html" class="project-card glass-panel priority-card" data-tags="all network security infrastructure">
           <div class="project-top">
             <span class="project-icon">
@@ -224,7 +243,7 @@
             <span class="status-badge active">Active</span>
           </div>
           <h3>10-VLAN Production Segmentation</h3>
-          <p>Project page for the current segmented lab design: OPNsense default-deny, Cisco/Netgear trunking, DMZ isolation, Proxmox quorum recovery, and 30+ services migrated.</p>
+          <p>Production-grade network segmentation: OPNsense default-deny, Cisco/Netgear trunking, DMZ isolation, Proxmox quorum recovery, and 30+ services migrated across 10 VLANs.</p>
           <div class="chip-row">
             <span class="chip">OPNsense</span>
             <span class="chip">Cisco SG300</span>
@@ -243,52 +262,33 @@
             <span class="status-badge active">Active</span>
           </div>
           <h3>Homelab MCP Server</h3>
-          <p>Custom Node.js MCP server exposing 55 validated tools for controlled operations across OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other services.</p>
+          <p>Custom Node.js MCP server exposing 55 validated tools for controlled AI operations across OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other services.</p>
           <div class="chip-row">
             <span class="chip">Node.js</span>
             <span class="chip">MCP</span>
             <span class="chip">55 Tools</span>
-            <span class="chip">SSH</span>
+            <span class="chip">Claude Code</span>
           </div>
           <span class="card-link">View project -&gt;</span>
         </a>
 
-        <a href="pages/operations-alerting.html" class="project-card glass-panel priority-card" data-tags="all monitoring security infrastructure">
+        <a href="pages/ai-gateway.html" class="project-card glass-panel priority-card" data-tags="all automation">
           <div class="project-top">
             <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </span>
-            <span class="project-type">Operations</span>
+            <span class="project-type">AI Automation</span>
             <span class="status-badge active">Active</span>
           </div>
-          <h3>Operations &amp; Alerting Stack</h3>
-          <p>Centralized email alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and media services, with TLS cleanup and documented rollback paths.</p>
+          <h3>AI Gateway</h3>
+          <p>Self-hosted Node.js gateway routing Telegram messages and emails to Claude, Gemini CLI, or Codex — with git integration, live streaming replies, and persistent conversation memory.</p>
           <div class="chip-row">
-            <span class="chip">mailcow</span>
-            <span class="chip">Monit</span>
-            <span class="chip">Wazuh</span>
-            <span class="chip">Runbooks</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Claude</span>
+            <span class="chip">Gemini CLI</span>
+            <span class="chip">Telegram</span>
           </div>
           <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/writeup-opnsense-oidc.html" class="project-card glass-panel priority-card" data-tags="all security identity network">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </span>
-            <span class="project-type">Identity Fix</span>
-            <span class="status-badge done">Documented</span>
-          </div>
-          <h3>OPNsense OIDC &amp; DNS Fix</h3>
-          <p>Diagnosed an OIDC login issue, restored Authentik SSO behavior, and moved infrastructure configuration away from stale hardcoded IP references.</p>
-          <div class="chip-row">
-            <span class="chip">OPNsense</span>
-            <span class="chip">Authentik</span>
-            <span class="chip">DNS</span>
-            <span class="chip">FreeBSD</span>
-          </div>
-          <span class="card-link">Read writeup -&gt;</span>
         </a>
       </div>
 
@@ -625,49 +625,25 @@
           <span class="card-link">View project -&gt;</span>
         </a>
 
-        <a href="pages/ai-gateway.html" class="project-card glass-panel" data-tags="all automation">
+        <a href="pages/skillsusa.html" class="project-card glass-panel" data-tags="all competition">
           <div class="project-top">
             <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </span>
-            <span class="project-type">AI Automation</span>
-            <span class="status-badge active">Active</span>
+            <span class="project-type">Competition</span>
+            <span class="status-badge">1st Place</span>
           </div>
 
-          <h3>AI Gateway</h3>
+          <h3>SkillsUSA IT &amp; Networking</h3>
           <p>
-            Self-hosted Node.js gateway routing Telegram messages and emails to Claude, Gemini CLI, or Codex — with git integration, live streaming replies, and persistent conversation memory.
+            1st place at SkillsUSA district competition in IT &amp; Networking — live troubleshooting, hardware identification, and network configuration under timed conditions.
           </p>
 
           <div class="chip-row">
-            <span class="chip">Node.js</span>
-            <span class="chip">Claude</span>
-            <span class="chip">Gemini CLI</span>
-            <span class="chip">Telegram</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/mcp-server.html" class="project-card glass-panel" data-tags="all automation">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            </span>
-            <span class="project-type">AI Infrastructure</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Homelab MCP Server</h3>
-          <p>
-            Custom Node.js MCP server on a Proxmox LXC exposing 55 approved tools for OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other lab services over SSH.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Node.js</span>
-            <span class="chip">MCP</span>
-            <span class="chip">55 Tools</span>
-            <span class="chip">Claude Code</span>
+            <span class="chip">Networking</span>
+            <span class="chip">CompTIA A+</span>
+            <span class="chip">Troubleshooting</span>
+            <span class="chip">SkillsUSA</span>
           </div>
 
           <span class="card-link">View project -&gt;</span>
