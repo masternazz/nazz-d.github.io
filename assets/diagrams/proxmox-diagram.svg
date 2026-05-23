@@ -1,167 +1,153 @@
-<svg width="900" height="620" viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', system-ui, sans-serif">
+<svg width="980" height="640" viewBox="0 0 980 640" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Arial, sans-serif">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#0d0a18"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
       <stop offset="100%" stop-color="#030208"/>
     </linearGradient>
-    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#1a1030"/>
-      <stop offset="100%" stop-color="#0a0818"/>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#172033"/>
+      <stop offset="100%" stop-color="#0b0f1a"/>
     </linearGradient>
-    <linearGradient id="purpleBar" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#9333ea"/>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="40%" stop-color="#8b5cf6"/>
+      <stop offset="80%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#22c55e"/>
     </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#9333ea" stroke-width="0.4" opacity="0.2"/>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#334155" stroke-width="0.45" opacity="0.24"/>
     </pattern>
     <filter id="glow">
       <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M0,0 L0,8 L8,4 z" fill="#7c3aed" opacity="0.85"/>
+    <marker id="arrPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#8b5cf6"/>
     </marker>
-    <marker id="arrIndigo" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M0,0 L0,8 L8,4 z" fill="#4f46e5" opacity="0.85"/>
+    <marker id="arrBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#22c55e"/>
     </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="900" height="620" fill="url(#bg)"/>
-  <rect width="900" height="620" fill="url(#grid)"/>
+  <rect width="980" height="640" fill="url(#bg)"/>
+  <rect width="980" height="640" fill="url(#grid)"/>
+  <rect x="0" y="0" width="980" height="5" fill="url(#bar)"/>
 
-  <!-- Title -->
-  <text x="450" y="32" text-anchor="middle" fill="#c084fc" font-size="15" font-weight="700" letter-spacing="2">Proxmox VE Cluster</text>
-  <text x="450" y="50" text-anchor="middle" fill="#4b4266" font-size="10" letter-spacing="1">masternazz.com homelab · virtualization platform</text>
+  <text x="490" y="34" text-anchor="middle" fill="#e5e7eb" font-size="17" font-weight="700" letter-spacing="1.4">Proxmox VE Cluster</text>
+  <text x="490" y="54" text-anchor="middle" fill="#94a3b8" font-size="10">3-node cluster · IBM M4 + Dell R610 + Dell R410 · 25+ VMs and LXCs · PBS backup · 3-2-1 strategy</text>
 
-  <!-- Node 1 -->
-  <rect x="38" y="62" width="258" height="76" rx="8" fill="url(#card)" stroke="#9333ea" stroke-width="1.8" filter="url(#glow)"/>
-  <rect x="38" y="62" width="258" height="5" rx="4" fill="url(#purpleBar)"/>
-  <text x="167" y="85" text-anchor="middle" fill="#f6f3ff" font-size="12" font-weight="700">Node 1 - IBM M4</text>
-  <text x="167" y="103" text-anchor="middle" fill="#9488ad" font-size="10">Proxmox Node 1</text>
-  <text x="167" y="119" text-anchor="middle" fill="#4b4266" font-size="9">All VMs &amp; containers run here</text>
+  <!-- 3 nodes -->
+  <rect x="38" y="72" width="280" height="82" rx="10" fill="url(#card)" stroke="#f59e0b" stroke-width="2" filter="url(#glow)"/>
+  <rect x="38" y="72" width="280" height="5" rx="4" fill="#f59e0b"/>
+  <text x="178" y="100" text-anchor="middle" fill="#fcd34d" font-size="13" font-weight="700">firstmoon — IBM M4</text>
+  <text x="178" y="120" text-anchor="middle" fill="#94a3b8" font-size="10">Primary compute node</text>
+  <text x="178" y="138" text-anchor="middle" fill="#64748b" font-size="9">Most VMs and LXCs run here · live migration target</text>
 
-  <!-- Node 2 -->
-  <rect x="321" y="62" width="258" height="76" rx="8" fill="url(#card)" stroke="#7c3aed" stroke-width="1.8"/>
-  <rect x="321" y="62" width="258" height="5" rx="4" fill="url(#purpleBar)"/>
-  <text x="450" y="85" text-anchor="middle" fill="#f6f3ff" font-size="12" font-weight="700">Node 2 - Dell R610</text>
-  <text x="450" y="103" text-anchor="middle" fill="#9488ad" font-size="10">Proxmox Node 2</text>
-  <text x="450" y="119" text-anchor="middle" fill="#4b4266" font-size="9">Online standby</text>
+  <rect x="350" y="72" width="280" height="82" rx="10" fill="url(#card)" stroke="#8b5cf6" stroke-width="1.8"/>
+  <rect x="350" y="72" width="280" height="5" rx="4" fill="#8b5cf6"/>
+  <text x="490" y="100" text-anchor="middle" fill="#c4b5fd" font-size="13" font-weight="700">Node 2 — Dell R610</text>
+  <text x="490" y="120" text-anchor="middle" fill="#94a3b8" font-size="10">Online standby</text>
+  <text x="490" y="138" text-anchor="middle" fill="#64748b" font-size="9">Cluster quorum member · live migration capable</text>
 
-  <!-- Node 3 -->
-  <rect x="604" y="62" width="258" height="76" rx="8" fill="url(#card)" stroke="#7c3aed" stroke-width="1.8"/>
-  <rect x="604" y="62" width="258" height="5" rx="4" fill="url(#purpleBar)"/>
-  <text x="733" y="85" text-anchor="middle" fill="#f6f3ff" font-size="12" font-weight="700">Node 3 - Dell R410</text>
-  <text x="733" y="103" text-anchor="middle" fill="#9488ad" font-size="10">Proxmox Node 3</text>
-  <text x="733" y="119" text-anchor="middle" fill="#4b4266" font-size="9">Online standby</text>
+  <rect x="662" y="72" width="280" height="82" rx="10" fill="url(#card)" stroke="#3b82f6" stroke-width="1.8"/>
+  <rect x="662" y="72" width="280" height="5" rx="4" fill="#3b82f6"/>
+  <text x="802" y="100" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Node 3 — Dell R410</text>
+  <text x="802" y="120" text-anchor="middle" fill="#94a3b8" font-size="10">Online standby</text>
+  <text x="802" y="138" text-anchor="middle" fill="#64748b" font-size="9">Cluster quorum member · corosync link</text>
 
-  <!-- Arrows from nodes down — T-bus into services layer -->
-  <line x1="167" y1="138" x2="167" y2="152" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
-  <line x1="450" y1="138" x2="450" y2="152" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
-  <line x1="733" y1="138" x2="733" y2="152" stroke="#7c3aed" stroke-width="1.5" opacity="0.6"/>
-  <line x1="167" y1="152" x2="733" y2="152" stroke="#7c3aed" stroke-width="1.2" opacity="0.4"/>
-  <line x1="450" y1="152" x2="450" y2="166" stroke="#7c3aed" stroke-width="1.5" opacity="0.6" marker-end="url(#arr)"/>
+  <!-- Cluster bus -->
+  <line x1="178" y1="154" x2="178" y2="168" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="490" y1="154" x2="490" y2="168" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="802" y1="154" x2="802" y2="168" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="178" y1="168" x2="802" y2="168" stroke="#8b5cf6" stroke-width="1.2" opacity="0.4"/>
+  <line x1="490" y1="168" x2="490" y2="182" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6" marker-end="url(#arrPurple)"/>
+  <text x="700" y="163" fill="#c4b5fd" font-size="8.5" text-anchor="middle">corosync cluster link</text>
 
-  <!-- Services header -->
-  <text x="450" y="162" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700" letter-spacing="1">22 Running VMs &amp; LXC Containers</text>
+  <!-- Services grid label -->
+  <text x="490" y="196" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="700" letter-spacing="0.8">25+ Running VMs &amp; LXC Containers</text>
 
-  <!-- Service category chips - Row 1 -->
-  <!-- Security -->
-  <rect x="38" y="172" width="262" height="68" rx="8" fill="#110d22" stroke="#9333ea" stroke-width="1.4"/>
-  <rect x="38" y="172" width="262" height="4" rx="4" fill="#9333ea" opacity="0.7"/>
-  <text x="169" y="194" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">Security</text>
-  <text x="169" y="211" text-anchor="middle" fill="#a78bfa" font-size="11">Wazuh SIEM / XDR</text>
-  <text x="169" y="228" text-anchor="middle" fill="#4b4266" font-size="9">Log ingestion · threat detection · alert triage</text>
+  <!-- Service chips 3x2 grid -->
+  <rect x="38" y="206" width="290" height="72" rx="8" fill="#0b1220" stroke="#ef4444" stroke-width="1.3"/>
+  <rect x="38" y="206" width="290" height="4" rx="4" fill="#ef4444"/>
+  <text x="183" y="228" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="700">Security</text>
+  <text x="183" y="247" text-anchor="middle" fill="#94a3b8" font-size="10">Wazuh SIEM / XDR · log collection</text>
+  <text x="183" y="264" text-anchor="middle" fill="#64748b" font-size="8.5">Threat detection · alert triage · endpoint agents</text>
 
-  <!-- Identity -->
-  <rect x="319" y="172" width="262" height="68" rx="8" fill="#110d22" stroke="#7c3aed" stroke-width="1.4"/>
-  <rect x="319" y="172" width="262" height="4" rx="4" fill="#7c3aed" opacity="0.7"/>
-  <text x="450" y="194" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">Identity</text>
-  <text x="450" y="211" text-anchor="middle" fill="#a78bfa" font-size="11">Authentik SSO / OIDC</text>
-  <text x="450" y="228" text-anchor="middle" fill="#4b4266" font-size="9">Centralized auth · MFA · LDAP outpost</text>
+  <rect x="345" y="206" width="290" height="72" rx="8" fill="#0b1220" stroke="#8b5cf6" stroke-width="1.3"/>
+  <rect x="345" y="206" width="290" height="4" rx="4" fill="#8b5cf6"/>
+  <text x="490" y="228" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="700">Identity</text>
+  <text x="490" y="247" text-anchor="middle" fill="#94a3b8" font-size="10">Authentik SSO / OIDC / LDAP</text>
+  <text x="490" y="264" text-anchor="middle" fill="#64748b" font-size="8.5">Centralized auth · MFA · user groups</text>
 
-  <!-- Media -->
-  <rect x="600" y="172" width="262" height="68" rx="8" fill="#110d22" stroke="#6d28d9" stroke-width="1.4"/>
-  <rect x="600" y="172" width="262" height="4" rx="4" fill="#6d28d9" opacity="0.7"/>
-  <text x="731" y="194" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">Media</text>
-  <text x="731" y="211" text-anchor="middle" fill="#a78bfa" font-size="11">Media Server</text>
-  <text x="731" y="228" text-anchor="middle" fill="#4b4266" font-size="9">Self-hosted streaming</text>
+  <rect x="652" y="206" width="290" height="72" rx="8" fill="#0b1220" stroke="#14b8a6" stroke-width="1.3"/>
+  <rect x="652" y="206" width="290" height="4" rx="4" fill="#14b8a6"/>
+  <text x="797" y="228" text-anchor="middle" fill="#5eead4" font-size="11" font-weight="700">Media &amp; Home</text>
+  <text x="797" y="247" text-anchor="middle" fill="#94a3b8" font-size="10">Jellyfin · Home Assistant</text>
+  <text x="797" y="264" text-anchor="middle" fill="#64748b" font-size="8.5">Self-hosted streaming · smart home automation</text>
 
-  <!-- Service category chips - Row 2 -->
-  <!-- AI/ML -->
-  <rect x="38" y="252" width="262" height="68" rx="8" fill="#110d22" stroke="#9333ea" stroke-width="1.4"/>
-  <rect x="38" y="252" width="262" height="4" rx="4" fill="#9333ea" opacity="0.7"/>
-  <text x="169" y="274" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">AI / ML</text>
-  <text x="169" y="291" text-anchor="middle" fill="#a78bfa" font-size="11">Ollama · OpenWebUI</text>
-  <text x="169" y="308" text-anchor="middle" fill="#4b4266" font-size="9">Local LLM inference · web chat interface</text>
+  <rect x="38" y="290" width="290" height="72" rx="8" fill="#0b1220" stroke="#22d3ee" stroke-width="1.3"/>
+  <rect x="38" y="290" width="290" height="4" rx="4" fill="#22d3ee"/>
+  <text x="183" y="312" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="700">Networking Services</text>
+  <text x="183" y="331" text-anchor="middle" fill="#94a3b8" font-size="10">NPMplus · AdGuard · Headscale</text>
+  <text x="183" y="348" text-anchor="middle" fill="#64748b" font-size="8.5">Reverse proxy · DNS · VPN mesh controller</text>
 
-  <!-- Automation -->
-  <rect x="319" y="252" width="262" height="68" rx="8" fill="#110d22" stroke="#7c3aed" stroke-width="1.4"/>
-  <rect x="319" y="252" width="262" height="4" rx="4" fill="#7c3aed" opacity="0.7"/>
-  <text x="450" y="274" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">Automation</text>
-  <text x="450" y="291" text-anchor="middle" fill="#a78bfa" font-size="11">Home Assistant</text>
-  <text x="450" y="308" text-anchor="middle" fill="#4b4266" font-size="9">Smart home · event automation · integrations</text>
+  <rect x="345" y="290" width="290" height="72" rx="8" fill="#0b1220" stroke="#f59e0b" stroke-width="1.3"/>
+  <rect x="345" y="290" width="290" height="4" rx="4" fill="#f59e0b"/>
+  <text x="490" y="312" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="700">Game Servers</text>
+  <text x="490" y="331" text-anchor="middle" fill="#94a3b8" font-size="10">Pelican Panel + Wings · Docker</text>
+  <text x="490" y="348" text-anchor="middle" fill="#64748b" font-size="8.5">Minecraft · web-based server management</text>
 
-  <!-- Game Servers -->
-  <rect x="600" y="252" width="262" height="68" rx="8" fill="#110d22" stroke="#6d28d9" stroke-width="1.4"/>
-  <rect x="600" y="252" width="262" height="4" rx="4" fill="#6d28d9" opacity="0.7"/>
-  <text x="731" y="274" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="700">Game Servers</text>
-  <text x="731" y="291" text-anchor="middle" fill="#a78bfa" font-size="11">Pelican Panel + Wings</text>
-  <text x="731" y="308" text-anchor="middle" fill="#4b4266" font-size="9">Multi-game · web-based management</text>
+  <rect x="652" y="290" width="290" height="72" rx="8" fill="#0b1220" stroke="#22c55e" stroke-width="1.3"/>
+  <rect x="652" y="290" width="290" height="4" rx="4" fill="#22c55e"/>
+  <text x="797" y="312" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">AI &amp; Infrastructure</text>
+  <text x="797" y="331" text-anchor="middle" fill="#94a3b8" font-size="10">Mailcow · Ollama · MCP Server</text>
+  <text x="797" y="348" text-anchor="middle" fill="#64748b" font-size="8.5">Self-hosted email · local LLM · AI tooling</text>
 
   <!-- Smaller chips row -->
-  <rect x="38" y="334" width="128" height="34" rx="6" fill="#110d22" stroke="#9333ea" stroke-width="0.8"/>
-  <text x="102" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">NPMplus</text>
-  <text x="102" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">Reverse proxy</text>
+  <g fill="#0b1220" stroke-width="1">
+    <rect x="38" y="376" width="148" height="36" rx="6" stroke="#8b5cf6"/>
+    <rect x="195" y="376" width="148" height="36" rx="6" stroke="#8b5cf6"/>
+    <rect x="352" y="376" width="148" height="36" rx="6" stroke="#6366f1"/>
+    <rect x="509" y="376" width="148" height="36" rx="6" stroke="#6366f1"/>
+    <rect x="666" y="376" width="136" height="36" rx="6" stroke="#475569"/>
+    <rect x="811" y="376" width="131" height="36" rx="6" stroke="#475569"/>
+  </g>
+  <text x="112" y="391" text-anchor="middle" fill="#c4b5fd" font-size="9.5" font-weight="600">Homepage</text>
+  <text x="112" y="405" text-anchor="middle" fill="#64748b" font-size="8">Dashboard launcher</text>
+  <text x="269" y="391" text-anchor="middle" fill="#c4b5fd" font-size="9.5" font-weight="600">netboot.xyz</text>
+  <text x="269" y="405" text-anchor="middle" fill="#64748b" font-size="8">PXE boot server</text>
+  <text x="426" y="391" text-anchor="middle" fill="#a5b4fc" font-size="9.5" font-weight="600">TeamSpeak</text>
+  <text x="426" y="405" text-anchor="middle" fill="#64748b" font-size="8">Voice server</text>
+  <text x="583" y="391" text-anchor="middle" fill="#a5b4fc" font-size="9.5" font-weight="600">Uptime Kuma</text>
+  <text x="583" y="405" text-anchor="middle" fill="#64748b" font-size="8">Service monitoring</text>
+  <text x="734" y="391" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-weight="600">AI Gateway</text>
+  <text x="734" y="405" text-anchor="middle" fill="#64748b" font-size="8">Telegram/email AI</text>
+  <text x="876" y="391" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-weight="600">Cloudflared</text>
+  <text x="876" y="405" text-anchor="middle" fill="#64748b" font-size="8">Tunnel LXC</text>
 
-  <rect x="174" y="334" width="128" height="34" rx="6" fill="#110d22" stroke="#9333ea" stroke-width="0.8"/>
-  <text x="238" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">Headscale</text>
-  <text x="238" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">VPN mesh controller</text>
+  <!-- Arrow to backup -->
+  <line x1="490" y1="422" x2="490" y2="452" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <text x="530" y="440" fill="#93c5fd" font-size="9">backup</text>
 
-  <rect x="310" y="334" width="128" height="34" rx="6" fill="#110d22" stroke="#7c3aed" stroke-width="0.8"/>
-  <text x="374" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">Unifi Controller</text>
-  <text x="374" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">AP management</text>
+  <!-- 3-2-1 backup section -->
+  <rect x="38" y="452" width="444" height="80" rx="10" fill="url(#card)" stroke="#3b82f6" stroke-width="1.8"/>
+  <rect x="38" y="452" width="444" height="5" rx="4" fill="#3b82f6"/>
+  <text x="260" y="476" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="700">Proxmox Backup Server (PBS)</text>
+  <text x="260" y="495" text-anchor="middle" fill="#94a3b8" font-size="9.5">Thecus NAS — Primary backup target</text>
+  <text x="260" y="512" text-anchor="middle" fill="#64748b" font-size="9">Deduplicated incremental · fast restore · encrypted at rest</text>
 
-  <rect x="446" y="334" width="128" height="34" rx="6" fill="#110d22" stroke="#7c3aed" stroke-width="0.8"/>
-  <text x="510" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">Homepage</text>
-  <text x="510" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">Dashboard · launcher</text>
-
-  <rect x="582" y="334" width="128" height="34" rx="6" fill="#110d22" stroke="#6d28d9" stroke-width="0.8"/>
-  <text x="646" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">netboot-xyz</text>
-  <text x="646" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">PXE boot server</text>
-
-  <rect x="718" y="334" width="144" height="34" rx="6" fill="#110d22" stroke="#6d28d9" stroke-width="0.8"/>
-  <text x="790" y="348" text-anchor="middle" fill="#a78bfa" font-size="9.5" font-weight="600">TeamSpeak</text>
-  <text x="790" y="361" text-anchor="middle" fill="#4b4266" font-size="8.5">Voice server</text>
-
-  <!-- Arrow down to backup -->
-  <line x1="450" y1="378" x2="450" y2="408" stroke="#4f46e5" stroke-width="2" opacity="0.7" marker-end="url(#arrIndigo)"/>
-
-  <!-- Backup section header -->
-  <text x="450" y="420" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700" letter-spacing="1">3-2-1 Backup Strategy</text>
-
-  <!-- PBS box -->
-  <rect x="80" y="442" width="340" height="76" rx="8" fill="url(#card)" stroke="#4f46e5" stroke-width="1.8"/>
-  <rect x="80" y="442" width="340" height="5" rx="4" fill="#4f46e5" opacity="0.7"/>
-  <text x="250" y="466" text-anchor="middle" fill="#f6f3ff" font-size="12" font-weight="700">Proxmox Backup Server</text>
-  <text x="250" y="483" text-anchor="middle" fill="#9488ad" font-size="10">Thecus NAS — Primary backup target</text>
-  <text x="250" y="498" text-anchor="middle" fill="#4b4266" font-size="9">Deduplicated incremental · fast restore</text>
-  <text x="250" y="512" text-anchor="middle" fill="#4b4266" font-size="9">Encrypted at rest</text>
-
-  <!-- Synology box -->
-  <rect x="480" y="442" width="340" height="76" rx="8" fill="url(#card)" stroke="#4f46e5" stroke-width="1.8"/>
-  <rect x="480" y="442" width="340" height="5" rx="4" fill="#4f46e5" opacity="0.7"/>
-  <text x="650" y="466" text-anchor="middle" fill="#f6f3ff" font-size="12" font-weight="700">Synology NAS</text>
-  <text x="650" y="483" text-anchor="middle" fill="#9488ad" font-size="10">Secondary — independent backup target</text>
-  <text x="650" y="498" text-anchor="middle" fill="#4b4266" font-size="9">Different media · separate failure domain</text>
-  <text x="650" y="512" text-anchor="middle" fill="#4b4266" font-size="9">Offsite planned</text>
+  <rect x="498" y="452" width="444" height="80" rx="10" fill="url(#card)" stroke="#22c55e" stroke-width="1.8"/>
+  <rect x="498" y="452" width="444" height="5" rx="4" fill="#22c55e"/>
+  <text x="720" y="476" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Synology NAS</text>
+  <text x="720" y="495" text-anchor="middle" fill="#94a3b8" font-size="9.5">Secondary — independent backup target</text>
+  <text x="720" y="512" text-anchor="middle" fill="#64748b" font-size="9">Different media · separate failure domain · offsite planned</text>
 
   <!-- Bottom label -->
-  <rect x="190" y="530" width="520" height="34" rx="8" fill="#110d22" stroke="#4b4266" stroke-width="0.8" opacity="0.8"/>
-  <text x="450" y="545" text-anchor="middle" fill="#c084fc" font-size="10" font-weight="700">3 copies · 2 different media · offsite planned</text>
-  <text x="450" y="558" text-anchor="middle" fill="#4b4266" font-size="9">Proxmox Backup Server (dedup) + Synology NAS (independent target)</text>
-
-  <!-- Footer -->
-  <text x="450" y="586" text-anchor="middle" fill="#4b4266" font-size="9">Cluster managed via Proxmox VE web UI · corosync cluster communication · live migration capable</text>
+  <rect x="200" y="552" width="580" height="52" rx="10" fill="#0b1220" stroke="#475569" stroke-width="1"/>
+  <text x="490" y="572" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="700">3-2-1 Backup Strategy</text>
+  <text x="490" y="590" text-anchor="middle" fill="#64748b" font-size="9">3 copies of data · 2 different storage media · 1 offsite (planned)</text>
+  <text x="490" y="603" text-anchor="middle" fill="#475569" font-size="8.5">Cluster managed via Proxmox VE web UI · corosync · live migration capable</text>
 </svg>
