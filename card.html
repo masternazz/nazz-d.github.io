@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Nazeem Massoom Dickey — Digital Business Card</title>
+  <meta name="description" content="Nazeem Massoom Dickey — IT & Cybersecurity candidate. Junior Network Admin / SOC / NOC. CompTIA Trifecta + CySA+, SkillsUSA Florida 1st Place.">
+  <link rel="canonical" href="https://masternazz.com/card">
+  <meta property="og:title" content="Nazeem Massoom Dickey — Digital Business Card">
+  <meta property="og:description" content="IT & Cybersecurity candidate. 31 certifications, enterprise homelab, SkillsUSA Florida Internetworking 1st Place.">
+  <meta property="og:url" content="https://masternazz.com/card">
+  <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSi2jPcVTgaAjFKwnPG5ZpX2N1dHzHMgcRBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* ── Page shell ── */
+    html, body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    main.card-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 48px;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── The card ── */
+    .biz-card {
+      width: min(420px, 100%);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-lift);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* top accent bar */
+    .biz-card::before {
+      content: "";
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, var(--purple), var(--accent), var(--green));
+    }
+
+    /* subtle inner glow */
+    .biz-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: radial-gradient(ellipse at 50% -20%, rgba(var(--accent-rgb), 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .card-inner {
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── Header row ── */
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .card-avatar {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--purple-strong));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--btn-text);
+      letter-spacing: -0.04em;
+      box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
+    }
+
+    .card-identity {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-name {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .card-location {
+      font-size: 0.77rem;
+      color: var(--subtle);
+      margin: 5px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-location svg { flex-shrink: 0; opacity: 0.7; }
+
+    /* ── Open to work badge ── */
+    .otw-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.28);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      align-self: flex-start;
+    }
+
+    .otw-chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    /* ── QR + links row ── */
+    .card-qr-row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* QR wrapper */
+    .qr-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 136px;
+      height: 136px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #ffffff;
+      padding: 8px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+    }
+
+    #qr-canvas {
+      width: 120px !important;
+      height: 120px !important;
+      display: block;
+    }
+
+    #qr-canvas canvas,
+    #qr-canvas img {
+      width: 120px !important;
+      height: 120px !important;
+      display: block;
+      border-radius: 4px;
+    }
+
+    /* ND overlay on QR */
+    .qr-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: #7c3aed;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 0.62rem;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .qr-label {
+      text-align: center;
+      font-size: 0.64rem;
+      color: var(--subtle);
+      margin-top: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Links column */
+    .card-links {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .card-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      background: rgba(var(--accent-rgb), 0.06);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s var(--ease-out);
+      cursor: pointer;
+    }
+
+    .card-link:hover {
+      background: rgba(var(--accent-rgb), 0.13);
+      border-color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .card-link:active { transform: translateX(1px); }
+
+    .link-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+    }
+
+    .link-icon svg { display: block; }
+
+    .link-text { flex: 1; min-width: 0; }
+    .link-label { display: block; font-size: 0.7rem; color: var(--subtle); font-weight: 500; line-height: 1; margin-bottom: 2px; }
+    .link-val { display: block; font-size: 0.78rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+
+    /* ── Certs strip ── */
+    .certs-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .cert-chip {
+      padding: 4px 9px;
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--chip-text);
+      white-space: nowrap;
+    }
+
+    /* ── Skills row ── */
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-tag {
+      padding: 4px 9px;
+      background: rgba(var(--accent-rgb), 0.07);
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
+      border-radius: 6px;
+      font-size: 0.69rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* ── Footer actions ── */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-actions .button {
+      flex: 1;
+      text-align: center;
+      padding: 11px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* ── Save contact button (vCard) ── */
+    .save-contact-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--purple-strong));
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: opacity 0.18s, transform 0.18s var(--ease-out), box-shadow 0.18s;
+      box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.3);
+    }
+
+    .save-contact-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(var(--accent-rgb), 0.4);
+    }
+
+    .save-contact-btn:active { transform: translateY(0); }
+
+    /* ── Divider ── */
+    .card-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 0 -28px;
+    }
+
+    /* ── "Share this card" hint ── */
+    .share-hint {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--subtle);
+      margin-top: 14px;
+    }
+
+    .share-hint a {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Minimal nav for this page ── */
+    .card-nav {
+      position: relative;
+      z-index: 1;
+      width: min(420px, 100%);
+      margin: 16px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 4px;
+    }
+
+    .card-nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--subtle);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+
+    .card-nav-back:hover { color: var(--accent); }
+
+    .card-nav-theme {
+      /* reuse existing theme-toggle styles via class */
+    }
+
+    /* Responsive: really small screens */
+    @media (max-width: 380px) {
+      .card-inner { padding: 24px 18px 20px; }
+      .card-qr-row { flex-direction: column; align-items: center; }
+      .card-links { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- minimal nav -->
+  <div class="card-nav" style="position:relative;z-index:1;">
+    <a href="index.html" class="card-nav-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      masternazz.com
+    </a>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme(event)">
+      <svg class="icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+
+  <main class="card-page">
+    <div class="biz-card">
+      <div class="card-inner">
+
+        <!-- Header -->
+        <div class="card-header">
+          <div class="card-avatar">ND</div>
+          <div class="card-identity">
+            <h1 class="card-name">Nazeem Massoom Dickey</h1>
+            <p class="card-title">Network &amp; Security · NOC / SOC</p>
+            <p class="card-location">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Boynton Beach, FL
+            </p>
+          </div>
+        </div>
+
+        <!-- Open to work -->
+        <div class="otw-chip">
+          <span class="dot"></span>
+          Open to internships &amp; entry-level IT roles
+        </div>
+
+        <div class="card-divider"></div>
+
+        <!-- QR + links -->
+        <div class="card-qr-row">
+          <div>
+            <div class="qr-wrap">
+              <div id="qr-canvas"></div>
+              <div class="qr-logo">ND</div>
+            </div>
+            <p class="qr-label">Scan to open portfolio</p>
+          </div>
+
+          <div class="card-links">
+            <!-- Portfolio -->
+            <a href="https://masternazz.com" class="card-link" target="_blank" rel="noopener noreferrer">
+              <div class="link-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="link-text">
+                <span class="link-label">Portfolio</span>
+                <span class="link-val">masternazz.com</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--subtle)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/nazeemdickey/" class="card-link" target="_blank" rel="noopener noreferrer">
+              <div class="link-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--accent)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <div class="link-text">
+                <span class="link-label">LinkedIn</span>
+                <span class="link-val">in/nazeemdickey</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--subtle)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+
+            <!-- Email -->
+            <button class="card-link" onclick="copyCardEmail(this)">
+              <div class="link-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="link-text">
+                <span class="link-label">Email</span>
+                <span class="link-val" id="card-email-val">nazeemdickey@masternazz.com</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--subtle)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+
+            <!-- GitHub -->
+            <a href="https://github.com/masternazz" class="card-link" target="_blank" rel="noopener noreferrer">
+              <div class="link-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--accent)"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              </div>
+              <div class="link-text">
+                <span class="link-label">GitHub</span>
+                <span class="link-val">github.com/masternazz</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--subtle)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <!-- Certs -->
+        <div>
+          <p style="font-size:0.7rem;font-weight:700;color:var(--subtle);letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;">Certifications</p>
+          <div class="certs-strip">
+            <span class="cert-chip">CompTIA A+</span>
+            <span class="cert-chip">Network+</span>
+            <span class="cert-chip">Security+</span>
+            <span class="cert-chip">CySA+</span>
+            <span class="cert-chip">CSAP</span>
+            <span class="cert-chip">CSIS</span>
+            <span class="cert-chip">CIOS</span>
+            <span class="cert-chip">Cisco CCST Net</span>
+            <span class="cert-chip">Cisco CCST Cyber</span>
+            <span class="cert-chip">AZ-900</span>
+            <span class="cert-chip">+22 more</span>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div>
+          <p style="font-size:0.7rem;font-weight:700;color:var(--subtle);letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;">Skills</p>
+          <div class="skills-row">
+            <span class="skill-tag">OPNsense</span>
+            <span class="skill-tag">Proxmox VE</span>
+            <span class="skill-tag">VLAN / 802.1Q</span>
+            <span class="skill-tag">Wazuh SIEM</span>
+            <span class="skill-tag">Cloudflare</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Node.js</span>
+          </div>
+        </div>
+
+        <!-- SkillsUSA callout -->
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.22);border-radius:10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div>
+            <p style="font-size:0.73rem;font-weight:700;color:#f59e0b;margin:0;line-height:1.2;">SkillsUSA Florida — Internetworking</p>
+            <p style="font-size:0.68rem;color:var(--subtle);margin:2px 0 0;line-height:1.3;">1st Place · Gold Medal · 2026</p>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <!-- Save contact -->
+        <button class="save-contact-btn" onclick="downloadVCard()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Save Contact
+        </button>
+
+        <!-- Share / QR actions -->
+        <div class="card-actions">
+          <a href="pages/resume.html" class="button secondary" style="font-size:0.78rem;padding:10px;">View Resume</a>
+          <a href="pages/certifications.html" class="button secondary" style="font-size:0.78rem;padding:10px;">All Certs</a>
+          <button class="button secondary" style="font-size:0.78rem;padding:10px;" onclick="shareCard()">Share</button>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="share-hint">
+      masternazz.com/card &mdash; share this link or scan the QR above
+    </p>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Generate QR code pointing to this card page
+    document.addEventListener("DOMContentLoaded", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") !== "light";
+      buildQR(isDark);
+    });
+
+    function buildQR(dark) {
+      const container = document.getElementById("qr-canvas");
+      container.innerHTML = "";
+      new QRCode(container, {
+        text: "https://masternazz.com/card",
+        width: 120,
+        height: 120,
+        colorDark: dark ? "#1a0a2e" : "#1e293b",
+        colorLight: dark ? "#ffffff" : "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H   // H = 30% error correction — leaves room for the ND logo
+      });
+    }
+
+    // Rebuild QR on theme change to match colors
+    const _origToggle = window.toggleTheme;
+    window.toggleTheme = function(e) {
+      if (_origToggle) _origToggle(e);
+      setTimeout(() => {
+        const nowDark = document.documentElement.getAttribute("data-theme") !== "light";
+        buildQR(nowDark);
+      }, 50);
+    };
+
+    // Copy email
+    function copyCardEmail(btn) {
+      const val = document.getElementById("card-email-val");
+      navigator.clipboard.writeText("nazeemdickey@masternazz.com").then(() => {
+        val.textContent = "Copied!";
+        setTimeout(() => { val.textContent = "nazeemdickey@masternazz.com"; }, 2000);
+      }).catch(() => {
+        val.textContent = "nazeemdickey@masternazz.com";
+      });
+    }
+
+    // Download vCard (.vcf) — saves to contacts app on phone
+    function downloadVCard() {
+      const vcf = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:Nazeem Massoom Dickey",
+        "N:Massoom Dickey;Nazeem;;;",
+        "TITLE:IT & Cybersecurity Candidate",
+        "ORG:Open to Opportunities",
+        "EMAIL;TYPE=INTERNET:nazeemdickey@masternazz.com",
+        "URL:https://masternazz.com",
+        "URL;TYPE=LinkedIn:https://www.linkedin.com/in/nazeemdickey/",
+        "URL;TYPE=GitHub:https://github.com/masternazz",
+        "ADR;TYPE=HOME:;;Boynton Beach;FL;;;US",
+        "NOTE:CompTIA Trifecta + CySA+ | SkillsUSA Florida Internetworking 1st Place 2026 | Proxmox / OPNsense homelab | 31 certifications",
+        "END:VCARD"
+      ].join("\r\n");
+
+      const blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Nazeem_Massoom_Dickey.vcf";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // Web Share API for the card URL
+    function shareCard() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Nazeem Massoom Dickey",
+          text: "IT & Cybersecurity candidate — masternazz.com",
+          url: "https://masternazz.com/card"
+        });
+      } else {
+        navigator.clipboard.writeText("https://masternazz.com/card").then(() => {
+          const btn = event.target;
+          const orig = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => { btn.textContent = orig; }, 2000);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

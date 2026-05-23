@@ -1,0 +1,121 @@
+<svg data-diagram-theme="light" width="980" height="560" viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#edf5ff"/>
+      <stop offset="100%" stop-color="#f8fbff"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2f7ff"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="45%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#2563eb" stroke-width="0.45" opacity="0.18"/>
+    </pattern>
+    <marker id="arrowCyan" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L0,9 L9,4.5 Z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L0,9 L9,4.5 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L0,9 L9,4.5 Z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="560" fill="url(#bg)"/>
+  <rect width="980" height="560" fill="url(#grid)"/>
+  <rect x="0" y="0" width="980" height="5" fill="url(#bar)"/>
+
+  <text x="490" y="34" text-anchor="middle" fill="#1e293b" font-size="17" font-weight="700" letter-spacing="1.4">AI Automation &amp; Agent Research</text>
+  <text x="490" y="54" text-anchor="middle" fill="#64748b" font-size="10">CLI-based AI tools tested against documented IT infrastructure tasks — AB-900 certified</text>
+
+  <!-- Three AI tools -->
+  <rect x="38" y="80" width="186" height="120" rx="10" fill="url(#card)" stroke="#06b6d4" stroke-width="1.5"/>
+  <rect x="38" y="80" width="186" height="5" rx="4" fill="#06b6d4"/>
+  <text x="131" y="110" text-anchor="middle" fill="#0891b2" font-size="13" font-weight="700">Claude Code</text>
+  <text x="131" y="132" text-anchor="middle" fill="#334155" font-size="10">Agentic CLI with tool use</text>
+  <text x="131" y="150" text-anchor="middle" fill="#64748b" font-size="9.5">MCP client · file ops</text>
+  <text x="131" y="168" text-anchor="middle" fill="#64748b" font-size="9.5">multi-step tasks</text>
+  <text x="131" y="188" text-anchor="middle" fill="#94a3b8" font-size="8.5">AB-900 AI Governance</text>
+
+  <rect x="240" y="80" width="186" height="120" rx="10" fill="url(#card)" stroke="#7c3aed" stroke-width="1.5"/>
+  <rect x="240" y="80" width="186" height="5" rx="4" fill="#7c3aed"/>
+  <text x="333" y="110" text-anchor="middle" fill="#6d28d9" font-size="13" font-weight="700">Gemini CLI</text>
+  <text x="333" y="132" text-anchor="middle" fill="#334155" font-size="10">Google agentic CLI</text>
+  <text x="333" y="150" text-anchor="middle" fill="#64748b" font-size="9.5">MCP client · shell tools</text>
+  <text x="333" y="168" text-anchor="middle" fill="#64748b" font-size="9.5">--yolo for auto-approve</text>
+  <text x="333" y="188" text-anchor="middle" fill="#94a3b8" font-size="8.5">Flash 2.5 model</text>
+
+  <rect x="442" y="80" width="186" height="120" rx="10" fill="url(#card)" stroke="#d97706" stroke-width="1.5"/>
+  <rect x="442" y="80" width="186" height="5" rx="4" fill="#d97706"/>
+  <text x="535" y="110" text-anchor="middle" fill="#b45309" font-size="13" font-weight="700">OpenAI Codex</text>
+  <text x="535" y="132" text-anchor="middle" fill="#334155" font-size="10">Code-focused CLI agent</text>
+  <text x="535" y="150" text-anchor="middle" fill="#64748b" font-size="9.5">stdin prompt mode</text>
+  <text x="535" y="168" text-anchor="middle" fill="#64748b" font-size="9.5">--quiet for scripting</text>
+  <text x="535" y="188" text-anchor="middle" fill="#94a3b8" font-size="8.5">codex-1 model</text>
+
+  <!-- MCP Server -->
+  <rect x="644" y="80" width="298" height="120" rx="10" fill="url(#card)" stroke="#0d9488" stroke-width="1.5"/>
+  <rect x="644" y="80" width="298" height="5" rx="4" fill="#0d9488"/>
+  <text x="793" y="110" text-anchor="middle" fill="#0f766e" font-size="13" font-weight="700">Homelab MCP Server</text>
+  <text x="793" y="132" text-anchor="middle" fill="#334155" font-size="10">55 validated tools over SSH stdio</text>
+  <text x="793" y="150" text-anchor="middle" fill="#64748b" font-size="9.5">OPNsense · Proxmox · AdGuard · NPMplus</text>
+  <text x="793" y="168" text-anchor="middle" fill="#64748b" font-size="9.5">Mailcow · Wazuh · Home Assistant</text>
+  <text x="793" y="188" text-anchor="middle" fill="#94a3b8" font-size="8.5">Node.js LXC · per-tool auth · zod schemas</text>
+
+  <!-- Arrows from CLIs down -->
+  <line x1="131" y1="200" x2="131" y2="248" stroke="#06b6d4" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+  <line x1="333" y1="200" x2="333" y2="248" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
+  <line x1="535" y1="200" x2="535" y2="248" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmber)"/>
+  <line x1="793" y1="200" x2="793" y2="248" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+
+  <!-- Task types row -->
+  <rect x="38" y="248" width="186" height="96" rx="10" fill="#e0f2fe" stroke="#06b6d4" stroke-width="1.2"/>
+  <rect x="38" y="248" width="186" height="4" rx="4" fill="#06b6d4"/>
+  <text x="131" y="274" text-anchor="middle" fill="#0891b2" font-size="11" font-weight="700">Infrastructure Tasks</text>
+  <text x="131" y="294" text-anchor="middle" fill="#475569" font-size="9">VLAN config · firewall rules</text>
+  <text x="131" y="312" text-anchor="middle" fill="#475569" font-size="9">DNS ops · service restarts</text>
+  <text x="131" y="330" text-anchor="middle" fill="#94a3b8" font-size="8.5">real lab environment</text>
+
+  <rect x="240" y="248" width="186" height="96" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+  <rect x="240" y="248" width="186" height="4" rx="4" fill="#7c3aed"/>
+  <text x="333" y="274" text-anchor="middle" fill="#6d28d9" font-size="11" font-weight="700">Code Tasks</text>
+  <text x="333" y="294" text-anchor="middle" fill="#475569" font-size="9">Script authoring · review</text>
+  <text x="333" y="312" text-anchor="middle" fill="#475569" font-size="9">Repo management via git</text>
+  <text x="333" y="330" text-anchor="middle" fill="#94a3b8" font-size="8.5">structured output verification</text>
+
+  <rect x="442" y="248" width="186" height="96" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <rect x="442" y="248" width="186" height="4" rx="4" fill="#d97706"/>
+  <text x="535" y="274" text-anchor="middle" fill="#b45309" font-size="11" font-weight="700">Research</text>
+  <text x="535" y="294" text-anchor="middle" fill="#475569" font-size="9">Agentic hang analysis</text>
+  <text x="535" y="312" text-anchor="middle" fill="#475569" font-size="9">Prompt injection testing</text>
+  <text x="535" y="330" text-anchor="middle" fill="#94a3b8" font-size="8.5">subprocess behavior study</text>
+
+  <rect x="644" y="248" width="298" height="96" rx="10" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+  <rect x="644" y="248" width="298" height="4" rx="4" fill="#0d9488"/>
+  <text x="793" y="274" text-anchor="middle" fill="#0f766e" font-size="11" font-weight="700">MCP Workflow</text>
+  <text x="793" y="294" text-anchor="middle" fill="#475569" font-size="9">AI client calls tool → structured result</text>
+  <text x="793" y="312" text-anchor="middle" fill="#475569" font-size="9">no terminal switching · no copy-paste</text>
+  <text x="793" y="330" text-anchor="middle" fill="#94a3b8" font-size="8.5">real homelab ops through MCP protocol</text>
+
+  <!-- Bottom summary bar -->
+  <rect x="38" y="376" width="904" height="80" rx="12" fill="url(#card)" stroke="#cbd5e1" stroke-width="1.2"/>
+  <rect x="38" y="376" width="904" height="5" rx="4" fill="url(#bar)"/>
+  <text x="490" y="404" text-anchor="middle" fill="#1e293b" font-size="12" font-weight="700">What This Research Covers</text>
+  <text x="210" y="428" text-anchor="middle" fill="#0891b2" font-size="10">How each CLI handles agentic vs. direct prompt modes</text>
+  <text x="210" y="446" text-anchor="middle" fill="#94a3b8" font-size="9">spawn behavior · stdin vs. arg · timeout patterns</text>
+  <text x="570" y="428" text-anchor="middle" fill="#6d28d9" font-size="10">MCP as the integration layer for AI + infrastructure</text>
+  <text x="570" y="446" text-anchor="middle" fill="#94a3b8" font-size="9">real tasks completed in production lab environment</text>
+  <text x="840" y="428" text-anchor="middle" fill="#b45309" font-size="10">AB-900 AI Governance certified</text>
+  <text x="840" y="446" text-anchor="middle" fill="#94a3b8" font-size="9">responsible agentic deployment</text>
+
+  <!-- Key insight box -->
+  <rect x="38" y="480" width="904" height="48" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="490" y="500" text-anchor="middle" fill="#475569" font-size="10" font-weight="600">Key Finding</text>
+  <text x="490" y="518" text-anchor="middle" fill="#94a3b8" font-size="9">Each CLI has distinct agentic behavior — understanding subprocess patterns, hang conditions, and prompt injection is prerequisite to reliable automated use</text>
+</svg>

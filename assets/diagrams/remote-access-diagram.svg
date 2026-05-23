@@ -36,8 +36,9 @@
   <text x="490" y="34" text-anchor="middle" fill="#e5e7eb" font-size="17" font-weight="700" letter-spacing="1.4">Zero-Trust Remote Access</text>
   <text x="490" y="54" text-anchor="middle" fill="#94a3b8" font-size="10">masternazz.com homelab · dual-path: admin via encrypted tunnel · public via Cloudflare</text>
 
-  <!-- Divider + labels -->
-  <line x1="490" y1="68" x2="490" y2="508" stroke="#475569" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+  <!-- Divider drawn BEFORE any cards so all cards appear on top of it -->
+  <line x1="490" y1="68" x2="490" y2="500" stroke="#475569" stroke-width="1" stroke-dasharray="6,4" opacity="0.4"/>
+
   <text x="245" y="76" text-anchor="middle" fill="#5eead4" font-size="10" font-weight="700" letter-spacing="1">ADMIN / PRIVATE ACCESS</text>
   <text x="735" y="76" text-anchor="middle" fill="#fcd34d" font-size="10" font-weight="700" letter-spacing="1">PUBLIC SERVICE ACCESS</text>
 

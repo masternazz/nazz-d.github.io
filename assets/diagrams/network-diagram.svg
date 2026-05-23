@@ -124,7 +124,7 @@
   <text x="691" y="404" text-anchor="middle" fill="#64748b" font-size="8.5">Workstations · mobile</text>
   <text x="691" y="421" text-anchor="middle" fill="#64748b" font-size="8.5">Separate VLANs per class</text>
 
-  <!-- Proxmox → Services layer -->
+  <!-- Proxmox → Services layer (line drawn before services layer rect so it goes behind) -->
   <line x1="175" y1="438" x2="175" y2="460" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr)"/>
 
   <!-- Services layer -->
