@@ -14,7 +14,7 @@
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
   <style>
     /* ── Page shell ── */
     html, body {
@@ -46,6 +46,9 @@
       justify-content: space-between;
       padding: 10px 4px;
     }
+
+    /* Override global responsive nav that hides nav-links on mobile */
+    .card-nav .nav-links { display: flex !important; }
 
     .card-nav-back {
       display: flex;
@@ -204,34 +207,14 @@
       border-radius: 14px;
       overflow: hidden;
       background: #ffffff;
-      padding: 10px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    #qr-canvas { width: 140px !important; height: 140px !important; display: block; }
-    #qr-canvas canvas, #qr-canvas img {
-      width: 140px !important; height: 140px !important;
-      display: block; border-radius: 4px;
-    }
-
-    .qr-logo {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 34px; height: 34px;
-      border-radius: 7px;
-      background: #7c3aed;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 0.66rem;
-      color: #ffffff;
-      letter-spacing: -0.02em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.45);
-      pointer-events: none;
-      z-index: 2;
-    }
+    .qr-wrap svg, .qr-wrap canvas { display: block; }
 
     .qr-label {
       font-size: 0.65rem;
@@ -411,11 +394,7 @@
         flex-shrink: 0;
       }
 
-      #qr-canvas-mobile { width: 88px !important; height: 88px !important; }
-      #qr-canvas-mobile canvas,
-      #qr-canvas-mobile img { width: 88px !important; height: 88px !important; display: block; }
-
-      .card-mobile-top .qr-logo { width: 22px; height: 22px; font-size: 0.52rem; border-radius: 5px; }
+      .card-mobile-top .qr-wrap { width: 100px; height: 100px; }
 
       /* hide the standalone QR block on mobile (shown in top row instead) */
       .qr-block-standalone { display: none; }
@@ -440,16 +419,13 @@
 </head>
 <body>
 
-  <!-- minimal nav -->
+  <!-- minimal nav — nav-links lets script.js inject the real theme toggle -->
   <div class="card-nav" style="position:relative;z-index:1;">
     <a href="index.html" class="card-nav-back">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       masternazz.com
     </a>
-    <button class="theme-toggle" aria-label="Toggle theme" id="card-theme-btn">
-      <svg class="icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
+    <div class="nav-links"></div>
   </div>
 
   <main class="card-page">
@@ -461,10 +437,7 @@
 
           <!-- Mobile: identity + small QR side by side -->
           <div class="card-mobile-top">
-            <div class="qr-wrap" id="qr-wrap-mobile">
-              <div id="qr-canvas-mobile"></div>
-              <div class="qr-logo">ND</div>
-            </div>
+            <div class="qr-wrap" id="qr-wrap-mobile"></div>
             <div class="card-mobile-top-identity">
               <div class="card-avatar" style="margin-bottom:8px;">ND</div>
               <h1 class="card-name">Nazeem Massoom Dickey</h1>
@@ -497,10 +470,7 @@
 
           <!-- QR (desktop standalone) -->
           <div class="qr-block qr-block-standalone">
-            <div class="qr-wrap">
-              <div id="qr-canvas"></div>
-              <div class="qr-logo">ND</div>
-            </div>
+            <div class="qr-wrap" id="qr-wrap-desktop"></div>
             <p class="qr-label">Scan to open portfolio</p>
           </div>
 
@@ -631,49 +601,61 @@
 
   <script src="assets/js/script.js"></script>
   <script>
-    // Generate QR code pointing to this card page
+    // ND logo as inline SVG data URI for the QR center
+    const ND_LOGO = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#7c3aed"/><text x="20" y="27" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-weight="900" font-size="16" fill="#ffffff" letter-spacing="-0.5">ND</text></svg>`);
+
+    function makeQRConfig(dark, size) {
+      const dot   = dark ? "#c084fc" : "#7c3aed";
+      const dot2  = dark ? "#818cf8" : "#2563eb";
+      const bg    = "#ffffff";
+      const logoSize = Math.round(size * 0.22);
+      return {
+        width: size, height: size,
+        type: "svg",
+        data: "https://masternazz.com/card",
+        image: ND_LOGO,
+        qrOptions: { errorCorrectionLevel: "H" },
+        imageOptions: { crossOrigin: "anonymous", margin: 2, imageSize: 0.28 },
+        dotsOptions: {
+          type: "extra-rounded",
+          gradient: { type: "linear", rotation: 45,
+            colorStops: [{ offset: 0, color: dot }, { offset: 1, color: dot2 }] }
+        },
+        backgroundOptions: { color: bg },
+        cornersSquareOptions: { type: "extra-rounded", color: dot },
+        cornersDotOptions: { type: "dot", color: dot2 }
+      };
+    }
+
+    let qrDesktop = null;
+    let qrMobile  = null;
+
     document.addEventListener("DOMContentLoaded", () => {
       const isDark = document.documentElement.getAttribute("data-theme") !== "light";
       buildQR(isDark);
     });
 
     function buildQR(dark) {
-      const colorDark  = dark ? "#1a0a2e" : "#1e293b";
-      const colorLight = "#ffffff";
+      const wrapD = document.getElementById("qr-wrap-desktop");
+      const wrapM = document.getElementById("qr-wrap-mobile");
 
-      // Desktop QR (160×160 wrap, 140px canvas)
-      const desktop = document.getElementById("qr-canvas");
-      if (desktop) {
-        desktop.innerHTML = "";
-        new QRCode(desktop, {
-          text: "https://masternazz.com/card",
-          width: 140, height: 140,
-          colorDark, colorLight,
-          correctLevel: QRCode.CorrectLevel.H
-        });
+      if (wrapD) {
+        wrapD.innerHTML = "";
+        qrDesktop = new QRCodeStyling(makeQRConfig(dark, 160));
+        qrDesktop.append(wrapD);
       }
-
-      // Mobile QR (100×100 wrap, 88px canvas)
-      const mobile = document.getElementById("qr-canvas-mobile");
-      if (mobile) {
-        mobile.innerHTML = "";
-        new QRCode(mobile, {
-          text: "https://masternazz.com/card",
-          width: 88, height: 88,
-          colorDark, colorLight,
-          correctLevel: QRCode.CorrectLevel.H
-        });
+      if (wrapM) {
+        wrapM.innerHTML = "";
+        qrMobile = new QRCodeStyling(makeQRConfig(dark, 100));
+        qrMobile.append(wrapM);
       }
     }
 
-    // Theme toggle — card page has no nav-links so script.js never injects its handler
-    document.getElementById("card-theme-btn").addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (_) {}
-      buildQR(next !== "light");
-    });
+    // Rebuild QR whenever script.js changes data-theme
+    new MutationObserver(() => {
+      const dark = document.documentElement.getAttribute("data-theme") !== "light";
+      buildQR(dark);
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     // Copy email
     function copyCardEmail(btn) {
