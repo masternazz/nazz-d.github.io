@@ -170,36 +170,33 @@
       height: 160px;
       border-radius: 14px;
       overflow: hidden;
-      /* white bg with a tiny inset so the QR doesn't touch the rounded edges */
       background: #ffffff;
+      padding: 10px;
+      box-sizing: border-box;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       flex-shrink: 0;
-      padding: 6px;
-      box-sizing: border-box;
     }
 
-    /* qrcodejs renders at 2× then we scale down for crisp output */
     .qr-wrap canvas, .qr-wrap img {
-      width: 148px !important;
-      height: 148px !important;
+      width: 140px !important;
+      height: 140px !important;
       display: block;
     }
 
-    /* ND overlay logo — kept small so it covers <15% of the QR area */
     .qr-logo {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 26px; height: 26px;
-      border-radius: 6px;
+      width: 32px; height: 32px;
+      border-radius: 7px;
       background: #7c3aed;
       display: grid;
       place-items: center;
       font-weight: 900;
-      font-size: 0.58rem;
+      font-size: 0.64rem;
       color: #fff;
       letter-spacing: -0.02em;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.45);
       pointer-events: none;
       z-index: 2;
     }
@@ -379,7 +376,7 @@
       .card-mobile-top .qr-wrap { width: 100px; height: 100px; }
       .card-mobile-top .qr-wrap canvas,
       .card-mobile-top .qr-wrap img { width: 100px !important; height: 100px !important; }
-      .card-mobile-top .qr-logo { width: 18px; height: 18px; font-size: 0.48rem; border-radius: 4px; }
+      .card-mobile-top .qr-logo { width: 22px; height: 22px; font-size: 0.52rem; border-radius: 5px; }
 
       /* hide the standalone QR block on mobile (shown in top row instead) */
       .qr-block-standalone { display: none; }
@@ -613,17 +610,14 @@
     });
 
     function buildQR(dark) {
-      const colorDark  = dark ? "#1a0a2e" : "#1e293b";
-      const colorLight = "#ffffff";
-
-      // Render at 2× pixel density inside each container, CSS scales it down to crisp display
       const desktop = document.getElementById("qr-canvas-desktop");
       if (desktop) {
         desktop.innerHTML = "";
         new QRCode(desktop, {
           text: "https://masternazz.com/card",
-          width: 320, height: 320,
-          colorDark, colorLight,
+          width: 280, height: 280,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
       }
@@ -634,7 +628,8 @@
         new QRCode(mobile, {
           text: "https://masternazz.com/card",
           width: 200, height: 200,
-          colorDark, colorLight,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
       }
