@@ -1155,7 +1155,7 @@ function setupRevealOnScroll() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0, rootMargin: "0px 0px -5% 0px" });
+  }, { threshold: 0, rootMargin: "0px 0px 0px 0px" });
 
   targets.forEach((el) => {
     if (el.classList.contains("reveal-on-scroll")) observer.observe(el);

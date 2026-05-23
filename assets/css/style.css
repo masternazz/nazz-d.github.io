@@ -1184,8 +1184,8 @@ p { color: var(--muted); line-height: 1.72; }
   .rack-gallery { grid-template-columns: 1fr; }
   .timeline-list { padding-left: 28px; }
   .timeline-item::before { left: -24px; }
-  .diagram-card img { min-width: 520px; }
-  .diagram-img { min-width: 520px; }
+  .diagram-card img { min-width: min(520px, 100%); }
+  .diagram-img { min-width: min(520px, 100%); }
   .project-card { min-height: 0; }
   .priority-card, .ops-item, .flow-lane { min-height: 0; }
 }
