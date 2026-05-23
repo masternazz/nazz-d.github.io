@@ -170,35 +170,36 @@
       height: 160px;
       border-radius: 14px;
       overflow: hidden;
+      /* white bg with a tiny inset so the QR doesn't touch the rounded edges */
       background: #ffffff;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       flex-shrink: 0;
+      padding: 6px;
+      box-sizing: border-box;
     }
 
     /* qrcodejs renders at 2× then we scale down for crisp output */
-    /* border-radius clips the canvas corners so no white bleeds past the rounded wrap */
     .qr-wrap canvas, .qr-wrap img {
-      width: 160px !important;
-      height: 160px !important;
+      width: 148px !important;
+      height: 148px !important;
       display: block;
-      border-radius: 14px;
     }
 
-    /* ND overlay logo in center of QR */
+    /* ND overlay logo — kept small so it covers <15% of the QR area */
     .qr-logo {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 36px; height: 36px;
-      border-radius: 8px;
+      width: 26px; height: 26px;
+      border-radius: 6px;
       background: #7c3aed;
       display: grid;
       place-items: center;
       font-weight: 900;
-      font-size: 0.68rem;
+      font-size: 0.58rem;
       color: #fff;
       letter-spacing: -0.02em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
       pointer-events: none;
       z-index: 2;
     }
@@ -378,7 +379,7 @@
       .card-mobile-top .qr-wrap { width: 100px; height: 100px; }
       .card-mobile-top .qr-wrap canvas,
       .card-mobile-top .qr-wrap img { width: 100px !important; height: 100px !important; }
-      .card-mobile-top .qr-logo { width: 24px; height: 24px; font-size: 0.55rem; border-radius: 5px; }
+      .card-mobile-top .qr-logo { width: 18px; height: 18px; font-size: 0.48rem; border-radius: 4px; }
 
       /* hide the standalone QR block on mobile (shown in top row instead) */
       .qr-block-standalone { display: none; }
