@@ -176,10 +176,12 @@
     }
 
     /* qrcodejs renders at 2× then we scale down for crisp output */
+    /* border-radius clips the canvas corners so no white bleeds past the rounded wrap */
     .qr-wrap canvas, .qr-wrap img {
       width: 160px !important;
       height: 160px !important;
       display: block;
+      border-radius: 14px;
     }
 
     /* ND overlay logo in center of QR */
