@@ -1180,16 +1180,20 @@ p { color: var(--muted); line-height: 1.72; }
   .nav-links { gap: 10px; }
   .search-trigger kbd { display: none; }
   .card, .snapshot-card, .project-card, .skill-box, .achievement-card, .detail-card { padding: 20px; }
-  .hero h1, .page-hero h1 { font-size: 2.34rem; }
-  .hero h2, .page-hero h2 { font-size: 1.22rem; }
-  .button { width: 100%; }
+  .hero h1, .page-hero h1 { font-size: 2.1rem; }
+  .hero h2, .page-hero h2 { font-size: 1.1rem; }
+  .hero-actions, .buttons { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-actions .button:first-child { grid-column: 1 / -1; }
+  .signal-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 20px; }
+  .signal strong { font-size: 0.88rem; }
   .rack-gallery { grid-template-columns: 1fr; }
   .timeline-list { padding-left: 28px; }
   .timeline-item::before { left: -24px; }
-  .diagram-card img { min-width: min(520px, 100%); }
-  .diagram-img { min-width: min(520px, 100%); }
+  .diagram-card img { min-width: 0; width: 100%; }
+  .diagram-img { min-width: 0; width: 100%; overflow-x: hidden; }
   .project-card { min-height: 0; }
   .priority-card, .ops-item, .flow-lane { min-height: 0; }
+  .eyebrow, .tagline { font-size: 0.75rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
