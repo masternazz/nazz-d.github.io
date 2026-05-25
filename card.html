@@ -366,22 +366,26 @@
       /* On mobile: header row stays side-by-side but name can wrap */
       .card-name { white-space: normal; font-size: 1.15rem; }
 
-      /* QR goes inline with identity on mobile to save vertical space */
+      /* QR centered above identity on mobile */
       .card-mobile-top {
         display: flex;
-        gap: 16px;
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
       }
 
-      .card-mobile-top .qr-wrap { width: 100px; height: 100px; }
+      .card-mobile-top .qr-wrap { width: 130px; height: 130px; }
       .card-mobile-top .qr-wrap canvas,
-      .card-mobile-top .qr-wrap img { width: 100px !important; height: 100px !important; }
-      .card-mobile-top .qr-logo { width: 22px; height: 22px; font-size: 0.52rem; border-radius: 5px; }
+      .card-mobile-top .qr-wrap img { width: 130px !important; height: 130px !important; }
+      .card-mobile-top .qr-logo { width: 28px; height: 28px; font-size: 0.6rem; border-radius: 6px; }
 
       /* hide the standalone QR block on mobile (shown in top row instead) */
       .qr-block-standalone { display: none; }
 
-      .card-mobile-top-identity { flex: 1; min-width: 0; }
+      .card-mobile-top-identity { width: 100%; text-align: center; }
+      .card-mobile-top-identity .card-avatar { margin: 0 auto 8px; }
+      .card-mobile-top-identity .card-location { justify-content: center; }
     }
 
     /* Desktop: hide the mobile-only top row, show standalone QR */
