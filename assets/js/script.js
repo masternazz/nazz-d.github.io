@@ -744,6 +744,7 @@ function setupHeroNameCanvas() {
   const FONT_FAMILY = '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif';
 
   const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lowEnd = (navigator.hardwareConcurrency || 4) <= 2;
 
   function getAccentColor() {
     const theme = document.documentElement.getAttribute("data-theme");
@@ -890,9 +891,11 @@ function setupHeroNameCanvas() {
 
     if (phase === "idle") {
       displayText = NAME;
-      if (now - idleStart > CONFIG.CANVAS_IDLE_GLITCH_MS) {
+      if (!lowEnd && now - idleStart > CONFIG.CANVAS_IDLE_GLITCH_MS) {
         phase = "corrupt";
         phaseStart = now;
+      } else if (lowEnd && now - idleStart > CONFIG.CANVAS_IDLE_GLITCH_MS) {
+        idleStart = now;
       }
       drawFrame();
       rafId = requestAnimationFrame(tick);
@@ -1092,6 +1095,17 @@ function setupFaviconAnimation() {
 
   window.addEventListener("focus", () => { focused = true; });
   window.addEventListener("blur",  () => { focused = false; });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      clearInterval(_faviconIntervalId);
+      _faviconIntervalId = null;
+    } else {
+      if (!_faviconIntervalId) {
+        _faviconIntervalId = setInterval(draw, CONFIG.FAVICON_INTERVAL_MS);
+      }
+    }
+  });
 
   _faviconIntervalId = setInterval(draw, CONFIG.FAVICON_INTERVAL_MS);
   draw();

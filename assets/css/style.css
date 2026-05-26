@@ -1208,6 +1208,7 @@ p { color: var(--muted); line-height: 1.72; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .glass-panel::before, .glass-panel::after { display: none; }
+  .card, .glass-panel, nav, .nav-inner, .mobile-nav-panel { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 }
 
 /* ── Writeup pages ─────────────────────────────────────────────────────── */
