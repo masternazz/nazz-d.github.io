@@ -1,5 +1,25 @@
 const email = "nazeemdickey@masternazz.com";
 
+const CONFIG = {
+  // Hero name canvas
+  CANVAS_TYPE_INTERVAL_MS: 55,
+  CANVAS_IDLE_GLITCH_MS: 8000,
+  CANVAS_CORRUPT_MS: 400,
+  CANVAS_ALIAS_HOLD_MS: 900,
+  CANVAS_CURSOR_BLINK_MS: 530,
+  // Role rotator
+  TYPE_SPEED_MS: 68,
+  DELETE_SPEED_MS: 34,
+  HOLD_MS: 2200,
+  // Cursor spotlight lerp
+  SPOTLIGHT_LERP: 0.14,
+  SPOTLIGHT_DEADZONE: 0.3,
+  // Favicon
+  FAVICON_INTERVAL_MS: 50,
+  FAVICON_TICK_FOCUSED: 0.018,
+  FAVICON_TICK_BLURRED: 0.005,
+};
+
 (() => {
   try {
     const savedTheme = localStorage.getItem("theme");
@@ -111,15 +131,15 @@ function setupCursorSpotlight() {
     const dx = tx - cx;
     const dy = ty - cy;
 
-    if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
+    if (Math.abs(dx) < CONFIG.SPOTLIGHT_DEADZONE && Math.abs(dy) < CONFIG.SPOTLIGHT_DEADZONE) {
       cx = tx;
       cy = ty;
       setSpotlightPosition(cx, cy);
       return;
     }
 
-    cx = lerp(cx, tx, 0.14);
-    cy = lerp(cy, ty, 0.14);
+    cx = lerp(cx, tx, CONFIG.SPOTLIGHT_LERP);
+    cy = lerp(cy, ty, CONFIG.SPOTLIGHT_LERP);
     setSpotlightPosition(cx, cy);
     scheduleTick();
   }
@@ -848,15 +868,13 @@ function setupHeroNameCanvas() {
   function tick(now) {
     rafId = null;
 
-    // Cursor blink — 530ms interval regardless of fps
-    if (now - lastCursorFlip > 530) {
+    if (now - lastCursorFlip > CONFIG.CANVAS_CURSOR_BLINK_MS) {
       cursorOn = !cursorOn;
       lastCursorFlip = now;
     }
 
     if (phase === "typing") {
-      // One char every 55ms
-      if (now - lastCharTime > 55 && charCount < NAME.length) {
+      if (now - lastCharTime > CONFIG.CANVAS_TYPE_INTERVAL_MS && charCount < NAME.length) {
         charCount++;
         lastCharTime = now;
       }
@@ -872,8 +890,7 @@ function setupHeroNameCanvas() {
 
     if (phase === "idle") {
       displayText = NAME;
-      // Trigger glitch every 8 seconds of idle
-      if (now - idleStart > 8000) {
+      if (now - idleStart > CONFIG.CANVAS_IDLE_GLITCH_MS) {
         phase = "corrupt";
         phaseStart = now;
       }
@@ -883,8 +900,7 @@ function setupHeroNameCanvas() {
     }
 
     if (phase === "corrupt") {
-      // Scramble over 400ms
-      const progress = Math.min((now - phaseStart) / 400, 1);
+      const progress = Math.min((now - phaseStart) / CONFIG.CANVAS_CORRUPT_MS, 1);
       displayText = scrambleBetween(NAME, ALIAS, progress);
       if (progress >= 1) { phase = "alias"; phaseStart = now; }
       drawFrame();
@@ -893,17 +909,15 @@ function setupHeroNameCanvas() {
     }
 
     if (phase === "alias") {
-      // Hold "masternazz" for 900ms
       displayText = ALIAS;
-      if (now - phaseStart > 900) { phase = "recover"; phaseStart = now; }
+      if (now - phaseStart > CONFIG.CANVAS_ALIAS_HOLD_MS) { phase = "recover"; phaseStart = now; }
       drawFrame();
       rafId = requestAnimationFrame(tick);
       return;
     }
 
     if (phase === "recover") {
-      // Scramble back over 400ms
-      const progress = Math.min((now - phaseStart) / 400, 1);
+      const progress = Math.min((now - phaseStart) / CONFIG.CANVAS_CORRUPT_MS, 1);
       displayText = scrambleBetween(ALIAS, NAME, progress);
       if (progress >= 1) {
         phase = "idle";
@@ -1002,7 +1016,14 @@ function setupSkillBars() {
   bars.forEach(b => observer.observe(b));
 }
 
+let _faviconIntervalId = null;
+
 function setupFaviconAnimation() {
+  if (_faviconIntervalId !== null) {
+    clearInterval(_faviconIntervalId);
+    _faviconIntervalId = null;
+  }
+
   const canvas = document.createElement("canvas");
   canvas.width = 32; canvas.height = 32;
   const ctx = canvas.getContext("2d");
@@ -1066,13 +1087,13 @@ function setupFaviconAnimation() {
     ctx.fillText("ND", 16, 17);
 
     link.href = canvas.toDataURL("image/png");
-    t += focused ? 0.018 : 0.005;
+    t += focused ? CONFIG.FAVICON_TICK_FOCUSED : CONFIG.FAVICON_TICK_BLURRED;
   }
 
   window.addEventListener("focus", () => { focused = true; });
   window.addEventListener("blur",  () => { focused = false; });
 
-  setInterval(draw, 50);
+  _faviconIntervalId = setInterval(draw, CONFIG.FAVICON_INTERVAL_MS);
   draw();
 }
 
@@ -1097,9 +1118,9 @@ function setupRoleRotator() {
   let charIdx = 0;
   let deleting = false;
   let lastTick = 0;
-  const TYPE_SPEED = 68;
-  const DELETE_SPEED = 34;
-  const HOLD_MS = 2200;
+  const TYPE_SPEED = CONFIG.TYPE_SPEED_MS;
+  const DELETE_SPEED = CONFIG.DELETE_SPEED_MS;
+  const HOLD_MS = CONFIG.HOLD_MS;
   let holdUntil = 0;
 
   function tick(now) {
@@ -1545,7 +1566,79 @@ function setupMobileNav() {
   });
 }
 
+function setupSharedDOM() {
+  // aria-current="page" — auto-set on nav link matching current URL
+  const path = location.pathname.replace(/\/$/, "") || "/";
+  document.querySelectorAll(".nav-links a").forEach(a => {
+    const href = a.getAttribute("href") || "";
+    const linkPath = new URL(href, location.href).pathname.replace(/\/$/, "");
+    if (linkPath === path) {
+      a.setAttribute("aria-current", "page");
+    } else {
+      a.removeAttribute("aria-current");
+    }
+  });
+
+  // Back-to-top button — inject if not already present in HTML
+  if (!document.getElementById("backToTop")) {
+    const btn = document.createElement("button");
+    btn.id = "backToTop";
+    btn.className = "back-to-top";
+    btn.setAttribute("aria-label", "Back to top");
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    document.body.prepend(btn);
+  }
+
+  // Scroll progress bar — inject if not already present
+  if (!document.getElementById("scrollProgress")) {
+    const bar = document.createElement("div");
+    bar.id = "scrollProgress";
+    bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.prepend(bar);
+  }
+
+  // Contact section — inject before </main> if not already present
+  const main = document.querySelector("main.page");
+  if (main && !document.getElementById("contact")) {
+    const isSubpage = location.pathname.includes("/pages/");
+    const cardHref = isSubpage ? "../card.html" : "card.html";
+    const contact = document.createElement("section");
+    contact.id = "contact";
+    contact.className = "section card callout";
+    contact.innerHTML = `
+      <div class="section-header">
+        <div>
+          <h2>Get In Touch</h2>
+          <p>Open to Junior Network Administrator, SOC Analyst, NOC, MSP, Help Desk, IT Support, and Cybersecurity Internship opportunities.</p>
+        </div>
+      </div>
+      <div class="contact-actions callout-actions">
+        <a href="mailto:${email}" class="button">Email Me</a>
+        <button type="button" class="button secondary" onclick="copyEmail()">Copy Email</button>
+        <a href="https://www.linkedin.com/in/nazeemdickey/" class="button secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/masternazz" class="button secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="${cardHref}" class="button secondary">Digital Card</a>
+      </div>
+      <p class="contact-line callout-contact-line" id="emailText" aria-live="polite">
+        Email: ${email} | Boynton Beach, FL
+      </p>`;
+    main.appendChild(contact);
+  }
+
+  // Footer — inject if not already present, use data-footer-text on <body> for custom text
+  if (!document.querySelector("footer.footer")) {
+    const footerText = document.body.dataset.footerText || "Built with HTML, CSS, and GitHub Pages.";
+    const footer = document.createElement("footer");
+    footer.className = "footer";
+    footer.innerHTML = `<p>${footerText}</p>`;
+    document.body.appendChild(footer);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  setupSharedDOM();
   setupProjectFilters();
   setupCursorSpotlight();
   setupGlassPanels();

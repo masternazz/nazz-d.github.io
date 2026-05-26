@@ -19,41 +19,8 @@
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f9ff" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <style>
-    .cert-media {
-      flex-shrink: 0;
-      width: 100px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      background: #ffffff !important;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
-      overflow: hidden;
-    }
-
-    .cert-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .cert-logo-text {
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: #3d2c8a;
-      letter-spacing: 0.04em;
-    }
-  </style>
 </head>
-<body>
-
-  <button id="backToTop" class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
-
-  <div id="scrollProgress" class="scroll-progress" aria-hidden="true"></div>
+<body data-footer-text="Credential links route to public Credly verification pages whenever available.">
 
   <header class="nav">
     <a href="../index.html" class="brand" aria-label="Nazeem Massoom Dickey home">ND</a>
@@ -62,7 +29,7 @@
       <a href="../index.html#projects">Projects</a>
       <a href="../index.html#skills">Skills</a>
       <a href="journey.html">Timeline</a>
-      <a href="certifications.html" aria-current="page">Certs</a>
+      <a href="certifications.html">Certs</a>
       <a href="resume.html">Resume</a>
       <a href="status.html">Live Status</a>
       <a href="writeups.html">Writeups</a>
@@ -565,33 +532,10 @@
       </div>
     </section>
 
-    <section id="contact" class="section card callout">
-      <div class="section-header">
-        <div>
-          <h2>Get In Touch</h2>
-          <p>Open to Junior Network Administrator, SOC Analyst, NOC, MSP, Help Desk, IT Support, and Cybersecurity Internship opportunities.</p>
-        </div>
-      </div>
-      <div class="contact-actions callout-actions">
-        <a href="mailto:nazeemdickey@masternazz.com" class="button">Email Me</a>
-        <button type="button" class="button secondary" onclick="copyEmail()">Copy Email</button>
-        <a href="https://www.linkedin.com/in/nazeemdickey/" class="button secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://github.com/masternazz" class="button secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="../card.html" class="button secondary">Digital Card</a>
-      </div>
-      <p class="contact-line callout-contact-line" id="emailText" aria-live="polite">
-        Email: nazeemdickey@masternazz.com | Boynton Beach, FL
-      </p>
-    </section>
-
     <div class="back-link">
       <a href="../index.html">&larr; Back to homepage</a>
     </div>
   </main>
-
-  <footer class="footer">
-    <p>Credential links route to public Credly verification pages whenever available.</p>
-  </footer>
 
   <script src="../assets/js/script.js"></script>
 </body>
