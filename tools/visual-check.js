@@ -25,6 +25,7 @@ const root = path.resolve(__dirname, '..');
     'pages/ai-automation.html',
     'pages/skillsusa.html',
     'pages/writeups.html',
+    'pages/writeup-guest-captive-portal.html',
     'pages/writeup-ai-gateway.html',
     'pages/writeup-cyberlaunch-2026.html',
     'pages/writeup-mailcow-email.html',

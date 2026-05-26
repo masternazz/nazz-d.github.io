@@ -310,6 +310,13 @@ const INDEX = [
     "keywords": "writeups ctf competition recap networking troubleshooting field reports cyberlaunch skillsusa vlan cisco technical writing"
   },
   {
+    "title": "Guest VLAN Captive Portal Enforcement",
+    "url": "pages/writeup-guest-captive-portal.html",
+    "icon": "network",
+    "desc": "Writeup on building and validating an OPNsense captive portal for an internet-only guest VLAN.",
+    "keywords": "guest vlan captive portal opnsense dhcp dns firewall isolation wifi ssid unifi vlan8 guest network mobile client validation"
+  },
+  {
     "title": "VLAN 50 Trunking Path Fix",
     "url": "pages/writeup-vlan50.html",
     "icon": "🔀",
