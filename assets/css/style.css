@@ -1211,6 +1211,15 @@ p { color: var(--muted); line-height: 1.72; }
   .card, .glass-panel, nav, .nav-inner, .mobile-nav-panel { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 }
 
+[data-perf="low"] .card,
+[data-perf="low"] .glass-panel,
+[data-perf="low"] nav,
+[data-perf="low"] .nav-inner,
+[data-perf="low"] .mobile-nav-panel { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+[data-perf="low"] .card,
+[data-perf="low"] .glass-panel { will-change: auto !important; }
+[data-perf="low"] *, [data-perf="low"] *::before, [data-perf="low"] *::after { transition-duration: 0.12s !important; }
+
 /* ── Writeup pages ─────────────────────────────────────────────────────── */
 .jump-nav {
   position: sticky;

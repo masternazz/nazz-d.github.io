@@ -31,6 +31,19 @@ const CONFIG = {
   }
 })();
 
+(() => {
+  const cores = navigator.hardwareConcurrency || 4;
+  const mem = navigator.deviceMemory || 4;
+  const conn = navigator.connection;
+  const slowNet = conn && (conn.effectiveType === "2g" || conn.effectiveType === "slow-2g");
+  const coarse = window.matchMedia("(pointer: coarse)").matches;
+
+  if (cores <= 2 || mem <= 2 || slowNet || (coarse && cores <= 4 && mem <= 4)) {
+    document.documentElement.setAttribute("data-perf", "low");
+    CONFIG.FAVICON_INTERVAL_MS = 150;
+  }
+})();
+
 async function copyEmail() {
   const text = document.getElementById("emailText");
 
@@ -90,7 +103,8 @@ function allowsMotionEffects() {
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
-  return finePointer && !reducedMotion;
+  const lowPerf = document.documentElement.getAttribute("data-perf") === "low";
+  return finePointer && !reducedMotion && !lowPerf;
 }
 
 function setupCursorSpotlight() {
