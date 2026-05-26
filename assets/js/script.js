@@ -1303,7 +1303,7 @@ function setupHeroScrollFade() {
   }
 
   function update() {
-    const max = 220;
+    const max = Math.max(hero.offsetHeight * 0.6, 220);
     const progress = Math.min(window.scrollY / max, 1);
     const fade = (progress * 0.55).toFixed(3);
     document.documentElement.style.setProperty("--hero-scroll-fade", fade);
