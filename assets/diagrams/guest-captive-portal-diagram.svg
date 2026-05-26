@@ -1,286 +1,154 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="svgtitle svgdesc">
-  <title id="svgtitle">Guest Captive Portal Architecture</title>
-  <desc id="svgdesc">Public-safe diagram: guest device → guest SSID (VLAN 8) → OPNsense portal zone → captive portal auth → internet allowed, internal blocked.</desc>
-
+<svg width="1100" height="680" viewBox="0 0 1100 680" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Arial, sans-serif">
   <defs>
-    <!-- Background gradient matching site bg -->
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#030208"/>
-      <stop offset="0.5" stop-color="#080611"/>
-      <stop offset="1" stop-color="#030208"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0a18"/>
+      <stop offset="100%" stop-color="#030208"/>
     </linearGradient>
-
-    <!-- Purple glow ambient -->
-    <radialGradient id="glowPurple" cx="18%" cy="-12%" r="45%">
-      <stop offset="0" stop-color="#9333ea" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="#9333ea" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="glowCyan" cx="88%" cy="10%" r="38%">
-      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.09"/>
-      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- Box fills -->
-    <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="rgba(18,12,36,0.72)"/>
-      <stop offset="1" stop-color="rgba(13,8,26,0.82)"/>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1030"/>
+      <stop offset="100%" stop-color="#0a0818"/>
     </linearGradient>
-    <linearGradient id="purpleBoxGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="rgba(147,51,234,0.14)"/>
-      <stop offset="1" stop-color="rgba(147,51,234,0.05)"/>
+    <linearGradient id="purpleBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="50%" stop-color="#9333ea"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
     </linearGradient>
-    <linearGradient id="cyanBoxGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="rgba(6,182,212,0.12)"/>
-      <stop offset="1" stop-color="rgba(6,182,212,0.04)"/>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9333ea"/>
+      <stop offset="40%" stop-color="#22d3ee"/>
+      <stop offset="70%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#ef4444"/>
     </linearGradient>
-    <linearGradient id="redBoxGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="rgba(239,68,68,0.13)"/>
-      <stop offset="1" stop-color="rgba(239,68,68,0.04)"/>
-    </linearGradient>
-    <linearGradient id="greenBoxGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="rgba(34,197,94,0.12)"/>
-      <stop offset="1" stop-color="rgba(34,197,94,0.04)"/>
-    </linearGradient>
-
-    <!-- Accent line gradient -->
-    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#c084fc"/>
-      <stop offset="1" stop-color="#06b6d4"/>
-    </linearGradient>
-    <linearGradient id="lineGradV" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#c084fc"/>
-      <stop offset="1" stop-color="#c084fc" stop-opacity="0.5"/>
-    </linearGradient>
-
-    <!-- Glow filter for boxes -->
-    <filter id="boxGlow" x="-8%" y="-8%" width="116%" height="116%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="purpleGlow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#9333ea" flood-opacity="0.45"/>
-    </filter>
-    <filter id="cyanGlow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#06b6d4" flood-opacity="0.4"/>
-    </filter>
-    <filter id="redGlow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#ef4444" flood-opacity="0.38"/>
-    </filter>
-    <filter id="greenGlow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#22c55e" flood-opacity="0.35"/>
-    </filter>
-    <filter id="titleGlow" x="-5%" y="-20%" width="110%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="16" flood-color="#c084fc" flood-opacity="0.55"/>
-    </filter>
-
-    <!-- Arrow markers -->
-    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1 L 9 5 L 0 9 z" fill="#c084fc"/>
-    </marker>
-    <marker id="arrowCyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1 L 9 5 L 0 9 z" fill="#06b6d4"/>
-    </marker>
-    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1 L 9 5 L 0 9 z" fill="#22c55e"/>
-    </marker>
-    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444"/>
-    </marker>
-
-    <!-- Grid pattern matching site -->
-    <pattern id="grid" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
-      <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(192,132,252,0.055)" stroke-width="1"/>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#9333ea" stroke-width="0.15" opacity="0.22"/>
     </pattern>
-
-    <style>
-      .lbl { font-family: "Segoe UI", Inter, Arial, sans-serif; fill: #f6f3ff; }
-      .muted { fill: #d0c8e2; }
-      .subtle { fill: #9488ad; }
-      .t-title { font-size: 38px; font-weight: 900; letter-spacing: -0.5px; }
-      .t-sub { font-size: 19px; font-weight: 400; }
-      .t-head { font-size: 24px; font-weight: 800; letter-spacing: -0.2px; }
-      .t-body { font-size: 16px; font-weight: 400; }
-      .t-tiny { font-size: 14px; font-weight: 400; }
-      .t-chip { font-size: 13px; font-weight: 600; }
-      .chip-base { fill: rgba(147,51,234,0.12); stroke: rgba(147,51,234,0.32); stroke-width: 1; }
-      .chip-green { fill: rgba(34,197,94,0.1); stroke: rgba(34,197,94,0.3); stroke-width: 1; }
-      .chip-red { fill: rgba(239,68,68,0.1); stroke: rgba(239,68,68,0.3); stroke-width: 1; }
-      .badge { fill: rgba(192,132,252,0.15); stroke: rgba(192,132,252,0.4); stroke-width: 1; }
-    </style>
+    <filter id="glow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#9333ea" opacity="0.9"/>
+    </marker>
+    <marker id="arrCyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#22d3ee" opacity="0.9"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#22c55e" opacity="0.9"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#ef4444" opacity="0.9"/>
+    </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="720" fill="url(#bgGrad)"/>
-  <rect width="1200" height="720" fill="url(#glowPurple)"/>
-  <rect width="1200" height="720" fill="url(#glowCyan)"/>
-  <rect width="1200" height="720" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1100" height="680" fill="url(#bg)"/>
+  <rect width="1100" height="680" fill="url(#grid)"/>
+  <rect x="0" y="0" width="1100" height="5" fill="url(#purpleBar)"/>
 
-  <!-- Title block -->
-  <text x="60" y="68" class="lbl t-title" filter="url(#titleGlow)">Guest Captive Portal</text>
-  <!-- accent underline -->
-  <rect x="60" y="76" width="340" height="3" rx="2" fill="url(#lineGrad)" opacity="0.7"/>
-  <text x="60" y="106" class="lbl t-sub muted">VLAN 8 · OPNsense portal enforcement · internet-only guest access</text>
+  <text x="550" y="34" text-anchor="middle" fill="#e2d9f3" font-size="15" font-weight="700" letter-spacing="2">GUEST CAPTIVE PORTAL — VLAN 8</text>
+  <text x="550" y="52" text-anchor="middle" fill="#4b4266" font-size="10" letter-spacing="1">OPNsense portal enforcement · internet-only guest access · internal-network blocking</text>
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 1 — Guest Device  (left column, top)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#purpleGlow)">
-    <rect x="42" y="148" width="200" height="148" rx="18" fill="url(#purpleBoxGrad)" stroke="rgba(192,132,252,0.42)" stroke-width="1.5"/>
-  </g>
-  <!-- icon: device -->
-  <g transform="translate(112, 176)" opacity="0.85">
-    <rect x="0" y="0" width="60" height="44" rx="6" fill="none" stroke="#c084fc" stroke-width="2"/>
-    <rect x="20" y="44" width="20" height="7" rx="2" fill="#c084fc" opacity="0.7"/>
-    <rect x="12" y="51" width="36" height="3" rx="1.5" fill="#c084fc" opacity="0.4"/>
-  </g>
-  <text x="142" y="244" text-anchor="middle" class="lbl t-head">Guest Device</text>
-  <text x="142" y="266" text-anchor="middle" class="lbl t-body muted">phone / laptop</text>
-  <text x="142" y="285" text-anchor="middle" class="lbl t-tiny subtle">receives guest DHCP lease</text>
+  <!-- Row 1: Guest Device → Guest SSID → OPNsense → Internet -->
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 2 — Guest SSID  (second column, top)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#cyanGlow)">
-    <rect x="302" y="148" width="210" height="148" rx="18" fill="url(#cyanBoxGrad)" stroke="rgba(6,182,212,0.42)" stroke-width="1.5"/>
-  </g>
-  <!-- icon: wifi -->
-  <g transform="translate(377, 170)" opacity="0.85">
-    <path d="M30 38 L30 38" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
-    <path d="M18 26 Q30 15 42 26" stroke="#06b6d4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path d="M10 18 Q30 2 50 18" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.65"/>
-    <circle cx="30" cy="38" r="3.5" fill="#06b6d4"/>
-  </g>
-  <text x="407" y="244" text-anchor="middle" class="lbl t-head">Guest SSID</text>
-  <text x="407" y="266" text-anchor="middle" class="lbl t-body muted">tagged VLAN 8</text>
-  <text x="407" y="285" text-anchor="middle" class="lbl t-tiny subtle">AP trunk carries guest traffic</text>
+  <!-- Guest Device -->
+  <rect x="40" y="76" width="200" height="100" rx="9" fill="url(#card)" stroke="#8b5cf6" stroke-width="1.6"/>
+  <rect x="40" y="76" width="200" height="4" rx="3" fill="#8b5cf6"/>
+  <text x="140" y="103" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="700">Guest Device</text>
+  <text x="140" y="121" text-anchor="middle" fill="#7c6a99" font-size="9.5">Phone or laptop</text>
+  <text x="140" y="138" text-anchor="middle" fill="#7c6a99" font-size="9">Joins guest SSID</text>
+  <text x="140" y="165" text-anchor="middle" fill="#6d28d9" font-size="8" font-style="italic">receives guest DHCP lease</text>
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 3 — OPNsense  (center, tall)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#purpleGlow)">
-    <rect x="572" y="128" width="230" height="188" rx="18" fill="url(#purpleBoxGrad)" stroke="rgba(147,51,234,0.52)" stroke-width="2"/>
-  </g>
-  <!-- shield icon -->
-  <g transform="translate(651, 150)" opacity="0.9">
-    <path d="M24 0 L48 10 L48 26 Q48 40 24 50 Q0 40 0 26 L0 10 Z" fill="none" stroke="#9333ea" stroke-width="2.2"/>
-    <path d="M24 8 L40 16 L40 27 Q40 36 24 44 Q8 36 8 27 L8 16 Z" fill="rgba(147,51,234,0.2)" stroke="none"/>
-    <path d="M16 26 L22 32 L34 20" stroke="#c084fc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  <text x="687" y="248" text-anchor="middle" class="lbl t-head">OPNsense</text>
-  <text x="687" y="272" text-anchor="middle" class="lbl t-body muted">Guest_Portal zone</text>
-  <text x="687" y="292" text-anchor="middle" class="lbl t-tiny subtle">opt8 / Guest interface</text>
-  <!-- badge: DHCP 8hr -->
-  <rect x="626" y="302" width="122" height="24" rx="12" class="badge"/>
-  <text x="687" y="319" text-anchor="middle" class="lbl t-chip" fill="#c084fc">DHCP 8 hr lease</text>
+  <line x1="240" y1="126" x2="290" y2="126" stroke="#8b5cf6" stroke-width="1.8" marker-end="url(#arrPurple)"/>
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 4 — Captive Portal  (center, bottom)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#purpleGlow)">
-    <rect x="562" y="440" width="250" height="158" rx="18" fill="url(#purpleBoxGrad)" stroke="rgba(192,132,252,0.38)" stroke-width="1.5"/>
-  </g>
-  <!-- lock icon -->
-  <g transform="translate(655, 456)" opacity="0.85">
-    <rect x="8" y="18" width="48" height="32" rx="6" fill="none" stroke="#c084fc" stroke-width="2"/>
-    <path d="M16 18 L16 10 Q32 -2 48 10 L48 18" fill="none" stroke="#c084fc" stroke-width="2"/>
-    <circle cx="32" cy="34" r="5" fill="#c084fc" opacity="0.8"/>
-    <line x1="32" y1="39" x2="32" y2="44" stroke="#c084fc" stroke-width="2" stroke-linecap="round"/>
-  </g>
-  <text x="687" y="532" text-anchor="middle" class="lbl t-head">Captive Portal</text>
-  <text x="687" y="554" text-anchor="middle" class="lbl t-body muted">click-to-connect</text>
-  <text x="687" y="573" text-anchor="middle" class="lbl t-tiny subtle">idle 30 min · hard 8 hr</text>
-  <!-- badge: anonymous session -->
-  <rect x="615" y="582" width="144" height="24" rx="12" class="badge"/>
-  <text x="687" y="599" text-anchor="middle" class="lbl t-chip" fill="#c084fc">anon guest session</text>
+  <!-- Guest SSID -->
+  <rect x="290" y="76" width="200" height="100" rx="9" fill="url(#card)" stroke="#22d3ee" stroke-width="1.6"/>
+  <rect x="290" y="76" width="200" height="4" rx="3" fill="#22d3ee"/>
+  <text x="390" y="103" text-anchor="middle" fill="#67e8f9" font-size="12" font-weight="700">Guest SSID</text>
+  <text x="390" y="121" text-anchor="middle" fill="#4b8a99" font-size="9.5">Tagged VLAN 8</text>
+  <text x="390" y="138" text-anchor="middle" fill="#4b8a99" font-size="9">AP trunk carries guest traffic</text>
+  <text x="390" y="165" text-anchor="middle" fill="#0e7490" font-size="8" font-style="italic">802.1Q tag applied at AP</text>
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 5 — Internet (allowed)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#greenGlow)">
-    <rect x="892" y="148" width="196" height="148" rx="18" fill="url(#greenBoxGrad)" stroke="rgba(34,197,94,0.4)" stroke-width="1.5"/>
-  </g>
-  <!-- globe icon -->
-  <g transform="translate(946, 166)" opacity="0.85">
-    <circle cx="44" cy="36" r="32" fill="none" stroke="#22c55e" stroke-width="2"/>
-    <ellipse cx="44" cy="36" rx="16" ry="32" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-    <line x1="12" y1="36" x2="76" y2="36" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-    <line x1="44" y1="4" x2="44" y2="68" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-  </g>
-  <text x="990" y="244" text-anchor="middle" class="lbl t-head">Internet</text>
-  <text x="990" y="266" text-anchor="middle" class="lbl t-body muted">allowed after auth</text>
-  <!-- badge: ALLOWED -->
-  <rect x="940" y="274" width="100" height="24" rx="12" class="chip-green"/>
-  <text x="990" y="291" text-anchor="middle" class="lbl t-chip" fill="#22c55e">ALLOWED</text>
+  <line x1="490" y1="126" x2="540" y2="126" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#arrCyan)"/>
 
-  <!-- ═══════════════════════════════════════════════════
-       NODE 6 — Internal (blocked)
-  ════════════════════════════════════════════════════ -->
-  <g filter="url(#redGlow)">
-    <rect x="892" y="438" width="196" height="168" rx="18" fill="url(#redBoxGrad)" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"/>
-  </g>
-  <!-- no-entry icon -->
-  <g transform="translate(946, 456)" opacity="0.85">
-    <circle cx="44" cy="36" r="32" fill="none" stroke="#ef4444" stroke-width="2"/>
-    <line x1="20" y1="36" x2="68" y2="36" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
-  </g>
-  <text x="990" y="538" text-anchor="middle" class="lbl t-head">Internal</text>
-  <text x="990" y="560" text-anchor="middle" class="lbl t-body muted">mgmt · storage · apps</text>
-  <text x="990" y="579" text-anchor="middle" class="lbl t-tiny subtle">private VLANs</text>
-  <!-- badge: BLOCKED -->
-  <rect x="940" y="588" width="100" height="24" rx="12" class="chip-red"/>
-  <text x="990" y="605" text-anchor="middle" class="lbl t-chip" fill="#ef4444">BLOCKED</text>
+  <!-- OPNsense -->
+  <rect x="540" y="66" width="240" height="120" rx="9" fill="url(#card)" stroke="#9333ea" stroke-width="2.2" filter="url(#glow)"/>
+  <rect x="540" y="66" width="240" height="5" rx="3" fill="url(#purpleBar)"/>
+  <text x="660" y="96" text-anchor="middle" fill="#e2d9f3" font-size="13" font-weight="700">OPNsense</text>
+  <text x="660" y="114" text-anchor="middle" fill="#9b85d4" font-size="10">Guest_Portal zone · opt8 / Guest</text>
+  <text x="660" y="131" text-anchor="middle" fill="#7c6a99" font-size="9">DHCP lease: 8 hours</text>
+  <text x="660" y="148" text-anchor="middle" fill="#7c6a99" font-size="9">Portal idle: 30 min · hard: 8 hr</text>
+  <text x="660" y="175" text-anchor="middle" fill="#6d28d9" font-size="8" font-style="italic">portal zone bound to Guest interface</text>
 
-  <!-- ═══════════════════════════════════════════════════
-       VALIDATION CHECKLIST (bottom-left)
-  ════════════════════════════════════════════════════ -->
-  <rect x="42" y="370" width="458" height="220" rx="18" fill="url(#panelGrad)" stroke="rgba(255,255,255,0.07)" stroke-width="1.5"/>
-  <text x="66" y="408" class="lbl t-head">Validation Checklist</text>
-  <!-- check items -->
-  <!-- item 1 -->
-  <rect x="66" y="422" width="200" height="36" rx="10" class="chip-green"/>
-  <text x="86" y="446" class="lbl t-chip" fill="#22c55e">✓  Guest DHCP lease</text>
-  <!-- item 2 -->
-  <rect x="280" y="422" width="200" height="36" rx="10" class="chip-green"/>
-  <text x="300" y="446" class="lbl t-chip" fill="#22c55e">✓  Portal session</text>
-  <!-- item 3 -->
-  <rect x="66" y="472" width="200" height="36" rx="10" class="chip-green"/>
-  <text x="86" y="496" class="lbl t-chip" fill="#22c55e">✓  Internet works</text>
-  <!-- item 4 -->
-  <rect x="280" y="472" width="200" height="36" rx="10" class="chip-red"/>
-  <text x="300" y="496" class="lbl t-chip" fill="#ef4444">✗  Internal blocked</text>
-  <!-- item 5: root cause note -->
-  <rect x="66" y="522" width="414" height="48" rx="10" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.28)" stroke-width="1"/>
-  <text x="86" y="542" class="lbl t-tiny" fill="#f59e0b">Root cause: portal zone bound to wrong interface</text>
-  <text x="86" y="561" class="lbl t-tiny subtle">Fixed → Guest_Portal bound to opt8 / Guest interface</text>
+  <line x1="780" y1="116" x2="830" y2="116" stroke="#22c55e" stroke-width="1.8" marker-end="url(#arrGreen)"/>
 
-  <!-- ═══════════════════════════════════════════════════
-       FLOW ARROWS
-  ════════════════════════════════════════════════════ -->
-  <!-- 1: Guest Device → Guest SSID -->
-  <line x1="242" y1="222" x2="302" y2="222" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrowPurple)" opacity="0.8"/>
+  <!-- Internet -->
+  <rect x="830" y="76" width="230" height="100" rx="9" fill="url(#card)" stroke="#22c55e" stroke-width="1.6"/>
+  <rect x="830" y="76" width="230" height="4" rx="3" fill="#22c55e"/>
+  <text x="945" y="103" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">Internet</text>
+  <text x="945" y="121" text-anchor="middle" fill="#4a8a5a" font-size="9.5">Allowed after portal auth</text>
+  <text x="945" y="138" text-anchor="middle" fill="#4a8a5a" font-size="9">Full WAN access</text>
+  <text x="945" y="165" text-anchor="middle" fill="#15803d" font-size="8" font-style="italic">ALLOWED</text>
 
-  <!-- 2: Guest SSID → OPNsense -->
-  <line x1="512" y1="222" x2="572" y2="222" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrowCyan)" opacity="0.8"/>
+  <!-- OPNsense down arrow to portal -->
+  <line x1="660" y1="186" x2="660" y2="236" stroke="#9333ea" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrPurple)"/>
 
-  <!-- 3: OPNsense → Captive Portal (vertical) -->
-  <line x1="687" y1="316" x2="687" y2="440" stroke="#c084fc" stroke-width="2.5" stroke-dasharray="8 5" marker-end="url(#arrowPurple)" opacity="0.75"/>
+  <!-- Captive Portal -->
+  <rect x="490" y="236" width="340" height="100" rx="9" fill="url(#card)" stroke="#9333ea" stroke-width="1.8" filter="url(#glow)"/>
+  <rect x="490" y="236" width="340" height="4" rx="3" fill="#9333ea"/>
+  <text x="660" y="263" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="700">Captive Portal</text>
+  <text x="660" y="281" text-anchor="middle" fill="#9b85d4" font-size="9.5">Click-to-connect · anonymous guest session</text>
+  <text x="660" y="298" text-anchor="middle" fill="#7c6a99" font-size="9">Idle timeout: 30 min · Hard timeout: 8 hr</text>
+  <text x="660" y="325" text-anchor="middle" fill="#6d28d9" font-size="8" font-style="italic">session aligned with DHCP lease window</text>
 
-  <!-- 4: OPNsense → Internet (allowed) -->
-  <path d="M802 222 Q847 222 892 222" stroke="#22c55e" stroke-width="2.5" fill="none" marker-end="url(#arrowGreen)" opacity="0.85"/>
+  <!-- Blocked arrow: OPNsense to Internal -->
+  <line x1="780" y1="156" x2="900" y2="280" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrRed)"/>
 
-  <!-- 5: OPNsense → Internal (blocked, diagonal) -->
-  <path d="M802 270 Q847 270 892 505" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-dasharray="9 6" marker-end="url(#arrowRed)" opacity="0.8"/>
+  <!-- Internal (blocked) -->
+  <rect x="830" y="236" width="230" height="100" rx="9" fill="url(#card)" stroke="#ef4444" stroke-width="1.6"/>
+  <rect x="830" y="236" width="230" height="4" rx="3" fill="#ef4444"/>
+  <text x="945" y="263" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="700">Internal Network</text>
+  <text x="945" y="281" text-anchor="middle" fill="#7a3a3a" font-size="9.5">Management · Storage · Apps</text>
+  <text x="945" y="298" text-anchor="middle" fill="#7a3a3a" font-size="9">Private VLANs</text>
+  <text x="945" y="325" text-anchor="middle" fill="#991b1b" font-size="8" font-style="italic">BLOCKED — RFC1918 unreachable</text>
 
-  <!-- Flow label: VLAN 8 tag -->
-  <rect x="340" y="204" width="70" height="24" rx="12" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
-  <text x="375" y="221" text-anchor="middle" class="lbl t-tiny" fill="#06b6d4">VLAN 8</text>
+  <!-- Root cause section -->
+  <rect x="40" y="236" width="430" height="100" rx="9" fill="#0b1220" stroke="#f59e0b" stroke-width="1.4"/>
+  <rect x="40" y="236" width="430" height="4" rx="3" fill="#f59e0b"/>
+  <text x="255" y="261" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="700">Root Cause Found and Fixed</text>
+  <text x="255" y="279" text-anchor="middle" fill="#94a3b8" font-size="9">Portal zone was bound to Network Services interface</text>
+  <text x="255" y="296" text-anchor="middle" fill="#94a3b8" font-size="9">instead of the actual Guest interface (opt8)</text>
+  <text x="255" y="313" text-anchor="middle" fill="#78716c" font-size="8.5">Clients could bypass portal — fix: rebind Guest_Portal to opt8</text>
+  <text x="255" y="325" text-anchor="middle" fill="#57534e" font-size="8" font-style="italic">reconfigured captive portal service after binding update</text>
 
-  <!-- Flow label: auth required -->
-  <rect x="616" y="366" width="142" height="24" rx="12" fill="rgba(192,132,252,0.08)" stroke="rgba(192,132,252,0.28)" stroke-width="1"/>
-  <text x="687" y="382" text-anchor="middle" class="lbl t-tiny subtle">auth required</text>
+  <!-- Validation checklist -->
+  <rect x="40" y="360" width="1020" height="130" rx="12" fill="#0b1220" stroke="#2d1f44" stroke-width="1.2"/>
+  <rect x="40" y="360" width="1020" height="5" rx="4" fill="url(#bar)"/>
+  <text x="550" y="387" text-anchor="middle" fill="#e2d9f3" font-size="12" font-weight="700">Validation Checklist</text>
 
-  <!-- ═══════════════════════════════════════════════════
-       FOOTER NOTE
-  ════════════════════════════════════════════════════ -->
-  <text x="60" y="700" class="lbl t-tiny subtle">Public-safe diagram · private addressing and sensitive host details omitted.</text>
+  <!-- 4 chips -->
+  <rect x="70" y="400" width="220" height="48" rx="8" fill="url(#card)" stroke="#22c55e" stroke-width="1.3"/>
+  <rect x="70" y="400" width="220" height="4" rx="3" fill="#22c55e"/>
+  <text x="180" y="422" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">Guest DHCP Lease</text>
+  <text x="180" y="440" text-anchor="middle" fill="#4a8a5a" font-size="8.5">Client receives guest pool address</text>
+
+  <rect x="310" y="400" width="220" height="48" rx="8" fill="url(#card)" stroke="#22c55e" stroke-width="1.3"/>
+  <rect x="310" y="400" width="220" height="4" rx="3" fill="#22c55e"/>
+  <text x="420" y="422" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">Portal Session Active</text>
+  <text x="420" y="440" text-anchor="middle" fill="#4a8a5a" font-size="8.5">Anonymous session in Guest zone</text>
+
+  <rect x="550" y="400" width="220" height="48" rx="8" fill="url(#card)" stroke="#22c55e" stroke-width="1.3"/>
+  <rect x="550" y="400" width="220" height="4" rx="3" fill="#22c55e"/>
+  <text x="660" y="422" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">Internet Access</text>
+  <text x="660" y="440" text-anchor="middle" fill="#4a8a5a" font-size="8.5">WAN reachable after auth</text>
+
+  <rect x="790" y="400" width="250" height="48" rx="8" fill="url(#card)" stroke="#ef4444" stroke-width="1.3"/>
+  <rect x="790" y="400" width="250" height="4" rx="3" fill="#ef4444"/>
+  <text x="915" y="422" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="700">Internal Blocked</text>
+  <text x="915" y="440" text-anchor="middle" fill="#7a3a3a" font-size="8.5">Private VLANs unreachable from guest</text>
+
+  <text x="550" y="478" text-anchor="middle" fill="#4b3f66" font-size="8" font-style="italic">Stale bypass sessions cleared · old DHCP artifacts on wrong interface removed · portal service reconfigured</text>
+
+  <!-- Footer -->
+  <rect x="40" y="510" width="1020" height="50" rx="8" fill="#0a0818" stroke="#1e1a2e" stroke-width="1"/>
+  <text x="550" y="532" text-anchor="middle" fill="#4b4266" font-size="8.5">Traffic path: Guest Device → Guest SSID (VLAN 8) → OPNsense Guest_Portal zone → Captive Portal auth → Internet</text>
+  <text x="550" y="549" text-anchor="middle" fill="#2d2540" font-size="8" font-style="italic">Public-safe diagram · private addressing, subnet details, and host IPs omitted</text>
 </svg>
