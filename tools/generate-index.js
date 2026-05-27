@@ -16,6 +16,7 @@ const ICON_MAP = {
   'identity': '👤',
   'wazuh': '🔍',
   'status': '📡',
+  'services': 'server',
   'writeups': '✍️',
   'skillsusa': '🥇',
   'journey': '🗺️'

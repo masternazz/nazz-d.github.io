@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Service Status | Nazeem Massoom Dickey</title>
-  <meta name="description" content="Real-time uptime monitoring for masternazz.com services, powered by a self-hosted Uptime Kuma instance running on Proxmox.">
+  <meta name="description" content="Sanitized public uptime monitoring for masternazz.com services, powered by a self-hosted Uptime Kuma instance running on Proxmox.">
   <link rel="canonical" href="https://masternazz.com/pages/status.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Live Service Status | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Self-hosted uptime monitoring with Uptime Kuma — live status for public-facing services.">
+  <meta property="og:description" content="Self-hosted uptime monitoring with Uptime Kuma for public-facing services, plus a sanitized services directory.">
   <meta property="og:url" content="https://masternazz.com/pages/status.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -130,6 +130,7 @@
       <a href="certifications.html">Certs</a>
       <a href="resume.html">Resume</a>
       <a href="status.html">Live Status</a>
+      <a href="services.html">Services</a>
       <a href="writeups.html">Writeups</a>
       <a href="#contact">Contact</a>
       <a href="../card.html">Card</a>
@@ -146,10 +147,14 @@
       <p class="eyebrow">Project | Monitoring</p>
       <h1>Live Service Status</h1>
       <p class="lead">
-        Real-time uptime monitoring for public-facing services — powered by a self-hosted
+        Real-time uptime monitoring for public-facing services - powered by a self-hosted
         Uptime Kuma instance running inside a Proxmox LXC container. The data below is live,
-        not a screenshot.
+        not a screenshot, and the public view is intentionally sanitized.
       </p>
+      <div class="hero-actions">
+        <a href="services.html" class="button">Open Service Directory</a>
+        <a href="https://status.masternazz.com/status/public" class="button secondary" target="_blank" rel="noopener noreferrer">Raw Kuma Page</a>
+      </div>
       <div class="chip-row">
         <span class="chip">Uptime Kuma</span>
         <span class="chip">Proxmox LXC</span>
@@ -165,6 +170,27 @@
         <p class="status-loading">Loading live status&hellip;</p>
       </div>
       <p class="status-updated" id="status-updated"></p>
+    </section>
+
+    <section class="section two-column">
+      <article class="card glass-panel">
+        <h2>Service Directory</h2>
+        <p>
+          The status feed shows health. The service directory is the public front door for user-facing
+          links like media, requests, Git, webmail, game endpoints, and portfolio docs.
+        </p>
+        <div class="callout-actions">
+          <a href="services.html" class="button">Open Services</a>
+        </div>
+      </article>
+
+      <article class="card glass-panel">
+        <h2>Sanitized Public View</h2>
+        <p>
+          This page avoids internal IPs, MAC addresses, credentials, exact firewall rules, admin consoles,
+          storage paths, and backend-only service names. Private systems stay behind private access paths.
+        </p>
+      </article>
     </section>
 
     <section class="section two-column">
