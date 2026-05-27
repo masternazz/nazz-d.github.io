@@ -32,7 +32,6 @@
       <a href="certifications.html">Certs</a>
       <a href="resume.html">Resume</a>
       <a href="status.html">Live Status</a>
-      <a href="services.html">Services</a>
       <a href="writeups.html">Writeups</a>
       <a href="#contact">Contact</a>
       <a href="../card.html">Card</a>
@@ -88,7 +87,7 @@
           <li>Bot polls the server every 5 minutes and edits a single pinned embed (no channel spam) showing live player count, online players, in-game time of day, day number, difficulty, uptime, CPU, memory, and disk usage.</li>
           <li>CPU / memory pulled from <code>docker stats</code>; disk from <code>df</code> inside the container; uptime from Docker's <code>StartedAt</code> timestamp — all via SSH chain through Proxmox.</li>
           <li>Slash commands: <code>/status</code> (full embed on demand) and <code>/players</code> (quick player list).</li>
-          <li>Bot's own Discord status updates dynamically: green "Playing mc.masternazz.com • N/20 online" when up, red "Offline" when down.</li>
+          <li>Bot's own Discord status updates dynamically with a green online player count when up and a red offline state when down.</li>
           <li>Deployed on a dedicated Debian LXC as a systemd service — starts on boot, auto-restarts on failure.</li>
         </ul>
       </div>

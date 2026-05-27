@@ -70,7 +70,7 @@
   <rect x="58" y="352" width="360" height="4" rx="4" fill="#16a34a"/>
   <text x="238" y="375" text-anchor="middle" fill="#15803d" font-size="11" font-weight="700">Docker Container — Minecraft Server</text>
   <text x="238" y="392" text-anchor="middle" fill="#475569" font-size="9.5">Fabric · isolated filesystem · resource limits</text>
-  <text x="238" y="406" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="600">mc.masternazz.com : 25565</text>
+  <text x="238" y="406" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="600">Public game endpoint</text>
 
   <!-- Proxmox right -->
   <rect x="542" y="298" width="400" height="118" rx="10" fill="url(#card)" stroke="#2563eb" stroke-width="1.8"/>

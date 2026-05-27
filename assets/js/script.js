@@ -295,13 +295,6 @@ const INDEX = [
     "keywords": "status uptime kuma monitoring live services proxmox lxc cloudflare tunnel public dashboard masternazz homelab services online"
   },
   {
-    "title": "Public Services",
-    "url": "pages/services.html",
-    "icon": "server",
-    "desc": "Sanitized public service directory for masternazz.com, including status, media, Git, webmail, game endpoints, and portfolio docs.",
-    "keywords": "public services service directory homepage portal status jellyfin media requests invite git forgejo webmail minecraft game endpoints sanitized masternazz"
-  },
-  {
     "title": "Operations &amp; Alerting Stack",
     "url": "pages/operations-alerting.html",
     "icon": "bell",
