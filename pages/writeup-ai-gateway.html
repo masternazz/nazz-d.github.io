@@ -137,7 +137,7 @@
           <p>
             simple-git 3.x blocks the <code>GIT_SSH_COMMAND</code> environment variable unless you explicitly
             opt in with <code>unsafe: { allowUnsafeSshCommand: true }</code> in the constructor options.
-            Setting the env var via <code>.env()</code> doesn't bypass this — the check happens at the options
+            Setting the environment variable through runtime config doesn't bypass this — the check happens at the options
             level before any env is read. Every git operation failed with "core.sshCommand is not permitted
             without enabling allowUnsafeSshCommand" until the option was passed to both the working git
             instance and the separate instance used for cloning.
@@ -178,7 +178,7 @@
           <h3>GEMINI_CLI_TRUST_WORKSPACE not reaching the subprocess</h3>
           <p>
             Gemini requires <code>GEMINI_CLI_TRUST_WORKSPACE=true</code> to operate in directories it hasn't
-            approved. This env var was set in the gateway's <code>.env</code> file and loaded by dotenv —
+            approved. This runtime variable was loaded from local configuration —
             but the subprocess spawned by <code>child_process.spawn</code> uses its own environment constructed
             in <code>SPAWN_ENV()</code>. The fix was to hardcode it directly in that function so it's always
             present regardless of what the parent process loaded.

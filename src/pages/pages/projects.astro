@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { projects } from '../../data/projects';
+import { rolePaths, site } from '../../data/site';
+import { writeups } from '../../data/writeups';
+
+const sortedProjects = [...projects].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99) || a.title.localeCompare(b.title));
+const filters = [
+  ['all', 'All'],
+  ['network', 'Networking'],
+  ['security', 'Security'],
+  ['infrastructure', 'Infrastructure'],
+  ['automation', 'Automation'],
+  ['operations', 'Operations'],
+  ['competition', 'Competition'],
+  ['support', 'Support'],
+  ['network-admin', 'Network Admin'],
+  ['soc-noc', 'SOC / NOC'],
+  ['msp-help-desk', 'MSP / Help Desk'],
+];
+---
+
+<BaseLayout
+  title={`Project Hub | ${site.name}`}
+  description="Full project directory for Nazeem Massoom Dickey, organized by networking, security, infrastructure, automation, operations, competition, and role fit."
+>
+  <section class="page-hero">
+    <span class="eyebrow">Project Hub</span>
+    <h1>One clean directory for the work.</h1>
+    <p class="lead">
+      Filter by domain or role path. Each project page follows the same hiring-friendly structure: problem, build, skills, result, and related writeups.
+    </p>
+  </section>
+
+  <section class="section project-directory" id="project-directory">
+    <div class="project-toolbar" aria-label="Project filters">
+      {filters.map(([value, label], index) => (
+        <button class={`filter-button${index === 0 ? ' is-selected' : ''}`} type="button" data-filter={value}>
+          {label}
+        </button>
+      ))}
+    </div>
+    <div class="grid three">
+      {sortedProjects.map(project => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <span class="mini-label">Role Paths</span>
+        <h2>Reviewer shortcuts</h2>
+      </div>
+    </div>
+    <div class="grid four">
+      {rolePaths.map(path => (
+        <article class="card" id={path.href.split('#')[1]}>
+          <h3>{path.title}</h3>
+          <p>{path.summary}</p>
+          <a class="card-link" href={`/pages/projects.html?filter=${path.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}#project-directory`}>Filter projects</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <span class="mini-label">Writeups</span>
+        <h2>Operational notes and public-safe recaps</h2>
+      </div>
+      <a class="card-link" href="/pages/writeups.html">All writeups</a>
+    </div>
+    <div class="grid three">
+      {writeups.slice(0, 6).map(writeup => (
+        <article class="card">
+          <span class="project-type">{writeup.category} - {writeup.date}</span>
+          <h3>{writeup.title}</h3>
+          <p>{writeup.summary}</p>
+          <a class="card-link" href={writeup.href}>Read writeup</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <ContactCTA />
+
+  <script is:inline>
+    (() => {
+      const directory = document.getElementById('project-directory');
+
+      if (!directory) {
+        return;
+      }
+
+      const buttons = Array.from(directory.querySelectorAll('[data-filter]'));
+      const cards = Array.from(directory.querySelectorAll('[data-tags]'));
+
+      function applyFilter(filter) {
+        buttons.forEach((button) => {
+          button.classList.toggle('is-selected', button.dataset.filter === filter);
+        });
+
+        cards.forEach((card) => {
+          const tags = (card.dataset.tags || '').split(' ');
+          card.classList.toggle('is-hidden', filter !== 'all' && !tags.includes(filter));
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter || 'all';
+          applyFilter(filter);
+          const url = new URL(window.location.href);
+          if (filter === 'all') {
+            url.searchParams.delete('filter');
+          } else {
+            url.searchParams.set('filter', filter);
+          }
+          history.replaceState(null, '', url);
+        });
+      });
+
+      const initial = new URL(window.location.href).searchParams.get('filter') || 'all';
+      applyFilter(initial);
+    })();
+  </script>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { certificationGroups, certificationHighlights } from '../../data/certifications';
+import { site } from '../../data/site';
+---
+
+<BaseLayout
+  title={`Certifications | ${site.name}`}
+  description="Certifications for Nazeem Massoom Dickey including CompTIA, Cisco, Microsoft, Certiport, and related credentials."
+>
+  <section class="page-hero">
+    <span class="eyebrow">Certifications</span>
+    <h1>Credentials backed by hands-on projects.</h1>
+    <p class="lead">
+      The certs show the learning path. The project hub shows the practical application across networking, security, infrastructure, and automation.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="grid four">
+      {certificationHighlights.map(highlight => (
+        <article class="card proof-card">
+          <strong>{highlight}</strong>
+          <p>Validated knowledge area with related public project evidence.</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid two">
+      {certificationGroups.map(group => (
+        <article class="card">
+          <span class="project-type">{group.issuer}</span>
+          <h2>{group.issuer}</h2>
+          <ul class="tag-list cert-list">
+            {group.items.map(item => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

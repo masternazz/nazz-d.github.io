@@ -1,5 +1,7 @@
 node_modules/
 screenshots/
+dist/
+.astro/
 
 # Local visual/check artifacts generated during site QA
 tools/check-pdf.js

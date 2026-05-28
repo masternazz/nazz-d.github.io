@@ -1321,11 +1321,20 @@ function setupHeroScrollFade() {
 }
 
 function setupActiveNav() {
-  const sections = ["#projects", "#skills", "#timeline", "#contact"]
-    .map(id => document.querySelector(id))
+  const navLinks = [...document.querySelectorAll(".nav-links a")];
+  const sectionLinks = navLinks.filter((link) => {
+    const href = link.getAttribute("href") || "";
+    return href.startsWith("#") && href !== "#contact";
+  });
+
+  if (!sectionLinks.length) {
+    return;
+  }
+
+  const sections = sectionLinks
+    .map(link => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
 
-  const navLinks = document.querySelectorAll(".nav-links a");
   if (!navLinks.length || !sections.length) return;
 
   function getLinkForSection(section) {
@@ -1607,7 +1616,8 @@ function setupSharedDOM() {
     const isSubpage = location.pathname.includes("/pages/");
     const root = isSubpage ? "../" : "";
     const pageRoot = isSubpage ? "" : "pages/";
-    const contactHref = document.getElementById("contact") || document.querySelector("main.page") ? "#contact" : `${root}index.html#contact`;
+    const hasLocalContact = Boolean(document.getElementById("contact") || document.querySelector("main.page"));
+    const contactHref = hasLocalContact ? "#contact" : `${root}index.html#contact`;
 
     navLinks.innerHTML = `
       <a href="${root}index.html">Home</a>
@@ -1628,7 +1638,12 @@ function setupSharedDOM() {
   const path = location.pathname.replace(/\/$/, "") || "/";
   document.querySelectorAll(".nav-links a").forEach(a => {
     const href = a.getAttribute("href") || "";
-    const linkPath = new URL(href, location.href).pathname.replace(/\/$/, "");
+    const url = new URL(href, location.href);
+    const linkPath = url.pathname.replace(/\/$/, "");
+    if (href.startsWith("#") || url.hash) {
+      a.removeAttribute("aria-current");
+      return;
+    }
     if (linkPath === path) {
       a.setAttribute("aria-current", "page");
     } else {

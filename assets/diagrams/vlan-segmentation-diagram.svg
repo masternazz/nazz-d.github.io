@@ -75,7 +75,7 @@
   <rect x="60" y="194" width="190" height="112" rx="8" fill="url(#card)" stroke="#3b82f6" stroke-width="1.6"/>
   <rect x="60" y="194" width="190" height="4" rx="3" fill="#3b82f6"/>
   <text x="155" y="218" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700">VLAN 10 — Management</text>
-  <text x="155" y="236" text-anchor="middle" fill="#4b6b9e" font-size="8.5">10.226.10.0/24</text>
+  <text x="155" y="236" text-anchor="middle" fill="#4b6b9e" font-size="8.5">Management subnet</text>
   <text x="155" y="252" text-anchor="middle" fill="#7a9ecf" font-size="8.5">OPNsense · Proxmox nodes</text>
   <text x="155" y="268" text-anchor="middle" fill="#7a9ecf" font-size="8.5">Core + access switches</text>
   <text x="155" y="284" text-anchor="middle" fill="#7a9ecf" font-size="8.5">Admin PC · Ubiquiti AP</text>
@@ -85,7 +85,7 @@
   <rect x="268" y="194" width="190" height="112" rx="8" fill="url(#card)" stroke="#8b5cf6" stroke-width="1.6"/>
   <rect x="268" y="194" width="190" height="4" rx="3" fill="#8b5cf6"/>
   <text x="363" y="218" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="700">VLAN 6 — Services</text>
-  <text x="363" y="236" text-anchor="middle" fill="#5c4a8a" font-size="8.5">10.226.6.0/24</text>
+  <text x="363" y="236" text-anchor="middle" fill="#5c4a8a" font-size="8.5">Services subnet</text>
   <text x="363" y="252" text-anchor="middle" fill="#9b85d4" font-size="8.5">Authentik · Mailcow</text>
   <text x="363" y="268" text-anchor="middle" fill="#9b85d4" font-size="8.5">Jellyfin · Dashboards</text>
   <text x="363" y="284" text-anchor="middle" fill="#9b85d4" font-size="8.5">Home Assistant</text>
@@ -95,7 +95,7 @@
   <rect x="476" y="194" width="190" height="112" rx="8" fill="url(#card)" stroke="#14b8a6" stroke-width="1.6"/>
   <rect x="476" y="194" width="190" height="4" rx="3" fill="#14b8a6"/>
   <text x="571" y="218" text-anchor="middle" fill="#5eead4" font-size="11" font-weight="700">VLAN 7 — DMZ</text>
-  <text x="571" y="236" text-anchor="middle" fill="#286b62" font-size="8.5">10.226.7.0/24</text>
+  <text x="571" y="236" text-anchor="middle" fill="#286b62" font-size="8.5">DMZ subnet</text>
   <text x="571" y="252" text-anchor="middle" fill="#4caea4" font-size="8.5">Cloudflare Tunnel LXC</text>
   <text x="571" y="268" text-anchor="middle" fill="#4caea4" font-size="8.5">NPMplus reverse proxy</text>
   <text x="571" y="284" text-anchor="middle" fill="#4caea4" font-size="8.5">MCP Server LXC</text>
@@ -105,7 +105,7 @@
   <rect x="684" y="194" width="190" height="112" rx="8" fill="url(#card)" stroke="#06b6d4" stroke-width="1.6"/>
   <rect x="684" y="194" width="190" height="4" rx="3" fill="#06b6d4"/>
   <text x="779" y="218" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="700">VLAN 5 — Storage</text>
-  <text x="779" y="236" text-anchor="middle" fill="#1a5a6b" font-size="8.5">10.226.5.0/24</text>
+  <text x="779" y="236" text-anchor="middle" fill="#1a5a6b" font-size="8.5">Storage subnet</text>
   <text x="779" y="252" text-anchor="middle" fill="#4fb8cd" font-size="8.5">TrueNAS · NFS shares</text>
   <text x="779" y="268" text-anchor="middle" fill="#4fb8cd" font-size="8.5">PBS backup target</text>
   <text x="779" y="284" text-anchor="middle" fill="#4fb8cd" font-size="8.5">Media library storage</text>
@@ -115,7 +115,7 @@
   <rect x="892" y="194" width="168" height="112" rx="8" fill="url(#card)" stroke="#ef4444" stroke-width="1.6"/>
   <rect x="892" y="194" width="168" height="4" rx="3" fill="#ef4444"/>
   <text x="976" y="218" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="700">VLAN 20 — SIEM</text>
-  <text x="976" y="236" text-anchor="middle" fill="#6b1a1a" font-size="8.5">10.226.20.0/24</text>
+  <text x="976" y="236" text-anchor="middle" fill="#6b1a1a" font-size="8.5">SIEM subnet</text>
   <text x="976" y="252" text-anchor="middle" fill="#d97171" font-size="8.5">Wazuh Manager</text>
   <text x="976" y="268" text-anchor="middle" fill="#d97171" font-size="8.5">Log aggregation</text>
   <text x="976" y="284" text-anchor="middle" fill="#d97171" font-size="8.5">Agent syslog paths</text>
@@ -126,7 +126,7 @@
   <rect x="60" y="330" width="190" height="112" rx="8" fill="url(#card)" stroke="#f59e0b" stroke-width="1.6"/>
   <rect x="60" y="330" width="190" height="4" rx="3" fill="#f59e0b"/>
   <text x="155" y="354" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="700">VLAN 2 — Game Servers</text>
-  <text x="155" y="372" text-anchor="middle" fill="#8a6c20" font-size="8.5">10.226.2.0/24</text>
+  <text x="155" y="372" text-anchor="middle" fill="#8a6c20" font-size="8.5">Game server subnet</text>
   <text x="155" y="388" text-anchor="middle" fill="#c9a84c" font-size="8.5">Pelican Panel</text>
   <text x="155" y="404" text-anchor="middle" fill="#c9a84c" font-size="8.5">Wings · mc-bot</text>
   <text x="155" y="420" text-anchor="middle" fill="#c9a84c" font-size="8.5">Minecraft instances</text>
@@ -136,7 +136,7 @@
   <rect x="268" y="330" width="190" height="112" rx="8" fill="url(#card)" stroke="#22c55e" stroke-width="1.6"/>
   <rect x="268" y="330" width="190" height="4" rx="3" fill="#22c55e"/>
   <text x="363" y="354" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">VLAN 4 — IoT</text>
-  <text x="363" y="372" text-anchor="middle" fill="#1a5a28" font-size="8.5">10.226.4.0/24</text>
+  <text x="363" y="372" text-anchor="middle" fill="#1a5a28" font-size="8.5">IoT subnet</text>
   <text x="363" y="388" text-anchor="middle" fill="#5ab87a" font-size="8.5">Smart home devices</text>
   <text x="363" y="404" text-anchor="middle" fill="#5ab87a" font-size="8.5">IP cameras</text>
   <text x="363" y="420" text-anchor="middle" fill="#5ab87a" font-size="8.5">PoE sensors</text>
@@ -146,7 +146,7 @@
   <rect x="476" y="330" width="190" height="112" rx="8" fill="url(#card)" stroke="#a3a3a3" stroke-width="1.6"/>
   <rect x="476" y="330" width="190" height="4" rx="3" fill="#a3a3a3"/>
   <text x="571" y="354" text-anchor="middle" fill="#d4d4d4" font-size="11" font-weight="700">VLAN 9 — Testing</text>
-  <text x="571" y="372" text-anchor="middle" fill="#525252" font-size="8.5">10.226.9.0/24</text>
+  <text x="571" y="372" text-anchor="middle" fill="#525252" font-size="8.5">Testing subnet</text>
   <text x="571" y="388" text-anchor="middle" fill="#8a8a8a" font-size="8.5">Sandbox workloads</text>
   <text x="571" y="404" text-anchor="middle" fill="#8a8a8a" font-size="8.5">Lab VMs and LXCs</text>
   <text x="571" y="420" text-anchor="middle" fill="#8a8a8a" font-size="8.5">Isolated experiments</text>
@@ -156,7 +156,7 @@
   <rect x="684" y="330" width="190" height="112" rx="8" fill="url(#card)" stroke="#ec4899" stroke-width="1.6"/>
   <rect x="684" y="330" width="190" height="4" rx="3" fill="#ec4899"/>
   <text x="779" y="354" text-anchor="middle" fill="#f9a8d4" font-size="11" font-weight="700">VLAN 3 — Guest</text>
-  <text x="779" y="372" text-anchor="middle" fill="#6b1a42" font-size="8.5">10.226.3.0/24</text>
+  <text x="779" y="372" text-anchor="middle" fill="#6b1a42" font-size="8.5">Guest subnet</text>
   <text x="779" y="388" text-anchor="middle" fill="#c06090" font-size="8.5">Visitor Wi-Fi</text>
   <text x="779" y="404" text-anchor="middle" fill="#c06090" font-size="8.5">Isolated clients</text>
   <text x="779" y="420" text-anchor="middle" fill="#c06090" font-size="8.5">No lab access</text>
@@ -166,7 +166,7 @@
   <rect x="892" y="330" width="168" height="112" rx="8" fill="url(#card)" stroke="#fb923c" stroke-width="1.6"/>
   <rect x="892" y="330" width="168" height="4" rx="3" fill="#fb923c"/>
   <text x="976" y="354" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="700">VLAN 99 — OOB</text>
-  <text x="976" y="372" text-anchor="middle" fill="#6b3010" font-size="8.5">10.226.99.0/24</text>
+  <text x="976" y="372" text-anchor="middle" fill="#6b3010" font-size="8.5">OOB subnet</text>
   <text x="976" y="388" text-anchor="middle" fill="#d07040" font-size="8.5">Break-glass access</text>
   <text x="976" y="404" text-anchor="middle" fill="#d07040" font-size="8.5">Emergency mgmt</text>
   <text x="976" y="420" text-anchor="middle" fill="#d07040" font-size="8.5">OOB console</text>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`Page Not Found | ${site.name}`} description="Portfolio page not found.">
+  <section class="page-hero">
+    <span class="eyebrow">404</span>
+    <h1>That page moved or never existed.</h1>
+    <p class="lead">The cleaned-up portfolio now routes most proof through the project hub, writeups, certifications, and resume pages.</p>
+    <div class="button-row">
+      <a class="button" href="/pages/projects.html">Project hub</a>
+      <a class="button secondary" href="/">Home</a>
+      <button class="button secondary" type="button" data-search-trigger>Search</button>
+    </div>
+  </section>
+  <ContactCTA />
+</BaseLayout>

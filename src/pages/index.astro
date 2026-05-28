@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { featuredProjects } from '../data/projects';
+import { latestWriteups } from '../data/writeups';
+import { rolePaths, site } from '../data/site';
+---
+
+<BaseLayout
+  title={site.title}
+  description="Hiring-focused cyber and infrastructure portfolio for Nazeem Massoom Dickey: networking, SOC/NOC, homelab, automation, certifications, and writeups."
+>
+  <Hero
+    eyebrow="Junior Network Admin / SOC-NOC Candidate"
+    title="Professional cyber portfolio backed by real infrastructure work."
+    lead="I build, document, and operate a public-safe homelab across OPNsense, Proxmox, managed switching, identity, monitoring, and AI-assisted automation."
+  />
+
+  <section class="section">
+    <div class="grid four">
+      <article class="card proof-card">
+        <strong>SkillsUSA Florida Gold</strong>
+        <p>Timed internetworking competition proof for troubleshooting, cabling, subnetting, and explanation.</p>
+      </article>
+      <article class="card proof-card">
+        <strong>CompTIA Trifecta + CySA+</strong>
+        <p>Security, networking, systems, and analyst fundamentals backed by public project evidence.</p>
+      </article>
+      <article class="card proof-card">
+        <strong>Production-Style Lab</strong>
+        <p>Segmented network, virtualization, firewalling, identity, monitoring, and backup thinking.</p>
+      </article>
+      <article class="card proof-card">
+        <strong>Public-Safe Writing</strong>
+        <p>Architecture and incident notes that explain decisions without leaking private configuration.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <span class="mini-label">Strongest Proof</span>
+        <h2>Featured projects</h2>
+      </div>
+      <a class="card-link" href="/pages/projects.html">Full project hub</a>
+    </div>
+    <div class="grid four">
+      {featuredProjects.map(project => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <span class="mini-label">Role Paths</span>
+        <h2>Pick the proof that matches the job.</h2>
+      </div>
+    </div>
+    <div class="grid four">
+      {rolePaths.map(path => (
+        <a class="card role-card" href={path.href}>
+          <h3>{path.title}</h3>
+          <p>{path.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <span class="mini-label">Recent Writing</span>
+        <h2>Latest public-safe writeups</h2>
+      </div>
+      <a class="card-link" href="/pages/writeups.html">All writeups</a>
+    </div>
+    <div class="grid three">
+      {latestWriteups.map(writeup => (
+        <article class="card">
+          <span class="project-type">{writeup.category} - {writeup.date}</span>
+          <h3>{writeup.title}</h3>
+          <p>{writeup.summary}</p>
+          <a class="card-link" href={writeup.href}>Read writeup</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

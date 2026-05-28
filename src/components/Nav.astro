@@ -1,0 +1,85 @@
+---
+import { navItems } from '../data/site';
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isCurrent(href: string) {
+  if (href === '/') {
+    return pathname === '/' || pathname === '/index.html';
+  }
+
+  return pathname === href.replace(/\/$/, '');
+}
+---
+
+<nav class="nav" aria-label="Primary navigation">
+  <a class="brand" href="/" aria-label="Nazeem Massoom Dickey home">ND</a>
+  <div class="nav-links">
+    {navItems.map(item => (
+      <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+    ))}
+    <a href="#contact">Contact</a>
+    <button class="nav-button" type="button" data-search-trigger aria-label="Search pages">
+      Search
+    </button>
+  </div>
+  <button
+    class="hamburger"
+    type="button"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="mobileNav"
+    data-mobile-toggle
+  >
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-panel" id="mobileNav" hidden>
+  {navItems.map(item => (
+    <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+  ))}
+  <a href="#contact">Contact</a>
+  <button class="nav-button" type="button" data-search-trigger>Search</button>
+</div>
+
+<script is:inline>
+  (() => {
+    const toggle = document.querySelector('[data-mobile-toggle]');
+    const panel = document.getElementById('mobileNav');
+
+    if (!toggle || !panel) {
+      return;
+    }
+
+    const close = () => {
+      panel.classList.remove('is-open');
+      panel.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    const open = () => {
+      panel.hidden = false;
+      panel.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+
+    toggle.addEventListener('click', () => {
+      if (panel.classList.contains('is-open')) {
+        close();
+      } else {
+        open();
+      }
+    });
+
+    panel.querySelectorAll('a, button').forEach((item) => {
+      item.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        close();
+      }
+    });
+  })();
+</script>

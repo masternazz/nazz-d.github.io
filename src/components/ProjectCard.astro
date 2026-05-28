@@ -1,0 +1,24 @@
+---
+import type { Project } from '../data/projects';
+
+type Props = {
+  project: Project;
+};
+
+const { project } = Astro.props;
+const roleTags = project.rolePaths.map(role => role.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
+const tags = [...project.categories, ...roleTags].join(' ');
+---
+
+<article class="project-card" data-tags={tags}>
+  <div class="project-top">
+    <span class="project-type">{project.eyebrow}</span>
+    <span class="status">{project.status}</span>
+  </div>
+  <h3>{project.title}</h3>
+  <p>{project.summary}</p>
+  <ul class="tag-list" aria-label={`${project.title} skills`}>
+    {project.skills.slice(0, 3).map(skill => <li>{skill}</li>)}
+  </ul>
+  <a class="card-link" href={`/pages/${project.slug}.html`}>View project</a>
+</article>

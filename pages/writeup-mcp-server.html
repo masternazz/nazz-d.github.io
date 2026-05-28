@@ -94,7 +94,7 @@
           <li><strong>Transport:</strong> stdio over SSH — the AI client SSHes into LXC 130 and pipes MCP protocol through the connection. No exposed HTTP port, no auth surface beyond SSH key.</li>
           <li><strong>Runtime:</strong> Node.js 20 LTS on a minimal Debian 12 LXC. 64 MB RAM idle — lighter than running a Docker container.</li>
           <li><strong>Structure:</strong> <code>index.js</code> registers all tools. Each integration lives in its own module under <code>tools/</code> — <code>adguard.js</code>, <code>opnsense.js</code>, <code>proxmox.js</code>, etc.</li>
-          <li><strong>Auth:</strong> Every tool module reads credentials from <code>.env</code> at startup. API keys, passwords, and SSH keys are never passed over the MCP connection itself.</li>
+          <li><strong>Auth:</strong> Every tool module reads credentials from local runtime configuration at startup. API keys, passwords, and SSH keys are never passed over the MCP connection itself.</li>
           <li><strong>Schema:</strong> Tools use <code>zod</code> for input validation. The MCP SDK generates the JSON Schema exposed to the client automatically.</li>
         </ul>
       </div>

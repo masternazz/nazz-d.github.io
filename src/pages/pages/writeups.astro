@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { site } from '../../data/site';
+import { writeups } from '../../data/writeups';
+---
+
+<BaseLayout
+  title={`Writeups | ${site.name}`}
+  description="Public-safe writeups covering networking, OPNsense, VLAN migrations, automation, identity, and competition recaps."
+>
+  <section class="page-hero">
+    <span class="eyebrow">Writeups</span>
+    <h1>Operational notes without private leakage.</h1>
+    <p class="lead">
+      These writeups focus on decisions, troubleshooting paths, lessons learned, and safe summaries rather than private addresses, secrets, or exact firewall rules.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="grid three">
+      {writeups.map(writeup => (
+        <article class="card">
+          <span class="project-type">{writeup.category} - {writeup.date}</span>
+          <h3>{writeup.title}</h3>
+          <p>{writeup.summary}</p>
+          <a class="card-link" href={writeup.href}>Read writeup</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>

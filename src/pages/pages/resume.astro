@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import { site } from '../../data/site';
+---
+
+<BaseLayout
+  title={`Resume | ${site.name}`}
+  description="Resume downloads and role-fit links for Nazeem Massoom Dickey."
+>
+  <section class="page-hero">
+    <span class="eyebrow">Resume</span>
+    <h1>Resume and fast proof links.</h1>
+    <p class="lead">
+      Download the PDF, open the ATS-friendly version, or jump into projects that show the work behind the bullet points.
+    </p>
+    <div class="button-row">
+      <a class="button" href="/assets/resumes/Massoom_Dickey_Nazeem_Resume_Styled.pdf">Styled PDF</a>
+      <a class="button secondary" href="/assets/resumes/Massoom_Dickey_Nazeem_Resume_ATS.pdf">ATS PDF</a>
+      <a class="button secondary" href="/pages/projects.html">Project hub</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid three">
+      <article class="card proof-card">
+        <strong>Networking</strong>
+        <p>VLANs, switching, firewalling, DNS/DHCP, public ingress, and documented troubleshooting.</p>
+        <a class="card-link" href="/pages/projects.html?filter=network-admin#project-directory">Network path</a>
+      </article>
+      <article class="card proof-card">
+        <strong>SOC / NOC</strong>
+        <p>Monitoring, Wazuh practice, alerting habits, identity work, and operational writeups.</p>
+        <a class="card-link" href="/pages/projects.html?filter=soc-noc#project-directory">SOC/NOC path</a>
+      </article>
+      <article class="card proof-card">
+        <strong>Automation</strong>
+        <p>MCP, AI workflow testing, API tooling, Discord automation, and repeatable checks.</p>
+        <a class="card-link" href="/pages/projects.html?filter=automation#project-directory">Automation path</a>
+      </article>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>
