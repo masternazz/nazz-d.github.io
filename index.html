@@ -607,14 +607,16 @@
 
           <h3>Game Hosting &amp; Discord Bot</h3>
           <p>
-            Pelican Panel game server infrastructure with a custom Python Discord bot — built from scratch using RCON and Docker metrics to post live server stats.
+            12 self-hosted game servers (Minecraft, Abiotic Factor, Terraria, Subnautica, Satisfactory, KSP, and more) on Pelican Panel and Wings. Custom Python Discord bot with autocomplete slash commands, grouped live status embed, multi-protocol player count queries (RCON, Steam A2S, TShock REST), and auto-stop after 20 minutes idle. Flask API serves real-time state to a custom public status site and Uptime Kuma monitors.
           </p>
 
           <div class="chip-row">
             <span class="chip">Pelican Panel</span>
-            <span class="chip">Docker</span>
             <span class="chip">Python</span>
+            <span class="chip">Flask</span>
             <span class="chip">Discord API</span>
+            <span class="chip">RCON</span>
+            <span class="chip">Steam A2S</span>
           </div>
 
           <span class="card-link">View project -&gt;</span>
@@ -684,6 +686,12 @@
       <div class="ops-timeline">
         <article class="ops-item glass-panel">
           <span>May 2026</span>
+          <h3>Game Server Infrastructure Expanded</h3>
+          <p>Scaled from 6 to 12 game servers — added MC Edwin, MC Evil, Satisfactory, LMP (KSP), Windrose, and Nitrox 2. Overhauled the Discord bot with grouped status embed (Minecraft vs Steam), autocomplete slash commands, per-category player count logic, and SRV records for all MC servers. Updated Uptime Kuma with 6 new keyword monitors and pushed all changes through the Forgejo deploy pipeline.</p>
+        </article>
+
+        <article class="ops-item glass-panel">
+          <span>May 2026</span>
           <h3>Email Alerts Rolled Out</h3>
           <p>Configured service alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and the media stack, then documented rollback steps.</p>
         </article>
@@ -731,7 +739,7 @@
 
         <div class="skill-box glass-panel">
           <h3>Infrastructure</h3>
-          <p>Proxmox VE, Linux, Windows, LXC, Docker, NAS storage, backups, hardware installs, and PC builds.</p>
+          <p>Proxmox VE, Linux, Windows, LXC, Docker, NAS storage, backups, hardware installs, PC builds, Python, and Flask.</p>
           <div class="skill-bar-wrap"><div class="skill-bar" data-pct="85"></div></div>
         </div>
 

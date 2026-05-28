@@ -8,12 +8,12 @@
   <link rel="canonical" href="https://masternazz.com/pages/game-hosting.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Game Server Hosting & Discord Automation | Nazeem Massoom Dickey">
-  <meta property="og:description" content="Pelican Panel game server infrastructure with a custom Discord bot that monitors live server stats via RCON and Docker.">
+  <meta property="og:description" content="Pelican Panel game server infrastructure with a custom Discord bot that monitors live server stats and handles auto-stop logic.">
   <meta property="og:url" content="https://masternazz.com/pages/game-hosting.html">
   <meta property="og:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Game Server Hosting & Discord Automation | Nazeem Massoom Dickey">
-  <meta name="twitter:description" content="Pelican Panel game server infrastructure with a custom Discord bot monitoring live stats via RCON and Docker.">
+  <meta name="twitter:description" content="Pelican Panel game server infrastructure with a custom Discord bot monitoring live stats and auto-stop logic.">
   <meta name="twitter:image" content="https://masternazz.com/assets/diagrams/network-diagram.png">
   <link rel="stylesheet" href="../assets/css/style.css">
   <meta name="theme-color" content="#030208" media="(prefers-color-scheme: dark)">
@@ -47,9 +47,9 @@
       <p class="eyebrow">Project | Automation & Infrastructure</p>
       <h1>Game Hosting &amp; Discord Automation</h1>
       <p class="lead">
-        Self-hosted Minecraft server infrastructure running on Pelican Panel and Docker inside
-        a Proxmox LXC. Built a Discord bot from scratch that pulls live server stats via RCON
-        and Docker metrics — deployed on its own dedicated LXC with a systemd service.
+        12 self-hosted game servers across Minecraft and Steam titles, running on Pelican Panel and Wings inside Proxmox LXCs.
+        Built a Discord bot from scratch that tracks live player counts across multiple protocols,
+        auto-stops idle servers with a 10-minute warning, and exposes a Flask status API consumed by a custom public status site and Uptime Kuma monitors.
       </p>
       <div class="chip-row">
         <span class="chip">Pelican Panel</span>
@@ -57,6 +57,8 @@
         <span class="chip">Python</span>
         <span class="chip">Discord API</span>
         <span class="chip">RCON Protocol</span>
+        <span class="chip">Steam A2S</span>
+        <span class="chip">Flask</span>
         <span class="chip">Proxmox LXC</span>
         <span class="chip">systemd</span>
       </div>
@@ -72,23 +74,22 @@
       <div class="card">
         <h2>Game Server Infrastructure</h2>
         <ul class="list-clean">
-          <li>Deployed Pelican Panel (open-source successor to Pterodactyl) across two dedicated LXC containers — one for the panel, one for the Wings daemon.</li>
-          <li>Wings runs game servers as isolated Docker containers, giving each server its own resource limits, filesystem, and network namespace.</li>
-          <li>Minecraft server runs on Fabric 1.21 with custom mods (Spark performance profiling, etc.) inside the Docker container managed by Wings.</li>
-          <li>RCON enabled for remote command execution, used by the Discord bot to query live game state.</li>
-          <li>Port allocations managed through the Pelican admin panel — game port (25565) and RCON explicitly allocated and forwarded.</li>
+          <li>Pelican Panel (open-source successor to Pterodactyl) on LXC 104, with a separate Wings daemon on LXC 121 — both on Proxmox firstmoon.</li>
+          <li>Wings runs each game server as an isolated Docker container with its own resource limits, filesystem, and network namespace.</li>
+          <li>12 servers across two categories — Minecraft: Vanilla QOL (Fabric 1.21), Casket of Reveries (Forge 1.20.1), Supernatural (Forge 1.20.1), MC Edwin, MC Evil. Steam: Abiotic Factor, Terraria (TShock), Nitrox/Subnautica, Nitrox 2, Satisfactory, LMP (KSP Multiplayer), Windrose.</li>
+          <li>Each server has a dedicated subdomain. Minecraft servers have SRV DNS records so players connect without specifying a port.</li>
+          <li>Modpack files (Modrinth, Prism, CurseForge formats) hosted on self-hosted Nextcloud.</li>
         </ul>
       </div>
 
       <div class="card">
         <h2>Discord Bot — Built From Scratch</h2>
         <ul class="list-clean">
-          <li>Wrote a custom RCON client in pure Python implementing the Minecraft RCON wire protocol — no external RCON libraries.</li>
-          <li>Bot polls the server every 5 minutes and edits a single pinned embed (no channel spam) showing live player count, online players, in-game time of day, day number, difficulty, uptime, CPU, memory, and disk usage.</li>
-          <li>CPU / memory pulled from <code>docker stats</code>; disk from <code>df</code> inside the container; uptime from Docker's <code>StartedAt</code> timestamp — all via SSH chain through Proxmox.</li>
-          <li>Slash commands: <code>/status</code> (full embed on demand) and <code>/players</code> (quick player list).</li>
-          <li>Bot's own Discord status updates dynamically with a green online player count when up and a red offline state when down.</li>
-          <li>Deployed on a dedicated Debian LXC as a systemd service — starts on boot, auto-restarts on failure.</li>
+          <li>Posts a live status embed to a Discord channel, auto-updating every 60 seconds with player counts for all 12 servers, split into Minecraft and Steam sections with per-category online counts.</li>
+          <li>Player counts use different protocols per server: custom RCON client (pure Python) for Minecraft, Steam A2S UDP query for Abiotic Factor, TShock REST API for Terraria. Servers with no player API (Nitrox, Satisfactory, LMP, Windrose) show <code>—</code> and are never auto-stopped.</li>
+          <li>Auto-stop logic: any server idle for 20 minutes is stopped automatically via the Pelican Wings API. Warning fires at 10 minutes. Servers with no player API are exempt.</li>
+          <li>Slash commands: <code>/start</code>, <code>/stop</code>, <code>/servers</code> — all use autocomplete dropdowns so there's no free-text server name to mistype. Bot presence updates live with active player count.</li>
+          <li>Deployed on a dedicated Debian LXC 122 (thirdmoon) as a systemd service — starts on boot, auto-restarts on failure.</li>
         </ul>
       </div>
     </section>
@@ -96,62 +97,59 @@
     <section class="section three-column">
       <article class="detail-card glass-panel">
         <span class="mini-label">Protocol</span>
-        <h2>Custom RCON Client</h2>
-        <p>The Minecraft RCON wire protocol is a binary TCP protocol. Rather than pulling in a library, I implemented it from scratch in Python — packet framing, struct packing, auth handshake, and response parsing. This lets the bot query any RCON command: player list, in-game time, difficulty, and day number.</p>
+        <h2>Multi-Protocol Player Queries</h2>
+        <p>Each game server exposes player counts differently. Minecraft servers use RCON — I implemented the binary TCP wire protocol from scratch in Python: packet framing, struct packing, auth handshake, response parsing. Abiotic Factor uses the Steam A2S_INFO UDP query protocol including the challenge handshake. Terraria (TShock) has a REST API. Servers with no player API (Nitrox, Satisfactory, LMP, Windrose) return <code>None</code> — the embed shows <code>—</code> and auto-stop is skipped entirely for those servers.</p>
       </article>
 
       <article class="detail-card glass-panel">
-        <span class="mini-label">Observability</span>
-        <h2>Docker Metrics via SSH Chain</h2>
-        <p>The bot LXC can't reach the Docker socket directly. Instead it SSH's into the Proxmox host, which uses <code>pct exec</code> to run <code>docker stats</code> and <code>docker inspect</code> inside the Wings LXC — pulling real CPU, memory, disk, and exact uptime for the MC container and surfacing them in Discord.</p>
+        <span class="mini-label">Automation</span>
+        <h2>Idle Auto-Stop</h2>
+        <p>Any server sitting at 0 players for 20 minutes is automatically stopped via the Pelican Wings API — no manual intervention needed. A warning fires at 10 minutes so any remaining players see it coming. Nitrox is exempt since its player count can't be queried. This keeps resource usage flat when servers are not actively in use.</p>
       </article>
 
       <article class="detail-card glass-panel">
-        <span class="mini-label">Deployment</span>
-        <h2>Isolated LXC + systemd</h2>
-        <p>The bot runs on its own Debian LXC (VMID 122) — not bundled into the Wings host or any other service container. A systemd unit file handles startup, restart-on-failure, and boot persistence. Python venv keeps dependencies isolated. The whole thing is self-contained and independent of the game server lifecycle.</p>
+        <span class="mini-label">Status API</span>
+        <h2>Hub API + Public Status Site</h2>
+        <p>A Flask app running on the same LXC exposes <code>GET /status</code> — a JSON array of all 12 servers with state, player count, and max players. This feeds a custom static status site (auto-refreshing every 30 seconds, with filter tabs for Minecraft vs Steam) and 12 Uptime Kuma keyword monitors provisioned via the SQLite API. The site deploys via git push to a self-hosted Forgejo repo with a deploy timer that rsyncs to the webroot every 60 seconds.</p>
       </article>
     </section>
 
     <section class="section card">
-      <h2>How It All Connects</h2>
-      <div class="flow-diagram" style="font-family:monospace;font-size:0.85rem;line-height:2;color:var(--text-secondary);overflow-x:auto;">
-        <pre style="margin:0;background:none;padding:0;">
-Discord Channel
-    ↑  embed edit / slash command response
-    │
-mc-bot LXC
-    ├─ RCON → Pelican Wings LXC
-    │           └─ Docker container: Minecraft server
-    │               ├─ player list, time, day, difficulty
-    └─ SSH → firstmoon Proxmox
-                └─ pct exec → Wings LXC
-                    └─ docker stats / docker inspect
-                        ├─ CPU, memory, disk
-                        └─ exact container uptime
-        </pre>
+      <h2>Architecture</h2>
+      <div class="three-column" style="gap:1.5rem;">
+        <article class="detail-card glass-panel">
+          <span class="mini-label">LXC 104 — firstmoon</span>
+          <h2>Pelican Panel</h2>
+          <p>Admin UI for managing game servers, user permissions, and port allocations. Communicates with the Wings daemon over HTTPS to start, stop, and provision server containers.</p>
+        </article>
+        <article class="detail-card glass-panel">
+          <span class="mini-label">LXC 121 — firstmoon</span>
+          <h2>Wings Daemon</h2>
+          <p>Runs all 12 game servers as isolated Docker containers. Exposes a local API used by Pelican Panel and the Discord bot for power actions. Each container gets its own resource limits and network namespace.</p>
+        </article>
+        <article class="detail-card glass-panel">
+          <span class="mini-label">LXC 122 — thirdmoon</span>
+          <h2>Discord Bot + Hub API</h2>
+          <p>Python Discord bot and Flask status API co-deployed as systemd services. Queries all 12 servers every 60 seconds, updates the Discord embed (grouped by Minecraft / Steam), enforces auto-stop, and serves the JSON status endpoint consumed by the public status site and Uptime Kuma.</p>
+        </article>
       </div>
     </section>
 
     <section class="section card callout">
       <h2>Employer-Relevant Skills</h2>
       <p>
-        This project covers more than hosting a game server. I built the monitoring layer, implemented
-        RCON communication, chained SSH through Proxmox to collect Docker metrics, wrote async Python
-        for the Discord API, and deployed the bot as a systemd service on dedicated infrastructure.
-        It demonstrates troubleshooting, automation, and service ownership.
+        This project covers more than hosting game servers. I implemented multiple query protocols
+        from scratch (RCON, Steam A2S), built an auto-stop system against a REST API, wrote a
+        status API consumed by two separate clients, and deployed everything as systemd services
+        on dedicated infrastructure. It demonstrates protocol-level networking, automation,
+        API design, and end-to-end service ownership.
       </p>
     </section>
 
     <section class="section card callout">
       <h2>What Wasn't Straightforward</h2>
       <p>
-        The hosting part was easy. The hard part was getting the bot to pull real resource data
-        from inside a Docker container it has no direct access to. The SSH chain through Proxmox
-        using <code>pct exec</code> was the only path that worked without loosening container
-        isolation. Writing the RCON client from scratch instead of using a library also took a
-        bit — the binary packet framing and auth handshake aren't complicated, but you have to
-        get the struct packing exactly right or the server just drops the connection.
+        The hard parts were protocol diversity, auto-stop edge cases, and scaling from 6 to 12 servers cleanly. Each game server speaks a different protocol — RCON for Minecraft, Steam A2S UDP for Abiotic Factor (including the challenge handshake newer servers require), REST for Terraria — and several servers have no query protocol at all. Writing the RCON client from scratch requires getting the binary packet framing exactly right; the server just drops the connection if the struct packing is off. The auto-stop logic needed careful handling to avoid stopping a server mid-session: servers with no player API return <code>None</code> (not 0), which cleanly opts them out of the idle timer without any special-casing in the watcher loop. The Discord embed also needed restructuring once the server count grew — grouping by Minecraft vs Steam with per-category counts made it actually readable at 12 entries.
       </p>
     </section>
 
@@ -173,7 +171,7 @@ mc-bot LXC
             <span class="project-type">Infrastructure</span>
           </div>
           <h3>Proxmox Infrastructure</h3>
-          <p>The cluster that hosts the game server and bot LXCs — three nodes and 25+ VMs/containers on rack hardware.</p>
+          <p>The three-node cluster that hosts all game server and bot LXCs — firstmoon and thirdmoon among 25+ VMs and containers.</p>
           <span class="card-link">View project &rarr;</span>
         </a>
 
@@ -185,7 +183,7 @@ mc-bot LXC
             <span class="project-type">Automation</span>
           </div>
           <h3>AI Automation Research</h3>
-          <p>Agentic AI workflows applied to IT infrastructure — same automation-first mindset behind the Discord bot.</p>
+          <p>Agentic AI workflows applied to IT infrastructure — same automation-first mindset as the Discord bot and hub API.</p>
           <span class="card-link">View project &rarr;</span>
         </a>
 
@@ -197,7 +195,7 @@ mc-bot LXC
             <span class="project-type">Network</span>
           </div>
           <h3>Zero-Trust Remote Access</h3>
-          <p>Headscale mesh and Cloudflare Tunnel - how admin access stays private while game servers use documented operational WAN forwards.</p>
+          <p>Headscale mesh and Cloudflare Tunnel — how admin access stays private while game servers use documented WAN forwards.</p>
           <span class="card-link">View project &rarr;</span>
         </a>
 
@@ -209,7 +207,7 @@ mc-bot LXC
             <span class="project-type">Monitoring</span>
           </div>
           <h3>Live Service Status</h3>
-          <p>Uptime Kuma monitoring all production services — including the MC server and bot LXC.</p>
+          <p>Uptime Kuma monitoring all production services — including all six game servers via the hub API keyword monitors.</p>
           <span class="card-link">View project &rarr;</span>
         </a>
 
