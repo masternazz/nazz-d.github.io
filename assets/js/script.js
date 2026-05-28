@@ -207,8 +207,15 @@ const INDEX = [
     "title": "Home",
     "url": "index.html",
     "icon": "🏠",
-    "desc": "Portfolio landing page",
-    "keywords": "home portfolio nazeem network admin soc noc msp skills projects contact hero"
+    "desc": "Hiring-focused portfolio landing page for Nazeem Massoom Dickey.",
+    "keywords": "home portfolio nazeem network admin soc noc msp projects resume contact homelab"
+  },
+  {
+    "title": "Project Hub",
+    "url": "pages/projects.html",
+    "icon": "network",
+    "desc": "Full portfolio project directory covering networking, security, infrastructure, operations, automation, competition, and writeups.",
+    "keywords": "project hub portfolio projects networking security infrastructure operations automation competition writeups homelab skills"
   },
   {
     "title": "Certifications",
@@ -312,8 +319,8 @@ const INDEX = [
     "title": "Game Hosting &amp; Discord Automation",
     "url": "pages/game-hosting.html",
     "icon": "gamepad",
-    "desc": "Game server hosting project using Pelican Panel, Docker, RCON, Discord API automation, and Proxmox LXC infrastructure.",
-    "keywords": "game hosting discord bot pelican panel docker rcon python discord api minecraft server proxmox lxc systemd metrics automation"
+    "desc": "Six self-hosted game servers on Pelican Panel and Wings, custom Discord bot with RCON/Steam A2S/REST queries, auto-stop logic, and a Flask status API feeding a public hub site.",
+    "keywords": "game hosting discord bot pelican panel docker rcon python discord api minecraft terraria abiotic factor nitrox subnautica steam a2s flask hub api proxmox lxc systemd auto-stop automation"
   },
   {
     "title": "Enterprise VLAN Segmentation",
@@ -382,8 +389,8 @@ const INDEX = [
     "title": "Enterprise VLAN Segmentation Migration",
     "url": "pages/writeup-vlan-migration.html",
     "icon": "network",
-    "desc": "Writeup on migrating from a flat 192.168.1.0/24 network to 10 VLANs, restoring Proxmox quorum, and moving 30+ services.",
-    "keywords": "vlan migration flat network 192.168.1.0 10 vlans proxmox quorum cisco sg300 gs728tp opnsense firewall dns nat npmplus"
+    "desc": "Writeup on migrating from a flat legacy network to role-based VLANs, restoring Proxmox quorum, and moving 30+ services.",
+    "keywords": "vlan migration flat legacy network role based vlans proxmox quorum cisco sg300 gs728tp opnsense firewall dns nat npmplus"
   },
   {
     "title": "Homelab MCP Server",
@@ -1595,6 +1602,28 @@ function setupMobileNav() {
 }
 
 function setupSharedDOM() {
+  const navLinks = document.querySelector(".nav-links");
+  if (navLinks) {
+    const isSubpage = location.pathname.includes("/pages/");
+    const root = isSubpage ? "../" : "";
+    const pageRoot = isSubpage ? "" : "pages/";
+    const contactHref = document.getElementById("contact") || document.querySelector("main.page") ? "#contact" : `${root}index.html#contact`;
+
+    navLinks.innerHTML = `
+      <a href="${root}index.html">Home</a>
+      <a href="${pageRoot}projects.html">Projects</a>
+      <a href="${pageRoot}homelab.html">Homelab</a>
+      <a href="${pageRoot}writeups.html">Writeups</a>
+      <a href="${pageRoot}certifications.html">Certs</a>
+      <a href="${pageRoot}resume.html">Resume</a>
+      <a href="${contactHref}">Contact</a>
+      <button class="search-trigger" aria-label="Search pages (Ctrl+K)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search <kbd>Ctrl K</kbd>
+      </button>
+    `;
+  }
+
   // aria-current="page" — auto-set on nav link matching current URL
   const path = location.pathname.replace(/\/$/, "") || "/";
   document.querySelectorAll(".nav-links a").forEach(a => {

@@ -7,6 +7,7 @@ const INDEX_FILE = path.join(__dirname, '../assets/js/script.js');
 // Icon mapping based on filename or content keywords
 const ICON_MAP = {
   'certifications': '🏅',
+  'projects': 'network',
   'resume': '📄',
   'homelab': '🖥️',
   'proxmox': '⚙️',
@@ -33,26 +34,25 @@ function generateIndex() {
   const index = [];
 
   // Add Home page manually as it's in root
-  const indexHtml = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
   index.push({
     title: 'Home',
     url: 'index.html', // This will be adjusted by setupSearch root logic
     icon: '🏠',
-    desc: 'Portfolio landing page',
-    keywords: 'home portfolio nazeem network admin soc noc msp skills projects contact hero'
+    desc: 'Hiring-focused portfolio landing page for Nazeem Massoom Dickey.',
+    keywords: 'home portfolio nazeem network admin soc noc msp projects resume contact homelab'
   });
 
   files.forEach(file => {
     const content = fs.readFileSync(path.join(PAGES_DIR, file), 'utf8');
-    
+
     const titleMatch = content.match(/<title>(.*?)<\/title>/);
     const descMatch = content.match(/<meta name="description" content="(.*?)"/);
-    
+
     // Extract keywords from meta keywords if they exist, or just use the title/filename
     const title = titleMatch ? titleMatch[1].split('|')[0].trim() : file;
     const desc = descMatch ? descMatch[1] : '';
     const nameOnly = file.replace('.html', '');
-    
+
     index.push({
       title: title,
       url: `pages/${file}`,

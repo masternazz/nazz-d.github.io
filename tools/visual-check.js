@@ -11,6 +11,7 @@ const root = path.resolve(__dirname, '..');
 
   const files = [
     'index.html',
+    'pages/projects.html',
     'pages/homelab.html',
     'pages/proxmox.html',
     'pages/opnsense.html',
@@ -61,7 +62,10 @@ const root = path.resolve(__dirname, '..');
       await sleep(100);
     });
     await page.evaluate(() => {
-      document.querySelectorAll('.reveal-on-scroll').forEach((el) => el.classList.add('is-visible'));
+      document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+        el.style.transition = 'none';
+        el.classList.add('is-visible');
+      });
       document.querySelectorAll('.section-divider').forEach((el) => el.classList.add('is-drawn'));
       document.querySelectorAll('.skill-bar[data-pct]').forEach((el) => {
         el.style.width = `${el.dataset.pct}%`;

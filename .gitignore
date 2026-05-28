@@ -4,6 +4,7 @@ screenshots/
 # Local visual/check artifacts generated during site QA
 tools/check-pdf.js
 tools/check-print-height.js
+tools/mobile-check.png
 tools/print-*.png
 tools/screenshot-full.js
 tools/screenshot-pages.js

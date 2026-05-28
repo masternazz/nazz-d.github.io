@@ -21,26 +21,18 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-  <div id="openToWork" class="otw-banner" role="status">
-    <span class="otw-dot"></span>
-    Open to internships &amp; entry-level IT roles &mdash; <a href="#contact">Get In Touch</a>
-    <button class="otw-close" aria-label="Dismiss" onclick="dismissOTW()">&#x2715;</button>
-  </div>
 
   <header class="nav">
     <a href="index.html" class="brand" aria-label="Nazeem Massoom Dickey home">ND</a>
 
     <nav class="nav-links" aria-label="Primary navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#projects">Projects</a>
-      <a href="index.html#skills">Skills</a>
-      <a href="index.html#timeline">Timeline</a>
+      <a href="pages/projects.html">Projects</a>
+      <a href="pages/homelab.html">Homelab</a>
+      <a href="pages/writeups.html">Writeups</a>
       <a href="pages/certifications.html">Certs</a>
       <a href="pages/resume.html">Resume</a>
-      <a href="pages/status.html">Live Status</a>
-      <a href="pages/writeups.html">Writeups</a>
       <a href="#contact">Contact</a>
-      <a href="card.html">Card</a>
       <button class="search-trigger" aria-label="Search pages (Ctrl+K)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         Search <kbd>Ctrl K</kbd>
@@ -48,185 +40,78 @@
     </nav>
   </header>
 
-  <main class="page">
+  <main class="page home-page">
 
-    <section class="hero">
-      <p class="status-dot">Open to internships &amp; entry-level IT roles</p>
-      <p class="eyebrow">SkillsUSA Florida Internetworking — 1st Place, Gold Medal &mdash; May 2026 graduate focused on networking, infrastructure, and security operations</p>
+    <section class="hero home-hero">
+      <div class="hero-copy">
+        <p class="status-dot">Open to internships &amp; entry-level IT roles</p>
+        <p class="eyebrow">Junior Network Admin / SOC / NOC / MSP</p>
 
-      <h1>Nazeem Massoom Dickey</h1>
-      <h2>IT &amp; Cybersecurity candidate &mdash; Junior Network Admin / SOC / NOC</h2>
+        <h1>Nazeem Massoom Dickey</h1>
+        <h2>Documented homelab proof for junior IT and security roles.</h2>
 
-      <p class="lead">
-        I run a documented homelab on rack hardware — Proxmox cluster, OPNsense firewall,
-        10-VLAN segmented network, Wazuh SIEM, Authentik SSO, and Cloudflare ingress. Everything
-        is built, broken, and fixed by me, and most of it is documented here.
-      </p>
+        <p class="lead">
+          I document a Proxmox/OPNsense homelab with Wazuh, Authentik, switching,
+          backups, and automation. My writeups show how I troubleshoot, validate,
+          and hand off fixes.
+        </p>
 
-      <div class="hero-actions">
-        <a href="#projects" class="button">View Projects</a>
-        <a href="pages/resume.html" class="button secondary">Resume</a>
-        <a href="pages/homelab.html" class="button secondary">Homelab</a>
-        <a href="https://www.linkedin.com/in/nazeemdickey/" class="button secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
-
-      <div class="signal-strip">
-        <div class="signal">
-          <span>Certifications</span>
-          <strong>CompTIA Trifecta + CySA+ &mdash; CSAP, CSIS, CIOS stackables &mdash; Cisco &amp; Microsoft</strong>
-        </div>
-
-        <div class="signal">
-          <span>Achievement</span>
-          <strong>SkillsUSA Florida Internetworking — 1st Place, Gold Medal — April 2026</strong>
-        </div>
-
-        <div class="signal">
-          <span>Core Lab</span>
-          <strong>Proxmox, OPNsense, Cisco SG300 + Netgear GS728TP switching, Synology NAS, Cloudflare, Authentik</strong>
-        </div>
-
-        <div class="signal">
-          <span>Location</span>
-          <strong>Boynton Beach, FL, open to junior IT and cybersecurity opportunities</strong>
+        <div class="hero-actions">
+          <a href="pages/resume.html" class="button">Resume</a>
+          <a href="pages/projects.html" class="button secondary">Project Hub</a>
+          <a href="#contact" class="button secondary">Contact</a>
         </div>
       </div>
+
+      <aside class="hero-proof glass-panel" aria-label="Portfolio proof points">
+        <span class="mini-label">Fast Proof</span>
+        <strong>SkillsUSA Florida Internetworking Gold Medal</strong>
+        <p>Documented lab, CompTIA Trifecta + CySA+, Cisco CCST credentials, and public writeups from real troubleshooting work.</p>
+        <div class="proof-mini-grid">
+          <span>31+ certs</span>
+          <span>3-node lab</span>
+          <span>10-VLAN design</span>
+          <span>Public writeups</span>
+        </div>
+      </aside>
     </section>
 
-    <section class="section snapshot-grid" aria-label="Professional snapshot">
-      <article class="snapshot-card glass-panel">
-        <h2>What Makes Me Different</h2>
-        <p>
-          I graduated from SouthTech Academy in May 2026 and built my learning around operating
-          a small production-style lab with real dependencies, outages, and documentation.
-        </p>
+    <section class="section proof-strip" aria-label="Role fit">
+      <article class="proof-item glass-panel">
+        <span>Target Roles</span>
+        <strong>Junior Network Admin, SOC, NOC, MSP, Help Desk</strong>
       </article>
-
-      <article class="snapshot-card glass-panel">
-        <h2>How I Work</h2>
-        <p>
-          Every change gets documented — what I did, why, what broke, how I fixed it.
-          If another tech had to take over, the notes are there.
-        </p>
+      <article class="proof-item glass-panel">
+        <span>Core Stack</span>
+        <strong>OPNsense, Proxmox, Cisco/Netgear switching, Wazuh, Authentik</strong>
       </article>
-
-      <article class="snapshot-card glass-panel">
-        <h2>Where I Fit</h2>
-        <p>
-          Junior network admin, SOC intern, NOC technician, MSP technician, help desk,
-          field support, and cybersecurity internship roles.
-        </p>
+      <article class="proof-item glass-panel">
+        <span>Work Style</span>
+        <strong>Document changes, validate fixes, keep handoff notes readable</strong>
       </article>
     </section>
 
-    <section class="section tech-stack">
-      <div class="tech-row">
-        <div class="tech-item glass-panel">
-          <strong>Virtualization</strong>
-          <span>Proxmox VE, LXC, KVM</span>
-        </div>
-        <div class="tech-item glass-panel">
-          <strong>Networking</strong>
-          <span>OPNsense, Cisco IOS, VLANs</span>
-        </div>
-        <div class="tech-item glass-panel">
-          <strong>Security</strong>
-          <span>Wazuh SIEM, Suricata IDS, MFA</span>
-        </div>
-        <div class="tech-item glass-panel">
-          <strong>Identity</strong>
-          <span>Authentik SSO, OIDC, LDAP</span>
-        </div>
-        <div class="tech-item glass-panel">
-          <strong>Infrastructure</strong>
-          <span>Synology NAS, Docker, NPMplus</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section architecture-glance">
+    <section id="projects" class="section featured-work">
       <div class="section-header">
         <div>
-          <h2>Architecture At A Glance</h2>
-          <p>The short version of how the lab is operated: segmented networks, controlled ingress, identity, monitoring, and backups.</p>
+          <h2>Featured Proof</h2>
+          <p>A short path through the strongest work. The full directory lives in the project hub.</p>
         </div>
-        <a href="pages/homelab.html" class="button secondary">Full architecture -&gt;</a>
+        <a href="pages/projects.html" class="button secondary">All projects -&gt;</a>
       </div>
 
-      <div class="architecture-flow glass-panel">
-        <div class="flow-lane">
-          <span>Controlled Ingress</span>
-          <strong>Internet -&gt; Cloudflare -&gt; cloudflared DMZ -&gt; NPMplus -&gt; approved backend</strong>
-          <p>No management ports are exposed directly to the internet.</p>
-        </div>
-        <div class="flow-lane">
-          <span>Admin Access</span>
-          <strong>Remote device -&gt; Tailscale subnet router -&gt; filtered internal VLANs</strong>
-          <p>Remote management enters through a defined network-services path.</p>
-        </div>
-        <div class="flow-lane">
-          <span>Operations</span>
-          <strong>Wazuh, Uptime Kuma, mailcow alerts, and OPNsense Monit</strong>
-          <p>Monitoring is tied to alerting so issues do not stay hidden in dashboards.</p>
-        </div>
-        <div class="flow-lane">
-          <span>Recovery</span>
-          <strong>Proxmox Backup Server, Synology NAS, and storage VLAN isolation</strong>
-          <p>Backup targets are treated as high-value infrastructure, not general servers.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section lab-media">
-      <div class="section-header">
-        <div>
-          <h2>The Lab In Practice</h2>
-          <p>Physical rack work backs the diagrams: servers, switching, NAS units, cabling, and console access.</p>
-        </div>
-      </div>
-
-      <div class="rack-gallery compact">
-        <figure>
-          <img src="assets/images/rack-full.jpg" alt="Full enclosed rack cabinet with monitor and keyboard on top" loading="lazy">
-          <figcaption>Enclosed rack with direct console access.</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/images/rack-interior.jpg" alt="Rack interior with firewall, switches, NAS units, and servers" loading="lazy">
-          <figcaption>Firewall, SG300 core, GS728TP access switch, NAS, and servers.</figcaption>
-        </figure>
-        <figure>
-          <img src="assets/images/rack-back-cables.jpg" alt="Back of the rack with cabling and wireless hardware" loading="lazy">
-          <figcaption>Cabling and wireless edge hardware.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <div class="section-header">
-        <div>
-          <h2>Featured Work</h2>
-          <p>Top competition result and strongest project builds — full project directory below.</p>
-        </div>
-      </div>
-
-      <div class="project-grid priority-project-grid">
-        <a href="pages/skillsusa.html" class="project-card glass-panel priority-card" data-tags="all network security">
+      <div class="project-grid compact-project-grid">
+        <a href="pages/skillsusa.html" class="project-card glass-panel priority-card" data-tags="all competition network">
           <div class="project-top">
             <span class="project-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </span>
             <span class="project-type">Competition</span>
-            <span class="status-badge active">1st Place</span>
+            <span class="status-badge active">Gold Medal</span>
           </div>
-          <h3>SkillsUSA Florida — Internetworking</h3>
-          <p>Gold Medal, 1st Place at SkillsUSA Florida State Championships in Internetworking. Competed in live network build, troubleshooting, and configuration under timed conditions.</p>
-          <div class="chip-row">
-            <span class="chip">Cisco</span>
-            <span class="chip">Networking</span>
-            <span class="chip">Gold Medal</span>
-            <span class="chip">2026</span>
-          </div>
-          <span class="card-link">View project -&gt;</span>
+          <h3>SkillsUSA Internetworking</h3>
+          <p>Placed 1st at SkillsUSA Florida in Internetworking after live networking, troubleshooting, and technical communication work.</p>
+          <span class="card-link">Read recap -&gt;</span>
         </a>
 
         <a href="pages/vlan-segmentation.html" class="project-card glass-panel priority-card" data-tags="all network security infrastructure">
@@ -237,15 +122,22 @@
             <span class="project-type">Network Security</span>
             <span class="status-badge active">Active</span>
           </div>
-          <h3>10-VLAN Production Segmentation</h3>
-          <p>Production-grade network segmentation: OPNsense default-deny, Cisco/Netgear trunking, DMZ isolation, Proxmox quorum recovery, and 30+ services migrated across 10 VLANs.</p>
-          <div class="chip-row">
-            <span class="chip">OPNsense</span>
-            <span class="chip">Cisco SG300</span>
-            <span class="chip">80+ Rules</span>
-            <span class="chip">30+ Services</span>
-          </div>
+          <h3>Production VLAN Segmentation</h3>
+          <p>Moved from flat networking into role-based VLANs, default-deny thinking, DMZ isolation, and documented migration steps.</p>
           <span class="card-link">View project -&gt;</span>
+        </a>
+
+        <a href="pages/homelab.html" class="project-card glass-panel priority-card" data-tags="all infrastructure network security">
+          <div class="project-top">
+            <span class="project-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </span>
+            <span class="project-type">Infrastructure</span>
+            <span class="status-badge active">Documented</span>
+          </div>
+          <h3>Enterprise Homelab Architecture</h3>
+          <p>Rack hardware, virtualization, firewalling, storage, identity, monitoring, and remote access shown through sanitized diagrams.</p>
+          <span class="card-link">See architecture -&gt;</span>
         </a>
 
         <a href="pages/mcp-server.html" class="project-card glass-panel priority-card" data-tags="all automation infrastructure">
@@ -257,723 +149,103 @@
             <span class="status-badge active">Active</span>
           </div>
           <h3>Homelab MCP Server</h3>
-          <p>Custom Node.js MCP server exposing 55 validated tools for controlled AI operations across OPNsense, Proxmox, AdGuard, NPMplus, Mailcow, Wazuh, and other services.</p>
-          <div class="chip-row">
-            <span class="chip">Node.js</span>
-            <span class="chip">MCP</span>
-            <span class="chip">55 Tools</span>
-            <span class="chip">Claude Code</span>
-          </div>
+          <p>Controlled AI operations tooling across the lab, designed around validated actions, documentation, and safer automation.</p>
           <span class="card-link">View project -&gt;</span>
         </a>
+      </div>
+    </section>
 
-        <a href="pages/ai-gateway.html" class="project-card glass-panel priority-card" data-tags="all automation">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </span>
-            <span class="project-type">AI Automation</span>
-            <span class="status-badge active">Active</span>
-          </div>
-          <h3>AI Gateway</h3>
-          <p>Self-hosted Node.js gateway routing Telegram messages and emails to Claude, Gemini CLI, or Codex — with git integration, live streaming replies, and persistent conversation memory.</p>
-          <div class="chip-row">
-            <span class="chip">Node.js</span>
-            <span class="chip">Claude</span>
-            <span class="chip">Gemini CLI</span>
-            <span class="chip">Telegram</span>
-          </div>
-          <span class="card-link">View project -&gt;</span>
-        </a>
+    <section class="section project-paths">
+      <div class="section-header">
+        <div>
+          <h2>Explore By Skill</h2>
+          <p>Pick the angle that matches the role: network, security, operations, or automation.</p>
+        </div>
       </div>
 
       <div class="project-domain-grid">
-        <article class="domain-card glass-panel">
-          <span class="mini-label">Network Core</span>
+        <a href="pages/projects.html#networking" class="domain-card glass-panel">
+          <span class="mini-label">Networking</span>
           <h3>Routing, VLANs, Switching</h3>
-          <p>OPNsense, Cisco SG300, Netgear GS728TP, DMZ isolation, guest network isolation, and storage VLAN design.</p>
-          <div class="domain-links">
-            <a href="pages/opnsense.html">Firewall</a>
-            <a href="pages/vlan-segmentation.html">Segmentation</a>
-            <a href="pages/switching.html">Switching</a>
-          </div>
-        </article>
+          <p>OPNsense, managed switching, segmentation, DMZ design, DNS/DHCP, and troubleshooting.</p>
+        </a>
 
-        <article class="domain-card glass-panel">
-          <span class="mini-label">Security &amp; Identity</span>
-          <h3>Access Control</h3>
-          <p>Authentik SSO, OIDC/LDAP, Wazuh monitoring, Suricata concepts, and remote access through controlled paths.</p>
-          <div class="domain-links">
-            <a href="pages/identity.html">Identity</a>
-            <a href="pages/wazuh.html">Wazuh</a>
-            <a href="pages/remote-access.html">Remote Access</a>
-          </div>
-        </article>
+        <a href="pages/projects.html#security" class="domain-card glass-panel">
+          <span class="mini-label">Security</span>
+          <h3>Identity, SIEM, Access</h3>
+          <p>Authentik, Wazuh workflows, secure remote access, MFA concepts, and public-safe incident writing.</p>
+        </a>
 
-        <article class="domain-card glass-panel">
+        <a href="pages/projects.html#operations" class="domain-card glass-panel">
           <span class="mini-label">Operations</span>
           <h3>Monitoring, Alerts, Recovery</h3>
-          <p>Uptime Kuma, mailcow alerts, OPNsense Monit, Proxmox backups, Synology storage, and documented rollback plans.</p>
-          <div class="domain-links">
-            <a href="pages/operations-alerting.html">Alerting</a>
-            <a href="pages/status.html">Live Status</a>
-            <a href="pages/proxmox.html">Backups</a>
-          </div>
-        </article>
+          <p>Uptime monitoring, mail alerts, backups, rollback notes, and service dependency thinking.</p>
+        </a>
 
-        <article class="domain-card glass-panel">
+        <a href="pages/projects.html#automation" class="domain-card glass-panel">
           <span class="mini-label">Automation</span>
-          <h3>AI, APIs, Game Hosting</h3>
-          <p>MCP tooling, API-driven monitor provisioning, CLI-based AI workflows, Pelican Panel, and Discord automation.</p>
-          <div class="domain-links">
-            <a href="pages/mcp-server.html">MCP Server</a>
-            <a href="pages/ai-automation.html">AI Research</a>
-            <a href="pages/game-hosting.html">Game Hosting</a>
-          </div>
-        </article>
-      </div>
-
-      <details class="project-directory">
-        <summary>Open full project card directory</summary>
-
-      <div class="project-toolbar" role="group" aria-label="Project filters">
-        <button type="button" class="filter-button is-active" data-filter="all">All</button>
-        <button type="button" class="filter-button" data-filter="network">Networking</button>
-        <button type="button" class="filter-button" data-filter="security">Security</button>
-        <button type="button" class="filter-button" data-filter="infrastructure">Infrastructure</button>
-        <button type="button" class="filter-button" data-filter="identity">Identity</button>
-        <button type="button" class="filter-button" data-filter="automation">Automation</button>
-      </div>
-
-      <div class="project-grid">
-
-        <a href="pages/homelab.html" class="project-card glass-panel" data-tags="all infrastructure network security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            </span>
-            <span class="project-type">Architecture</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Enterprise Homelab Architecture</h3>
-          <p>
-            Three-node Proxmox cluster, Cisco and Netgear switching, and Synology NAS —
-            all documented with physical and logical topology maps.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Proxmox</span>
-            <span class="chip">Cisco + Netgear</span>
-            <span class="chip">Inventory</span>
-            <span class="chip">Topology</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
+          <h3>AI, APIs, Scripting</h3>
+          <p>MCP tooling, AI workflow research, Discord/API automation, and documented command-line work.</p>
         </a>
-
-        <a href="pages/opnsense.html" class="project-card glass-panel" data-tags="all network security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </span>
-            <span class="project-type">Firewall</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>OPNsense Edge Firewall</h3>
-          <p>
-            OPNsense as the network gateway — VLAN routing, AdGuard DNS filtering,
-            Suricata IDS, ACME certs, and Cloudflare Tunnel in a DMZ for public services.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Routing</span>
-            <span class="chip">Security</span>
-            <span class="chip">VLANs</span>
-            <span class="chip">Suricata</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/proxmox.html" class="project-card glass-panel" data-tags="all infrastructure network">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </span>
-            <span class="project-type">Virtualization</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Proxmox Cluster Management</h3>
-          <p>
-            Three-node cluster running 25+ VMs and LXC containers across SIEM, identity, AI inference, media, email, and game server infrastructure.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Virtualization</span>
-            <span class="chip">LXC/VM</span>
-            <span class="chip">HA / Quorum</span>
-            <span class="chip">Backup</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/remote-access.html" class="project-card glass-panel" data-tags="all network security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-            </span>
-            <span class="project-type">Network</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Zero-Trust Remote Access</h3>
-          <p>
-            Two independent access layers: Headscale mesh VPN for admin access and
-            Cloudflare Tunnel in a DMZ VLAN for public services — no management ports on the internet.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Headscale</span>
-            <span class="chip">Cloudflare Tunnel</span>
-            <span class="chip">DMZ Design</span>
-            <span class="chip">Wildcard TLS</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/identity.html" class="project-card glass-panel" data-tags="all identity security infrastructure">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </span>
-            <span class="project-type">IAM</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Centralized Identity &amp; Auth</h3>
-          <p>
-            Authentik running as the identity provider across the lab — OIDC for
-            modern services, LDAP for anything older, one place to manage users.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Authentik</span>
-            <span class="chip">SSO</span>
-            <span class="chip">OIDC</span>
-            <span class="chip">Access Control</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/wazuh.html" class="project-card glass-panel" data-tags="all security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            </span>
-            <span class="project-type">Monitoring</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>SIEM/XDR with Wazuh</h3>
-          <p>
-            Self-hosted Wazuh SIEM/XDR — log aggregation, endpoint agents, file integrity
-            monitoring, and alert routing across the homelab.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Wazuh</span>
-            <span class="chip">SIEM</span>
-            <span class="chip">SOC</span>
-            <span class="chip">Logging</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/vlan-segmentation.html" class="project-card glass-panel" data-tags="all network security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="9" height="4" rx="1"/><rect x="13" y="10" width="9" height="4" rx="1"/><rect x="2" y="17" width="5" height="4" rx="1"/><rect x="9" y="17" width="5" height="4" rx="1"/><rect x="16" y="17" width="6" height="4" rx="1"/></svg>
-            </span>
-            <span class="project-type">Network Security</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Enterprise VLAN Segmentation</h3>
-          <p>
-            Flat single-subnet lab redesigned into 10 production VLANs — default-deny OPNsense firewall,
-            DMZ isolation, Proxmox quorum recovery, and 30+ services migrated to role-based private subnets.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">OPNsense</span>
-            <span class="chip">802.1Q VLANs</span>
-            <span class="chip">Default-Deny</span>
-            <span class="chip">DMZ Design</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/switching.html" class="project-card glass-panel" data-tags="all network">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="4" rx="1"/><rect x="2" y="14" width="20" height="4" rx="1"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="6" y1="16" x2="6" y2="16"/><line x1="10" y1="8" x2="10" y2="8"/><line x1="10" y1="16" x2="10" y2="16"/></svg>
-            </span>
-            <span class="project-type">Switching</span>
-            <span class="status-badge done">Completed</span>
-          </div>
-
-          <h3>Gigabit Switching &amp; PoE+ Deployment</h3>
-          <p>
-            Cisco SG300-20 core plus Netgear GS728TP PoE access, 1 Gbps trunk design,
-            and VLAN 7 DMZ isolation for Cloudflare Tunnel public ingress.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Gigabit</span>
-            <span class="chip">PoE+</span>
-            <span class="chip">VLANs</span>
-            <span class="chip">DMZ</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/status.html" class="project-card glass-panel" data-tags="all monitoring">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </span>
-            <span class="project-type">Monitoring</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Live Service Status</h3>
-          <p>
-            Self-hosted Uptime Kuma on Proxmox LXC — 30+ monitors provisioned via
-            socket.io API, published publicly through Cloudflare Tunnel.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Uptime Kuma</span>
-            <span class="chip">Proxmox LXC</span>
-            <span class="chip">SQLite</span>
-            <span class="chip">API Automation</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/operations-alerting.html" class="project-card glass-panel" data-tags="all monitoring infrastructure security">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-            </span>
-            <span class="project-type">Operations</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Operations &amp; Alerting Stack</h3>
-          <p>
-            Centralized service alerting through mailcow for Proxmox, Wazuh, Uptime Kuma,
-            Authentik, OPNsense Monit, and media services.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">mailcow</span>
-            <span class="chip">Monit</span>
-            <span class="chip">TLS</span>
-            <span class="chip">Runbooks</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/game-hosting.html" class="project-card glass-panel" data-tags="all infrastructure automation">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M7 12h.01"/><path d="M17 12h.01"/><path d="M12 8v8"/></svg>
-            </span>
-            <span class="project-type">Automation</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>Game Hosting &amp; Discord Bot</h3>
-          <p>
-            12 self-hosted game servers (Minecraft, Abiotic Factor, Terraria, Subnautica, Satisfactory, KSP, and more) on Pelican Panel and Wings. Custom Python Discord bot with autocomplete slash commands, grouped live status embed, multi-protocol player count queries (RCON, Steam A2S, TShock REST), and auto-stop after 20 minutes idle. Flask API serves real-time state to a custom public status site and Uptime Kuma monitors.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Pelican Panel</span>
-            <span class="chip">Python</span>
-            <span class="chip">Flask</span>
-            <span class="chip">Discord API</span>
-            <span class="chip">RCON</span>
-            <span class="chip">Steam A2S</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/skillsusa.html" class="project-card glass-panel" data-tags="all competition">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </span>
-            <span class="project-type">Competition</span>
-            <span class="status-badge">1st Place</span>
-          </div>
-
-          <h3>SkillsUSA IT &amp; Networking</h3>
-          <p>
-            1st place at SkillsUSA district competition in IT &amp; Networking — live troubleshooting, hardware identification, and network configuration under timed conditions.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Networking</span>
-            <span class="chip">CompTIA A+</span>
-            <span class="chip">Troubleshooting</span>
-            <span class="chip">SkillsUSA</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-        <a href="pages/ai-automation.html" class="project-card glass-panel" data-tags="all automation">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
-            </span>
-            <span class="project-type">Automation</span>
-            <span class="status-badge active">Active</span>
-          </div>
-
-          <h3>AI Automation Research</h3>
-          <p>
-            Testing CLI-based AI tools — Claude Code, Gemini CLI, and OpenAI Codex — against documented IT infrastructure tasks. AB-900 certified in AI governance.
-          </p>
-
-          <div class="chip-row">
-            <span class="chip">Claude Code</span>
-            <span class="chip">Gemini CLI</span>
-            <span class="chip">AB-900</span>
-            <span class="chip">Agentic Workflows</span>
-          </div>
-
-          <span class="card-link">View project -&gt;</span>
-        </a>
-
-      </div>
-      </details>
-    </section>
-
-    <section class="section recent-operations">
-      <div class="section-header">
-        <div>
-          <h2>Recent Operations</h2>
-          <p>Selected field notes from the homelab docs, rewritten as public-safe operations summaries.</p>
-        </div>
-        <a href="pages/writeups.html" class="button secondary">More writeups -&gt;</a>
-      </div>
-
-      <div class="ops-timeline">
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>Game Server Infrastructure Expanded</h3>
-          <p>Scaled from 6 to 12 game servers — added two additional private Minecraft instances, Satisfactory, LMP (KSP), a custom multiplayer server, and a second Subnautica co-op instance. Overhauled the Discord bot with grouped status embed (Minecraft vs Steam), autocomplete slash commands, per-category player count logic, and SRV records for all MC servers. Updated Uptime Kuma with 6 new keyword monitors and pushed all changes through the Forgejo deploy pipeline.</p>
-        </article>
-
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>Email Alerts Rolled Out</h3>
-          <p>Configured service alerting through mailcow for Proxmox, Wazuh, Uptime Kuma, Authentik, OPNsense Monit, and the media stack, then documented rollback steps.</p>
-        </article>
-
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>Scoped UPnP for One Workstation</h3>
-          <p>Restricted UPnP/PCP to a single approved workstation, corrected daemon startup behavior, and removed broad manual game-port forwarding.</p>
-        </article>
-
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>OIDC DNS Self-Resolution Fixed</h3>
-          <p>Updated service DNS so OPNsense could reliably resolve the Authentik service endpoint internally without depending on stale IP references.</p>
-        </article>
-
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>Guest Network Captive Portal</h3>
-          <p>Validated OPNsense captive portal behavior, DNS handling, DHCP scope, and switch trunking for an internet-only guest VLAN.</p>
-        </article>
-
-        <article class="ops-item glass-panel">
-          <span>May 2026</span>
-          <h3>Storage VLAN Cutover</h3>
-          <p>Migrated backup and NAS services into the storage VLAN, confirmed Proxmox backup connectivity, and kept storage access limited to approved clients.</p>
-        </article>
       </div>
     </section>
 
-    <section id="skills" class="section">
-      <div class="section-header">
-        <div>
-          <h2>Technical Skill Stack</h2>
-          <p>Hands-on skills from the homelab and competition work.</p>
-        </div>
-      </div>
-
-      <div class="skill-grid four">
-        <div class="skill-box glass-panel">
-          <h3>Networking</h3>
-          <p>TCP/IP, subnetting, VLAN planning, DHCP, DNS, NAT, firewall rules, switching, wireless, and troubleshooting.</p>
-          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="92"></div></div>
-        </div>
-
-        <div class="skill-box glass-panel">
-          <h3>Infrastructure</h3>
-          <p>Proxmox VE, Linux, Windows, LXC, Docker, NAS storage, backups, hardware installs, PC builds, Python, and Flask.</p>
-          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="85"></div></div>
-        </div>
-
-        <div class="skill-box glass-panel">
-          <h3>Security</h3>
-          <p>OPNsense, Suricata concepts, Wazuh workflows, log review, identity, access control, and secure remote access.</p>
-          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="78"></div></div>
-        </div>
-
-        <div class="skill-box glass-panel">
-          <h3>Support</h3>
-          <p>RustDesk remote support, clear communication, customer service, documentation, escalation notes, and problem solving.</p>
-          <div class="skill-bar-wrap"><div class="skill-bar" data-pct="88"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section achievements">
-      <div class="section-header">
-        <div>
-          <h2>Highlights</h2>
-          <p>Quick context for the resume.</p>
-        </div>
-      </div>
-
-      <a href="pages/skillsusa.html" class="skillsusa-feature glass-panel">
-        <div class="skillsusa-medal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8 14l-2 7 6-3 6 3-2-7"/></svg>
-        </div>
-        <div class="skillsusa-body">
-          <p class="skillsusa-eyebrow">April 2026 &mdash; Florida State Competition</p>
-          <h3>SkillsUSA Internetworking<br><span>1st Place — Gold Medal</span></h3>
-          <p class="skillsusa-desc">Placed 1st in SkillsUSA Florida Internetworking and advanced to SkillsUSA NLSC Nationals in Atlanta, GA.</p>
-          <span class="skillsusa-link">Read full writeup &rarr;</span>
-        </div>
-      </a>
-
-      <div class="achievement-grid homepage-achievement-grid">
-        <article class="achievement-card glass-panel">
-          <span>March 2026</span>
-          <strong>CompTIA Trifecta — A+, Network+, Security+</strong>
-          <p>Three core certifications earned consecutively within a single three-week period of focused study.</p>
-        </article>
-
-        <article class="achievement-card glass-panel">
-          <span>SouthTech Academy</span>
-          <strong>Honor Roll &bull; Esports Team Captain</strong>
-          <p>Balancing esports leadership, 20+ VMs, 6 architecture projects, and freelance tech support.</p>
-        </article>
-
-        <article class="achievement-card glass-panel">
-          <span>April 2026</span>
-          <strong>CyberLaunch USF State Championship — Participant</strong>
-          <p>Florida's largest state-sponsored high school CTF, hosted by Cyber Florida at USF. Competed in the in-person State Championship in Tampa after qualifying through the November virtual round.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="timeline" class="section">
-      <div class="section-header">
-        <div>
-          <h2>Journey &amp; Timeline</h2>
-          <p>Started IT midway through junior year; built a documented homelab, earned the CompTIA trifecta, and placed 1st in SkillsUSA Florida Internetworking within two years.</p>
-        </div>
-        <a href="pages/journey.html" class="button secondary">Full timeline -&gt;</a>
-      </div>
-
-      <div class="timeline-list">
-
-        <div class="timeline-item glass-panel">
-          <span>Late 2025 — Turning Point</span>
-          <h3>Committed to IT</h3>
-          <p>After my grandmother passed, I focused heavily on IT. Passed CCST Networking — which I needed to qualify for SkillsUSA — and started the CompTIA track immediately after.</p>
-        </div>
-
-        <div class="timeline-item glass-panel">
-          <span>March 2026 — Three Weeks</span>
-          <h3>CompTIA Trifecta: A+, Network+, Security+</h3>
-          <p>Passed A+ Core 1 and 2 in a single week, Network+ the week after, Security+ the week after that. Three certifications in three consecutive weeks.</p>
-        </div>
-
-        <div class="timeline-item glass-panel">
-          <span>April 2026 — State Level</span>
-          <h3>SkillsUSA Florida Internetworking — 1st Place, Gold Medal</h3>
-          <p>Placed 1st at the SkillsUSA Florida State Competition and qualified for SkillsUSA NLSC Nationals in Atlanta, GA.</p>
-        </div>
-
-        <div class="timeline-item glass-panel">
-          <span>June 1–5, 2026 — Atlanta, GA</span>
-          <h3>SkillsUSA NLSC Nationals — Internetworking</h3>
-          <p>Competing at SkillsUSA NLSC in Atlanta — the national championship with 6,500+ state champions from across the country. Actively studying CCNA (targeting June–July 2026) and PenTest+. Open to junior networking, SOC, NOC, MSP, and IT support roles.</p>
-        </div>
-
-      </div>
-
-      <div class="timeline-actions">
-        <a href="pages/journey.html" class="button secondary">See the full journey -&gt;</a>
-      </div>
-    </section>
-
-    <section class="section card">
-      <div class="section-header">
-        <div>
-          <h2>Certification Coverage &mdash; <span id="certCounter" class="cert-counter" data-target="31" aria-label="31 certifications">0</span>+ certs</h2>
-          <p>Certifications and fundamentals that support the hands-on portfolio.</p>
-        </div>
-      </div>
-
-      <div class="chip-row large">
-        <span class="chip">CompTIA A+</span>
-        <span class="chip">CompTIA Network+</span>
-        <span class="chip">CompTIA Security+</span>
-        <span class="chip">CompTIA CySA+</span>
-        <span class="chip">EC-Council EHE</span>
-        <span class="chip">EC-Council NDE</span>
-        <span class="chip">CCST IT Support</span>
-        <span class="chip">CCST Networking</span>
-        <span class="chip">CCST Cybersecurity</span>
-        <span class="chip">AZ-900</span>
-        <span class="chip">SC-900</span>
-        <span class="chip">AB-900</span>
-        <span class="chip">AI-900</span>
-        <span class="chip">DP-900</span>
-        <span class="chip">PL-900</span>
-        <span class="chip">CSAP</span>
-        <span class="chip">CSIS</span>
-        <span class="chip">CIOS</span>
-        <span class="chip">ITS Cloud</span>
-        <span class="chip">ITS Security</span>
-      </div>
-    </section>
-
-    <section class="section card glass-panel">
-      <div class="section-header">
-        <div>
-          <h2>Currently Learning</h2>
-          <p>Active certification goals and skills in progress.</p>
-        </div>
-      </div>
-      <div class="in-progress-strip">
-        <span class="chip progress">CCNA</span>
-        <span class="chip progress">PenTest+</span>
-      </div>
-    </section>
-
-    <section class="section card glass-panel nationals-countdown-section">
-      <div class="section-header">
-        <div>
-          <h2>SkillsUSA NLSC Nationals</h2>
-          <p>Competing in Internetworking at the national championship in Atlanta, GA.</p>
-        </div>
-      </div>
-      <div class="nationals-countdown" id="nationalsCountdown">
-        <div class="countdown-unit"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-unit"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-unit"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Minutes</span></div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-unit"><span class="countdown-num" id="cdSecs">--</span><span class="countdown-label">Seconds</span></div>
-      </div>
-      <p class="nationals-sub">June 1 &ndash; 5, 2026 &mdash; Atlanta, Georgia</p>
-    </section>
-
-    <section class="section">
+    <section class="section recent-writing">
       <div class="section-header">
         <div>
           <h2>Latest Writeups</h2>
-          <p>Technical writeups and competition recaps from troubleshooting and project work.</p>
+          <p>Short field reports that show troubleshooting, tradeoffs, and what changed.</p>
         </div>
-        <a href="pages/writeups.html" class="button secondary">All writeups &rarr;</a>
+        <a href="pages/writeups.html" class="button secondary">All writeups -&gt;</a>
       </div>
 
-      <div class="project-grid">
+      <div class="project-grid compact-project-grid">
         <a href="pages/writeup-guest-captive-portal.html" class="project-card glass-panel">
           <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-            </span>
             <span class="project-type">Networking</span>
           </div>
-          <h3>Guest VLAN Captive Portal Enforcement</h3>
-          <p>OPNsense captive portal for an internet-only guest VLAN: wrong-interface root cause, DHCP/DNS cleanup, stale bypass session removal, and live mobile-client validation.</p>
-          <span class="card-link">Read writeup &rarr;</span>
+          <h3>Guest VLAN Captive Portal</h3>
+          <p>Validated guest isolation and captive portal behavior while keeping the public writeup sanitized.</p>
+          <span class="card-link">Read writeup -&gt;</span>
         </a>
 
         <a href="pages/writeup-vlan-migration.html" class="project-card glass-panel">
           <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="4" rx="1"/><rect x="2" y="14" width="20" height="4" rx="1"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="6" y1="16" x2="6" y2="16"/><line x1="10" y1="8" x2="10" y2="8"/><line x1="10" y1="16" x2="10" y2="16"/></svg>
-            </span>
-            <span class="project-type">Networking</span>
+            <span class="project-type">Infrastructure</span>
           </div>
-          <h3>Enterprise VLAN Segmentation Migration</h3>
-          <p>Flat single-subnet lab to 10 production VLANs — Cisco switch hardware swap, Proxmox quorum recovery, 30+ services migrated, and firewall default-deny enforced across the entire network.</p>
-          <span class="card-link">Read writeup &rarr;</span>
+          <h3>VLAN Segmentation Migration</h3>
+          <p>Moved the lab toward production-style network separation with documented recovery points.</p>
+          <span class="card-link">Read writeup -&gt;</span>
         </a>
 
         <a href="pages/writeup-opnsense-oidc.html" class="project-card glass-panel">
           <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </span>
             <span class="project-type">Security</span>
           </div>
-          <h3>OPNsense OIDC SSO Fix &amp; DNS Migration</h3>
-          <p>Finding a PHP SimpleXML bug that hid the Authentik SSO button, applying a rootless fix via FreeBSD package tooling, and migrating all service configs from hardcoded IPs to DNS names.</p>
-          <span class="card-link">Read writeup &rarr;</span>
-        </a>
-
-        <a href="pages/writeup-vlan50.html" class="project-card glass-panel">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="4" rx="1"/><rect x="2" y="14" width="20" height="4" rx="1"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="6" y1="16" x2="6" y2="16"/></svg>
-            </span>
-            <span class="project-type">Networking</span>
-          </div>
-          <h3>VLAN 50 Trunking Path Fix</h3>
-          <p>Diagnosing a VLAN trunking mismatch that broke Cloudflare Tunnel DMZ ingress, then validating the path after migration to SG300 + GS728TP.</p>
-          <span class="card-link">Read writeup &rarr;</span>
-        </a>
-
-        <a href="pages/writeup-cyberlaunch-2026.html" class="project-card glass-panel">
-          <div class="project-top">
-            <span class="project-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </span>
-            <span class="project-type">CTF</span>
-          </div>
-          <h3>CyberLaunch USF 2026 State Championship</h3>
-          <p>Florida's largest high school CTF — Kali Linux, Metasploit, Hashcat, SMB exploitation, hash cracking, and OSINT under competition pressure.</p>
-          <span class="card-link">Read writeup &rarr;</span>
+          <h3>OPNsense OIDC SSO Fix</h3>
+          <p>Tracked down an authentication UI issue, fixed it, and cleaned stale service references.</p>
+          <span class="card-link">Read writeup -&gt;</span>
         </a>
       </div>
+    </section>
+
+    <section id="contact" class="section card callout contact-card-clean">
+      <div class="section-header">
+        <div>
+          <h2>Get In Touch</h2>
+          <p>Open to junior networking, SOC, NOC, MSP, help desk, field support, and cybersecurity internship opportunities.</p>
+        </div>
+      </div>
+      <div class="contact-actions callout-actions">
+        <a href="mailto:nazeemdickey@masternazz.com" class="button">Email Me</a>
+        <button type="button" class="button secondary" onclick="copyEmail()">Copy Email</button>
+        <a href="pages/resume.html" class="button secondary">Resume</a>
+        <a href="https://www.linkedin.com/in/nazeemdickey/" class="button secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/masternazz" class="button secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <p class="contact-line callout-contact-line" id="emailText" aria-live="polite">
+        Email: nazeemdickey@masternazz.com | Boynton Beach, FL
+      </p>
     </section>
 
   </main>
