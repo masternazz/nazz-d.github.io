@@ -76,7 +76,7 @@
         <ul class="list-clean">
           <li>Pelican Panel (open-source successor to Pterodactyl) on LXC 104, with a separate Wings daemon on LXC 121 — both on Proxmox firstmoon.</li>
           <li>Wings runs each game server as an isolated Docker container with its own resource limits, filesystem, and network namespace.</li>
-          <li>12 servers across two categories — Minecraft: Vanilla QOL (Fabric 1.21), Casket of Reveries (Forge 1.20.1), Supernatural (Forge 1.20.1), MC Edwin, MC Evil. Steam: Abiotic Factor, Terraria (TShock), Nitrox/Subnautica, Nitrox 2, Satisfactory, LMP (KSP Multiplayer), Windrose.</li>
+          <li>12 servers across two categories — Minecraft: Vanilla QOL (Fabric 1.21), Casket of Reveries (Forge 1.20.1), Supernatural (Forge 1.20.1), and two additional private Fabric instances. Steam: Abiotic Factor, Terraria (TShock), Subnautica co-op (×2), Satisfactory, LMP (KSP Multiplayer), and a custom multiplayer title.</li>
           <li>Each server has a dedicated subdomain. Minecraft servers have SRV DNS records so players connect without specifying a port.</li>
           <li>Modpack files (Modrinth, Prism, CurseForge formats) hosted on self-hosted Nextcloud.</li>
         </ul>
@@ -86,7 +86,7 @@
         <h2>Discord Bot — Built From Scratch</h2>
         <ul class="list-clean">
           <li>Posts a live status embed to a Discord channel, auto-updating every 60 seconds with player counts for all 12 servers, split into Minecraft and Steam sections with per-category online counts.</li>
-          <li>Player counts use different protocols per server: custom RCON client (pure Python) for Minecraft, Steam A2S UDP query for Abiotic Factor, TShock REST API for Terraria. Servers with no player API (Nitrox, Satisfactory, LMP, Windrose) show <code>—</code> and are never auto-stopped.</li>
+          <li>Player counts use different protocols per server: custom RCON client (pure Python) for Minecraft, Steam A2S UDP query for Abiotic Factor, TShock REST API for Terraria. Servers with no player API show <code>—</code> and are never auto-stopped.</li>
           <li>Auto-stop logic: any server idle for 20 minutes is stopped automatically via the Pelican Wings API. Warning fires at 10 minutes. Servers with no player API are exempt.</li>
           <li>Slash commands: <code>/start</code>, <code>/stop</code>, <code>/servers</code> — all use autocomplete dropdowns so there's no free-text server name to mistype. Bot presence updates live with active player count.</li>
           <li>Deployed on a dedicated Debian LXC 122 (thirdmoon) as a systemd service — starts on boot, auto-restarts on failure.</li>
@@ -98,7 +98,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Protocol</span>
         <h2>Multi-Protocol Player Queries</h2>
-        <p>Each game server exposes player counts differently. Minecraft servers use RCON — I implemented the binary TCP wire protocol from scratch in Python: packet framing, struct packing, auth handshake, response parsing. Abiotic Factor uses the Steam A2S_INFO UDP query protocol including the challenge handshake. Terraria (TShock) has a REST API. Servers with no player API (Nitrox, Satisfactory, LMP, Windrose) return <code>None</code> — the embed shows <code>—</code> and auto-stop is skipped entirely for those servers.</p>
+        <p>Each game server exposes player counts differently. Minecraft servers use RCON — I implemented the binary TCP wire protocol from scratch in Python: packet framing, struct packing, auth handshake, response parsing. Abiotic Factor uses the Steam A2S_INFO UDP query protocol including the challenge handshake. Terraria (TShock) has a REST API. Servers with no accessible player API return <code>None</code> — the embed shows <code>—</code> and auto-stop is skipped entirely for those servers.</p>
       </article>
 
       <article class="detail-card glass-panel">
