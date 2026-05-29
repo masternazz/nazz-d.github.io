@@ -8,17 +8,23 @@ function isCurrent(href: string) {
     return pathname === '/' || pathname === '/index.html';
   }
 
-  return pathname === href.replace(/\/$/, '');
+  const clean = href.replace(/\/$/, '').replace(/\.html$/, '');
+  const cleanPath = pathname.replace(/\.html$/, '');
+  return cleanPath === clean || pathname === href.replace(/\/$/, '');
 }
 ---
 
 <nav class="nav" aria-label="Primary navigation">
   <a class="brand" href="/" aria-label="Nazeem Massoom Dickey home">ND</a>
   <div class="nav-links">
-    {navItems.map(item => (
+    {navItems.filter(item => item.label !== 'Card').map(item => (
       <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
     ))}
     <a href="#contact">Contact</a>
+    <a href="/card.html" class="nav-card-link" aria-current={isCurrent('/card.html') ? 'page' : undefined}>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Card
+    </a>
     <button class="nav-button" type="button" data-search-trigger aria-label="Search pages">
       Search
     </button>
@@ -36,10 +42,14 @@ function isCurrent(href: string) {
 </nav>
 
 <div class="mobile-panel" id="mobileNav" hidden>
-  {navItems.map(item => (
+  {navItems.filter(item => item.label !== 'Card').map(item => (
     <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
   ))}
   <a href="#contact">Contact</a>
+  <a href="/card.html" class="nav-card-link" aria-current={isCurrent('/card.html') ? 'page' : undefined}>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    Card
+  </a>
   <button class="nav-button" type="button" data-search-trigger>Search</button>
 </div>
 

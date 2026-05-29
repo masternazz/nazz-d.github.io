@@ -139,6 +139,26 @@ button:focus-visible {
   cursor: pointer;
 }
 
+.nav-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid rgba(183, 121, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(183, 121, 255, 0.08);
+  color: var(--accent) !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.nav-card-link:hover,
+.nav-card-link[aria-current="page"] {
+  background: rgba(183, 121, 255, 0.16);
+  border-color: var(--accent);
+}
+
 .hamburger {
   display: none;
   width: 42px;

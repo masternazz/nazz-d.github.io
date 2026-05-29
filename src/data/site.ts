@@ -18,6 +18,7 @@ export const navItems = [
   { label: 'Writeups', href: '/pages/writeups.html' },
   { label: 'Certs', href: '/pages/certifications.html' },
   { label: 'Resume', href: '/pages/resume.html' },
+  { label: 'Card', href: '/card.html' },
 ];
 
 export const rolePaths = [
