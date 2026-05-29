@@ -6,9 +6,9 @@ import QRCode from 'qrcode';
 const CARD_URL = 'https://masternazz.com/card';
 const qrOpts = { margin: 2, color: { dark: '#000000', light: '#ffffff' }, errorCorrectionLevel: 'H' as const };
 
-// Generate at two sizes at build time — no CDN, no JS library, works with any ad blocker
-const qrSmall  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 120 });
-const qrLarge  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 280 });
+// Generate at 2× display size for sharpness on high-DPR screens
+const qrSmall  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 240 });
+const qrLarge  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 560 });
 ---
 
 <BaseLayout
@@ -32,6 +32,7 @@ const qrLarge  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 280 });
           <div class="mobile-top">
             <div class="qr-wrap" id="qrMobile" data-action="open-qr" style="cursor:pointer" role="button" aria-label="Expand QR code" tabindex="0">
               <img src={qrSmall} alt="QR code — scan to open masternazz.com/card" width="100" height="100" />
+              <div class="qr-logo">ND</div>
             </div>
             <p class="qr-hint">Tap to expand</p>
             <div class="mobile-identity">
@@ -68,6 +69,7 @@ const qrLarge  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 280 });
           <div class="qr-block desktop-qr">
             <div class="qr-wrap" id="qrDesktop" data-action="open-qr" style="cursor:pointer" title="Click to expand" role="button" aria-label="Expand QR code" tabindex="0">
               <img src={qrSmall} alt="QR code — scan to open masternazz.com/card" width="120" height="120" />
+              <div class="qr-logo">ND</div>
             </div>
             <p class="qr-label">Scan to open &bull; click to expand</p>
           </div>
