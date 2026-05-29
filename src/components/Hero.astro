@@ -1,29 +1,39 @@
 ---
 type Props = {
   eyebrow: string;
-  title: string;
+  name: string;
+  subtitle: string;
   lead: string;
+  status?: string;
 };
 
-const { eyebrow, title, lead } = Astro.props;
+const { eyebrow, name, subtitle, lead, status = 'Open to internships & entry-level IT roles' } = Astro.props;
 ---
 
 <section class="hero">
   <div>
+    {status && <p class="status-dot">{status}</p>}
     <span class="eyebrow">{eyebrow}</span>
-    <h1>{title}</h1>
+    <h1>{name}</h1>
+    <h2 class="hero-subtitle">{subtitle}</h2>
     <p class="lead">{lead}</p>
     <div class="button-row">
-      <a class="button" href="/pages/projects.html">Explore projects</a>
-      <a class="button secondary" href="/pages/resume.html">View resume</a>
+      <a class="button" href="/pages/resume.html">Resume</a>
+      <a class="button secondary" href="/pages/projects.html">Project Hub</a>
       <a class="button secondary" href="#contact">Contact</a>
     </div>
   </div>
   <div class="card hero-proof">
-    <span class="mini-label">Current Signal</span>
-    <h2>CompTIA Trifecta + CySA+, SkillsUSA Florida gold, real homelab operations.</h2>
+    <span class="mini-label">Fast Proof</span>
+    <strong>SkillsUSA Florida Internetworking Gold Medal</strong>
     <p>
-      This portfolio is built around proof: documented network changes, infrastructure pages, public-safe writeups, and working automation.
+      Documented lab, CompTIA Trifecta + CySA+, Cisco CCST credentials, and public writeups from real troubleshooting work.
     </p>
+    <ul class="proof-mini-grid" aria-label="Portfolio highlights">
+      <li>31+ certs</li>
+      <li>3-node lab</li>
+      <li>10-VLAN design</li>
+      <li>Public writeups</li>
+    </ul>
   </div>
 </section>

@@ -12,10 +12,11 @@ type Props = {
   ogImage?: string;
 };
 
+const rawPath = Astro.url.pathname.replace(/\/index\.html$/, '/');
 const {
   title = site.title,
   description = site.description,
-  canonical = new URL(Astro.url.pathname, site.url).toString(),
+  canonical = new URL(rawPath, site.url).toString(),
   ogImage = site.ogImage,
 } = Astro.props;
 
