@@ -105,6 +105,22 @@ const diagram = diagrams[project.slug];
     </div>
   </section>
 
+  {project.slug === 'skillsusa' && (
+    <section class="section">
+      <div class="card nationals-countdown">
+        <span class="mini-label">Next Up</span>
+        <h2>SkillsUSA NLSC Nationals — Atlanta, GA</h2>
+        <p class="lead">June 1–6, 2026 &bull; Competing against 6,500+ state champions nationwide.</p>
+        <div class="countdown-grid" id="nationalsCountdown">
+          <div class="countdown-cell"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
+          <div class="countdown-cell"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
+          <div class="countdown-cell"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Mins</span></div>
+          <div class="countdown-cell"><span class="countdown-num" id="cdSecs">--</span><span class="countdown-label">Secs</span></div>
+        </div>
+      </div>
+    </section>
+  )}
+
   {relatedWriteups.length > 0 && (
     <section class="section">
       <div class="section-header">
@@ -132,3 +148,78 @@ const diagram = diagrams[project.slug];
 
   <ContactCTA />
 </BaseLayout>
+
+<style>
+  .nationals-countdown {
+    border-left: 3px solid var(--accent-strong);
+  }
+
+  .countdown-grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .countdown-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 72px;
+    padding: 14px 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-soft);
+  }
+
+  .countdown-num {
+    font-size: 2rem;
+    font-weight: 950;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .countdown-label {
+    margin-top: 4px;
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const target = new Date('2026-06-01T08:00:00');
+    const end = new Date('2026-06-06T23:59:59');
+    const dEl = document.getElementById('cdDays');
+    const hEl = document.getElementById('cdHours');
+    const mEl = document.getElementById('cdMins');
+    const sEl = document.getElementById('cdSecs');
+    const wrap = document.getElementById('nationalsCountdown');
+
+    if (!dEl || !wrap) return;
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const now = new Date();
+      if (now >= end) {
+        wrap.innerHTML = '<p style="color:var(--accent);font-weight:700;font-size:1.05rem;margin:12px 0 0">Atlanta, GA — June 1–6, 2026</p>';
+        return;
+      }
+      let diff = Math.max(target - now, 0);
+      const days = Math.floor(diff / 86400000); diff %= 86400000;
+      const hours = Math.floor(diff / 3600000); diff %= 3600000;
+      const mins = Math.floor(diff / 60000); diff %= 60000;
+      const secs = Math.floor(diff / 1000);
+      dEl.textContent = String(days);
+      hEl.textContent = pad(hours);
+      mEl.textContent = pad(mins);
+      sEl.textContent = pad(secs);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>

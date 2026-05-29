@@ -494,11 +494,199 @@ h3 {
   margin-top: 0;
 }
 
+/* ── Chip / tag row (writeup heroes, card page) ── */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.chip {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── Writeup body ── */
+.writeup-body {
+  padding: 28px 32px;
+  line-height: 1.75;
+}
+
+.writeup-body h2 {
+  margin-top: 2rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+}
+
+.writeup-body h3 {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.writeup-body p,
+.writeup-body li {
+  color: var(--muted);
+}
+
+.writeup-body ul,
+.writeup-body ol {
+  padding-left: 1.4rem;
+  margin: 0.75rem 0;
+  color: var(--muted);
+}
+
+.writeup-body li {
+  margin-bottom: 0.4rem;
+}
+
+.writeup-body strong {
+  color: var(--text);
+}
+
+/* ── STAR callout card ── */
+.star-callout {
+  border-left: 3px solid var(--accent-strong);
+  margin-bottom: 2rem;
+}
+
+.star-callout h3 {
+  margin-top: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* list-clean alias */
+.list-clean {
+  display: grid;
+  gap: 10px;
+  padding-left: 1.1rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Code blocks ── */
+pre {
+  margin: 1.25rem 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.35);
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+pre code {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  color: #c9c0d9;
+}
+
+code {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(183, 121, 255, 0.08);
+  font-size: 0.84em;
+  color: var(--accent);
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ── Diagram card (writeup diagrams) ── */
+.diagram-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  text-align: center;
+}
+
+.diagram-card img,
+.diagram-img {
+  display: block;
+  width: 100%;
+  max-height: 540px;
+  object-fit: contain;
+}
+
+/* ── hr section divider ── */
+hr,
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+/* ── Back / nav link ── */
+.back-link {
+  margin-top: 24px;
+}
+
+.back-link a,
+.back-link a:visited {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.back-link a:hover {
+  color: var(--text);
+}
+
+/* ── Writeup meta row (competition writeups) ── */
+.writeup-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.writeup-meta-item {
+  font-size: 0.82rem;
+  color: var(--subtle);
+}
+
+.writeup-meta-item strong {
+  color: var(--text);
+}
+
 .footer {
   width: min(1180px, calc(100% - 32px));
   margin: 48px auto 72px;
   color: var(--subtle);
   text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--subtle);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
 }
 
 body.search-lock {

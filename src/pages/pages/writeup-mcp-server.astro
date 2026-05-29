@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Self-Hosted MCP Server for AI Homelab Control | Nazeem Massoom Dickey"
+  description="Built a custom Model Context Protocol server on a Proxmox LXC exposing 55 validated homelab tools for OPNsense, Proxmox, AdGuard, Mailcow, Wazuh, and more."
+  canonical="https://masternazz.com/pages/writeup-mcp-server.html"
+>
+
+    <section class="page-hero">
+      <p class="eyebrow">Writeup | AI Automation &amp; Infrastructure</p>
+      <h1>Self-Hosted MCP Server for AI Homelab Control</h1>
+      <p class="lead">
+        Built a custom Model Context Protocol server running on a dedicated Proxmox LXC.
+        It exposes 55 validated tools for OPNsense, Proxmox, AdGuard, NPMplus, Mailcow,
+        Wazuh, Jellyfin, and other lab services so MCP-compatible clients can run approved
+        checks and service actions over SSH.
+      </p>
+      <div class="chip-row">
+        <span class="chip">MCP</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">OPNsense API</span>
+        <span class="chip">Proxmox</span>
+        <span class="chip">Claude Code</span>
+        <span class="chip">Wazuh</span>
+        <span class="chip">Gemini CLI</span>
+        <span class="chip">stdio transport</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>The Problem</h2>
+        </div>
+      </div>
+      <div class="card">
+        <p>
+          When an assistant needs to interact with homelab infrastructure — check DHCP leases,
+          restart a service, add a DNS rewrite — the normal workflow is slow: open a terminal,
+          SSH to the right host, find the right API endpoint, format the JSON body, parse the
+          response, and bring the output back into the working context.
+        </p>
+        <p style="margin-top:1rem;">
+          MCP (Model Context Protocol) solves this at the protocol level. An MCP server exposes
+          tools as structured functions. MCP-compatible clients — Claude Code, Gemini CLI,
+          VS Code Copilot, Cursor — call those tools natively and receive structured results.
+          That removes copy-pasting, repeated terminal switching, and manually formatted API requests.
+        </p>
+        <p style="margin-top:1rem;">
+          The goal: one server, one SSH connection, the AI calls what it needs.
+        </p>
+      </div>
+    </section>
+
+    <section class="section two-column">
+      <div class="card">
+        <h2>Architecture</h2>
+        <ul class="list-clean">
+          <li><strong>Transport:</strong> stdio over SSH — the AI client SSHes into LXC 130 and pipes MCP protocol through the connection. No exposed HTTP port, no auth surface beyond SSH key.</li>
+          <li><strong>Runtime:</strong> Node.js 20 LTS on a minimal Debian 12 LXC. 64 MB RAM idle — lighter than running a Docker container.</li>
+          <li><strong>Structure:</strong> <code>index.js</code> registers all tools. Each integration lives in its own module under <code>tools/</code> — <code>adguard.js</code>, <code>opnsense.js</code>, <code>proxmox.js</code>, etc.</li>
+          <li><strong>Auth:</strong> Every tool module reads credentials from local runtime configuration at startup. API keys, passwords, and SSH keys are never passed over the MCP connection itself.</li>
+          <li><strong>Schema:</strong> Tools use <code>zod</code> for input validation. The MCP SDK generates the JSON Schema exposed to the client automatically.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>How a Tool Call Works</h2>
+        <ul class="list-clean">
+          <li>AI client sends: <code>&#123;"tool": "adguard_add_rewrite", "input": &#123;"domain": "test.lab", "answer": "[internal-ip]"&#125;&#125;</code></li>
+          <li>MCP server calls the handler, which POSTs to AdGuard's REST API at <code>http://[adguard-internal-ip]:3001</code> with Basic auth.</li>
+          <li>Handler returns a plain-text result: <code>"Added rewrite: test.lab → [internal-ip]"</code></li>
+          <li>AI client gets structured <code>content: [&#123;"type": "text", "text": "..."&#125;]</code> back and reasons on the result.</li>
+          <li>From the client perspective: call the tool, receive the result, and keep the workflow in one place.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Tools Exposed — 55 Total</h2>
+          <p>Grouped by service. Each tool is callable by MCP-compatible clients over SSH.</p>
+        </div>
+      </div>
+
+      <div class="skill-grid four">
+
+        <div class="skill-box glass-panel">
+          <h3>AdGuard Home</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>List / add / delete DNS rewrites</li>
+            <li>Get / set custom filtering rules</li>
+            <li>Query log (recent DNS lookups)</li>
+            <li>Status (version, stats)</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>Proxmox</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>List all LXCs and status</li>
+            <li>Execute command inside any LXC</li>
+            <li>Start / stop / status LXC</li>
+            <li>List all cluster nodes</li>
+            <li>Node CPU / RAM / uptime</li>
+            <li>Create LXC, backup LXC</li>
+            <li>List backups</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>OPNsense</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>Raw API call passthrough</li>
+            <li>DHCP leases (dnsmasq)</li>
+            <li>Firmware version / update info</li>
+            <li>Restart any service</li>
+            <li>List firewall aliases</li>
+            <li>List firewall rules</li>
+            <li>Add DHCP reservation</li>
+            <li>List interfaces</li>
+            <li>ARP table</li>
+            <li>Add Unbound DNS override</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>NPMplus</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>List all proxy hosts</li>
+            <li>Add / delete / update proxy host</li>
+            <li>List SSL certificates</li>
+            <li>Enable / disable proxy host</li>
+            <li>Trigger cert renewal</li>
+            <li>Find proxy host by domain</li>
+            <li>Get access/error logs</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>Mailcow</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>List mailboxes</li>
+            <li>Add / delete mailbox</li>
+            <li>List aliases</li>
+            <li>Add alias</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>Monitoring</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>Uptime Kuma — all monitor statuses</li>
+            <li>Wazuh — recent security alerts</li>
+            <li>Wazuh — agent connection status</li>
+            <li>Proxmox backup job results</li>
+          </ul>
+        </div>
+
+        <div class="skill-box glass-panel">
+          <h3>Services</h3>
+          <ul class="list-clean" style="font-size:0.85rem;">
+            <li>Authentik — list users / applications</li>
+            <li>Headscale — list Tailscale nodes</li>
+            <li>Jellyfin — server status, recent media</li>
+            <li>Home Assistant — entity states, service calls</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Non-Obvious Engineering Problems</h2>
+        </div>
+      </div>
+
+      <div class="timeline-list">
+
+        <div class="timeline-item glass-panel">
+          <span>AdGuard binding issue</span>
+          <h3>Service bound to old IP</h3>
+          <p>
+            AdGuard Home was still bound to a legacy management address from before the VLAN migration.
+            After migration, AdGuard's management interface was unreachable from the MCP LXC.
+            Fix: edited <code>AdGuardHome.yaml</code> via SSH to bind to all local interfaces and restarted.
+            Also updated the NPMplus proxy host that was still pointing at the old address.
+          </p>
+        </div>
+
+        <div class="timeline-item glass-panel">
+          <span>NPMplus auth</span>
+          <h3>Cookie-based auth, not Bearer token</h3>
+          <p>
+            NPMplus uses a session cookie (<code>__Host-Http-token</code>) not a Bearer JWT like the original
+            Nginx Proxy Manager. The login endpoint sets the cookie via <code>Set-Cookie</code> header. The initial
+            implementation tried Bearer auth and got 401s. Also, NPMplus only serves HTTPS — hitting the
+            plain HTTP port gets a 308 redirect. Fixed by using <code>node-fetch</code> with a custom
+            <code>https.Agent({'{'} rejectUnauthorized: false {'}'})</code> and extracting the session cookie.
+          </p>
+        </div>
+
+        <div class="timeline-item glass-panel">
+          <span>OPNsense API</span>
+          <h3>GET requests rejecting JSON bodies</h3>
+          <p>
+            OPNsense returns <code>400 Invalid JSON syntax</code> if you send a body on a GET request.
+            Several endpoints (firmware info, alias list) were implemented as GET but needed POST per the actual
+            OPNsense PHP controllers. Fixed by auditing each endpoint against the controller source and adding a
+            <code>method !== 'GET'</code> guard before attaching the request body.
+          </p>
+        </div>
+
+        <div class="timeline-item glass-panel">
+          <span>DHCP leases</span>
+          <h3>No API endpoint for dnsmasq leases</h3>
+          <p>
+            OPNsense's dnsmasq plugin has no REST endpoint that returns current leases. Tried
+            <code>/dhcpv4/leases/searchLease</code> and <code>/dnsmasq/leases/searchLease</code> — both 404.
+            dnsmasq writes leases to a flat file at <code>/var/db/dnsmasq.leases</code>.
+            Fix: SSH to OPNsense via firstmoon and read the file directly with <code>sshpass</code>.
+          </p>
+        </div>
+
+        <div class="timeline-item glass-panel">
+          <span>Firewall inter-VLAN</span>
+          <h3>NPMplus blocked from reaching Mailcow</h3>
+          <p>
+            NPMplus (VLAN 7/DMZ) proxying to Mailcow (VLAN 6/Internal_Services) was returning 502.
+            The DMZ VLAN has a default-deny RFC1918 block rule. The fix — adding a pass rule for
+            <code>[npmplus-ip] → [mailcow-ip]:443</code> — had to be inserted <em>before</em> the block rule.
+            New rules added via API land at the end of the list. Solved by reading the block rule's
+            sequence number (2200) and re-adding the pass rule with sequence 2199.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Real Tasks Completed With the MCP Server</h2>
+          <p>Operational tasks completed through controlled MCP tool calls.</p>
+        </div>
+      </div>
+      <div class="skill-grid four">
+        <div class="skill-box glass-panel">
+          <h3>NIC Swap Recovery</h3>
+          <p>After a hardware swap broke all VLANs by changing firewall interface names, used OPNsense API tools to migrate VLAN parent interfaces and fix scrambled DHCP ranges in a single session.</p>
+        </div>
+        <div class="skill-box glass-panel">
+          <h3>Proxy Host Audit</h3>
+          <p>Called <code>npmplus_list_proxyhosts</code>, tested all 28 backends, identified two broken ones (headplane 404, firstwing 401), diagnosed root causes, and corrected both through the MCP workflow.</p>
+        </div>
+        <div class="skill-box glass-panel">
+          <h3>Firewall Debugging</h3>
+          <p>Diagnosed a 502 on webmail by calling <code>opnsense_list_firewall_rules</code>, identifying the blocking rule, and adding the correct pass rule with the right sequence number via the API.</p>
+        </div>
+        <div class="skill-box glass-panel">
+          <h3>DNS + Service Ops</h3>
+          <p>Added DNS rewrites, checked DHCP leases, restarted services, queried Wazuh for recent alerts, and checked Uptime Kuma monitor statuses through the MCP server.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Connecting an AI Client</h2>
+          <p>Works with any MCP-compatible client over stdio transport via SSH.</p>
+        </div>
+      </div>
+      <div class="two-column">
+        <div class="card">
+          <h3>Claude Code</h3>
+          <pre style="background:var(--surface);padding:1rem;border-radius:0.5rem;font-size:0.8rem;overflow-x:auto;"><code>&#123;"mcpServers": &#123;"homelab": &#123;"command": "ssh","args": ["-i", "~/.ssh/id_ai_assistant","-o", "StrictHostKeyChecking=no","aiassistant@[mcp-lxc-ip]","node /opt/homelab-mcp/index.js"]&#125;&#125;&#125;
+</code></pre>
+        </div>
+        <div class="card">
+          <h3>VS Code / Cursor / Gemini CLI</h3>
+          <p style="margin-bottom:0.75rem;">Same SSH stdio config — just placed in the right settings file for each client:</p>
+          <ul class="list-clean" style="font-size:0.9rem;">
+            <li><strong>VS Code:</strong> user <code>settings.json</code> under <code>"mcp.servers"</code></li>
+            <li><strong>Cursor:</strong> <code>.cursor/mcp.json</code> in project root</li>
+            <li><strong>Gemini CLI:</strong> <code>~/.gemini/settings.json</code> under <code>"mcpServers"</code></li>
+          </ul>
+          <p style="margin-top:0.75rem;font-size:0.9rem;">The server runs over stdio — the SSH connection is the transport layer. No HTTP port exposed, no extra auth surface.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="back-link">
+      <a href="/pages/writeups.html">&larr; Back to writeups</a>
+    </div>
+
+</BaseLayout>
