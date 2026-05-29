@@ -23,22 +23,26 @@ export const navItems = [
 export const rolePaths = [
   {
     title: 'Network Admin',
-    href: '/pages/projects.html#network-admin',
+    href: '/pages/projects.html?filter=network-admin#project-directory',
+    filter: 'network-admin',
     summary: 'Routing, switching, VLAN segmentation, DNS/DHCP, firewalling, and troubleshooting.',
   },
   {
     title: 'SOC / NOC',
-    href: '/pages/projects.html#soc-noc',
+    href: '/pages/projects.html?filter=soc-noc#project-directory',
+    filter: 'soc-noc',
     summary: 'Monitoring, alerting, Wazuh workflow, uptime checks, identity, and incident notes.',
   },
   {
     title: 'MSP / Help Desk',
-    href: '/pages/projects.html#msp-help-desk',
+    href: '/pages/projects.html?filter=msp-help-desk#project-directory',
+    filter: 'msp-help-desk',
     summary: 'Documentation, customer-facing support, escalation notes, remote access, and recovery steps.',
   },
   {
     title: 'Automation',
-    href: '/pages/projects.html#automation',
+    href: '/pages/projects.html?filter=automation#project-directory',
+    filter: 'automation',
     summary: 'AI tooling, APIs, scripts, Discord automation, MCP operations, and repeatable checks.',
   },
 ];

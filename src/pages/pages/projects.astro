@@ -56,10 +56,10 @@ const filters = [
     </div>
     <div class="grid four">
       {rolePaths.map(path => (
-        <article class="card" id={path.href.split('#')[1]}>
+        <article class="card" id={path.filter}>
           <h3>{path.title}</h3>
           <p>{path.summary}</p>
-          <a class="card-link" href={`/pages/projects.html?filter=${path.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}#project-directory`}>Filter projects</a>
+          <a class="card-link" href={path.href}>Filter projects</a>
         </article>
       ))}
     </div>
