@@ -46,6 +46,7 @@ export const projects: Project[] = [
     skills: ['Networking fundamentals', 'Troubleshooting', 'Technical communication', 'Competition discipline'],
     result:
       'Placed 1st at SkillsUSA Florida Internetworking and created a clear proof point for junior networking roles.',
+    relatedWriteups: ['writeup-cyberlaunch-2026'],
   },
   {
     slug: 'vlan-segmentation',
@@ -155,6 +156,7 @@ export const projects: Project[] = [
     skills: ['Proxmox', 'Linux', 'LXC/VMs', 'Backups', 'Service documentation'],
     result:
       'This project proves day-to-day systems administration habits beyond single-machine lab exercises.',
+    relatedWriteups: ['writeup-vlan-migration', 'writeup-mailcow-email'],
   },
   {
     slug: 'switching',
@@ -175,6 +177,7 @@ export const projects: Project[] = [
     skills: ['Switching', '802.1Q concepts', 'PoE', 'Cabling', 'Physical troubleshooting'],
     result:
       'The network fabric is easier to inspect, troubleshoot, and explain from both physical and logical views.',
+    relatedWriteups: ['writeup-vlan-migration', 'writeup-vlan50'],
   },
   {
     slug: 'remote-access',
@@ -256,6 +259,7 @@ export const projects: Project[] = [
     skills: ['Monitoring', 'Alerting', 'Runbooks', 'Rollback planning', 'Service dependencies'],
     result:
       'The operations work shows the habits that make infrastructure supportable after the first build.',
+    relatedWriteups: ['writeup-mailcow-email'],
   },
   {
     slug: 'status',
@@ -316,6 +320,7 @@ export const projects: Project[] = [
     skills: ['AI tooling', 'Prompting', 'Infrastructure context', 'Workflow design', 'Risk review'],
     result:
       'The research page shows curiosity and caution: useful automation, but not blind automation.',
+    relatedWriteups: ['writeup-ai-gateway', 'writeup-mcp-server'],
   },
   {
     slug: 'game-hosting',

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactCTA from '../../components/ContactCTA.astro';
-import { site } from '../../data/site';
+import { site, rolePaths } from '../../data/site';
 ---
 
 <BaseLayout
@@ -22,22 +22,14 @@ import { site } from '../../data/site';
   </section>
 
   <section class="section">
-    <div class="grid three">
-      <article class="card proof-card">
-        <strong>Networking</strong>
-        <p>VLANs, switching, firewalling, DNS/DHCP, public ingress, and documented troubleshooting.</p>
-        <a class="card-link" href="/pages/projects.html?filter=network-admin#project-directory">Network path</a>
-      </article>
-      <article class="card proof-card">
-        <strong>SOC / NOC</strong>
-        <p>Monitoring, Wazuh practice, alerting habits, identity work, and operational writeups.</p>
-        <a class="card-link" href="/pages/projects.html?filter=soc-noc#project-directory">SOC/NOC path</a>
-      </article>
-      <article class="card proof-card">
-        <strong>Automation</strong>
-        <p>MCP, AI workflow testing, API tooling, Discord automation, and repeatable checks.</p>
-        <a class="card-link" href="/pages/projects.html?filter=automation#project-directory">Automation path</a>
-      </article>
+    <div class="grid four">
+      {rolePaths.map(path => (
+        <article class="card proof-card">
+          <strong>{path.title}</strong>
+          <p>{path.summary}</p>
+          <a class="card-link" href={path.href}>Explore {path.title} →</a>
+        </article>
+      ))}
     </div>
   </section>
 
