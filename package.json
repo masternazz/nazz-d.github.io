@@ -16,8 +16,12 @@
     "visual:check": "node tools/visual-check.js"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.6",
     "astro": "^6.3.8",
     "playwright": "^1.59.1",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
   }
 }

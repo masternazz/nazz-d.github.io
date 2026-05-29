@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
+import QRCode from 'qrcode';
+
+const CARD_URL = 'https://masternazz.com/card';
+const qrOpts = { margin: 2, color: { dark: '#000000', light: '#ffffff' }, errorCorrectionLevel: 'H' as const };
+
+// Generate at two sizes at build time — no CDN, no JS library, works with any ad blocker
+const qrSmall  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 120 });
+const qrLarge  = await QRCode.toDataURL(CARD_URL, { ...qrOpts, width: 280 });
 ---
 
 <BaseLayout
@@ -22,8 +30,8 @@ import { site } from '../data/site';
 
           <!-- mobile: QR + name stacked -->
           <div class="mobile-top">
-            <div class="qr-wrap" id="qrMobile" data-action="open-qr" style="cursor:pointer">
-              <div id="qrCanvasMobile"></div>
+            <div class="qr-wrap" id="qrMobile" data-action="open-qr" style="cursor:pointer" role="button" aria-label="Expand QR code" tabindex="0">
+              <img src={qrSmall} alt="QR code — scan to open masternazz.com/card" width="100" height="100" />
               <div class="qr-logo">ND</div>
             </div>
             <p class="qr-hint">Tap to expand</p>
@@ -59,8 +67,8 @@ import { site } from '../data/site';
 
           <!-- desktop QR -->
           <div class="qr-block desktop-qr">
-            <div class="qr-wrap" id="qrDesktop" data-action="open-qr" style="cursor:pointer" title="Click to expand">
-              <div id="qrCanvasDesktop"></div>
+            <div class="qr-wrap" id="qrDesktop" data-action="open-qr" style="cursor:pointer" title="Click to expand" role="button" aria-label="Expand QR code" tabindex="0">
+              <img src={qrSmall} alt="QR code — scan to open masternazz.com/card" width="120" height="120" />
               <div class="qr-logo">ND</div>
             </div>
             <p class="qr-label">Scan to open &bull; click to expand</p>
@@ -187,10 +195,10 @@ import { site } from '../data/site';
   </div>
 
   <!-- QR expand modal -->
-  <div class="qr-modal" id="qrModal">
-    <div class="qr-modal-inner" id="qrModalInner">
+  <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-label="Expanded QR code">
+    <div class="qr-modal-inner">
       <div style="position:relative;line-height:0">
-        <div id="qrModalCanvas"></div>
+        <img src={qrLarge} alt="QR code — masternazz.com/card" width="280" height="280" />
         <div class="qr-logo qr-modal-logo">ND</div>
       </div>
       <p class="qr-modal-url">masternazz.com/card</p>
@@ -337,18 +345,11 @@ import { site } from '../data/site';
     flex-shrink: 0;
   }
 
-  /* QRCode.js injects a wrapper div with inline width/height — override it */
-  .qr-wrap > div {
-    width: 120px !important;
-    height: 120px !important;
-    line-height: 0;
-  }
-
-  .qr-wrap canvas,
   .qr-wrap img {
-    width: 120px !important;
-    height: 120px !important;
+    width: 120px;
+    height: 120px;
     display: block;
+    border-radius: 4px;
   }
 
   .qr-logo {
@@ -602,16 +603,11 @@ import { site } from '../data/site';
     box-shadow: 0 24px 80px rgba(0,0,0,0.6);
   }
 
-  .qr-modal-inner > div > div {
-    width: 260px !important;
-    height: 260px !important;
-  }
-
-  .qr-modal-inner canvas,
   .qr-modal-inner img {
-    width: 260px !important;
-    height: 260px !important;
+    width: 280px;
+    height: 280px;
     display: block;
+    border-radius: 6px;
   }
 
   .qr-modal-logo {
@@ -668,15 +664,9 @@ import { site } from '../data/site';
       padding: 6px;
     }
 
-    .mobile-top .qr-wrap > div {
-      width: 100px !important;
-      height: 100px !important;
-    }
-
-    .mobile-top .qr-wrap canvas,
     .mobile-top .qr-wrap img {
-      width: 100px !important;
-      height: 100px !important;
+      width: 100px;
+      height: 100px;
     }
 
     .mobile-top .qr-logo {
@@ -702,37 +692,14 @@ import { site } from '../data/site';
   }
 </style>
 
-<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous"></script>
 <script is:inline>
   (() => {
     const CARD_URL = 'https://masternazz.com/card';
 
-    function makeQR(el, size) {
-      if (!el || typeof QRCode === 'undefined') return;
-      el.innerHTML = '';
-      new QRCode(el, {
-        text: CARD_URL,
-        width: size,
-        height: size,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H,
-      });
-    }
-
-    function buildAll() {
-      makeQR(document.getElementById('qrCanvasDesktop'), 120);
-      makeQR(document.getElementById('qrCanvasMobile'), 100);
-    }
-
-    document.addEventListener('DOMContentLoaded', buildAll);
-
-    // QR modal
+    // QR modal — images are pre-generated at build time, just show/hide
     const modal = document.getElementById('qrModal');
-    const modalCanvas = document.getElementById('qrModalCanvas');
 
     function openModal() {
-      makeQR(modalCanvas, 260);
       modal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     }
@@ -744,6 +711,7 @@ import { site } from '../data/site';
 
     document.querySelectorAll('[data-action="open-qr"]').forEach(el => {
       el.addEventListener('click', openModal);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
     });
 
     modal.addEventListener('click', e => {
