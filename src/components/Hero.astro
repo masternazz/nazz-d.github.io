@@ -2,12 +2,11 @@
 type Props = {
   eyebrow: string;
   name: string;
-  subtitle: string;
   lead: string;
   status?: string;
 };
 
-const { eyebrow, name, subtitle, lead, status = 'Open to internships & entry-level IT roles' } = Astro.props;
+const { eyebrow, name, lead, status = 'Open to internships & entry-level IT roles' } = Astro.props;
 ---
 
 <section class="hero">
@@ -15,7 +14,6 @@ const { eyebrow, name, subtitle, lead, status = 'Open to internships & entry-lev
     {status && <p class="status-dot">{status}</p>}
     <span class="eyebrow">{eyebrow}</span>
     <h1>{name}</h1>
-    <h2 class="hero-subtitle">{subtitle}</h2>
     <p class="lead">{lead}</p>
     <div class="button-row">
       <a class="button" href="/pages/resume.html">Resume</a>
@@ -25,15 +23,7 @@ const { eyebrow, name, subtitle, lead, status = 'Open to internships & entry-lev
   </div>
   <div class="card hero-proof">
     <span class="mini-label">Fast Proof</span>
-    <strong>SkillsUSA Florida Internetworking Gold Medal</strong>
-    <p>
-      Documented lab, CompTIA Trifecta + CySA+, Cisco CCST credentials, and public writeups from real troubleshooting work.
-    </p>
-    <ul class="proof-mini-grid" aria-label="Portfolio highlights">
-      <li>31+ certs</li>
-      <li>3-node lab</li>
-      <li>10-VLAN design</li>
-      <li>Public writeups</li>
-    </ul>
+    <h2>CompTIA Trifecta + CySA+, SkillsUSA Florida gold, real homelab operations.</h2>
+    <p>31+ certs &bull; 3-node Proxmox lab &bull; 10-VLAN design &bull; public writeups from real troubleshooting work.</p>
   </div>
 </section>
