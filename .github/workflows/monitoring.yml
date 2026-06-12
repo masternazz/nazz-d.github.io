@@ -17,12 +17,13 @@ jobs:
       - name: Check Main Site
         id: check
         run: |
-          if curl -s --head --request GET https://masternazz.com | grep "200 OK" > /dev/null; then
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://masternazz.com)
+          if [ "$HTTP_CODE" = "200" ]; then
             echo "status=up" >> $GITHUB_OUTPUT
-            echo "UP"
+            echo "UP ($HTTP_CODE)"
           else
             echo "status=down" >> $GITHUB_OUTPUT
-            echo "DOWN"
+            echo "DOWN ($HTTP_CODE)"
           fi
 
       - name: Update Status File

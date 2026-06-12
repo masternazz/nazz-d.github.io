@@ -108,10 +108,10 @@ const diagram = diagrams[project.slug];
   {project.slug === 'skillsusa' && (
     <section class="section">
       <div class="card nationals-countdown">
-        <span class="mini-label">Next Up</span>
-        <h2>SkillsUSA NLSC Nationals — Atlanta, GA</h2>
-        <p class="lead">June 1–6, 2026 &bull; Competing against 6,500+ state champions nationwide.</p>
-        <div class="countdown-grid" id="nationalsCountdown">
+        <span class="mini-label" id="cdLabel">NLSC Nationals — Atlanta, GA</span>
+        <h2 id="cdHeading">Competed at NLSC Nationals</h2>
+        <p class="lead" id="cdLead">Atlanta, GA &bull; June 1&ndash;6, 2026 &bull; 6,500+ state champions from 114 events nationwide.</p>
+        <div class="countdown-grid is-hidden" id="nationalsCountdown">
           <div class="countdown-cell"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
           <div class="countdown-cell"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
           <div class="countdown-cell"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Mins</span></div>
@@ -160,6 +160,10 @@ const diagram = diagrams[project.slug];
     margin-top: 20px;
   }
 
+  .countdown-grid.is-hidden {
+    display: none;
+  }
+
   .countdown-cell {
     display: flex;
     flex-direction: column;
@@ -190,33 +194,40 @@ const diagram = diagrams[project.slug];
 
 <script is:inline>
   (() => {
-    const target = new Date('2026-06-01T08:00:00');
     const end = new Date('2026-06-06T23:59:59');
+    const now = new Date();
+    // After event: static HTML defaults are correct — nothing to do.
+    if (now >= end) return;
+
+    // Before or during event: switch to countdown mode.
+    const wrap = document.getElementById('nationalsCountdown');
+    const label = document.getElementById('cdLabel');
+    const heading = document.getElementById('cdHeading');
+    const lead = document.getElementById('cdLead');
     const dEl = document.getElementById('cdDays');
     const hEl = document.getElementById('cdHours');
     const mEl = document.getElementById('cdMins');
     const sEl = document.getElementById('cdSecs');
-    const wrap = document.getElementById('nationalsCountdown');
+    if (!wrap) return;
 
-    if (!dEl || !wrap) return;
+    if (label) label.textContent = 'Next Up';
+    if (heading) heading.textContent = 'SkillsUSA NLSC Nationals — Atlanta, GA';
+    if (lead) lead.textContent = 'June 1–6, 2026 • Competing against 6,500+ state champions nationwide.';
+    wrap.classList.remove('is-hidden');
 
+    const target = new Date('2026-06-01T08:00:00');
     function pad(n) { return String(n).padStart(2, '0'); }
 
     function tick() {
-      const now = new Date();
-      if (now >= end) {
-        wrap.innerHTML = '<p style="color:var(--accent);font-weight:700;font-size:1.05rem;margin:12px 0 0">Atlanta, GA — June 1–6, 2026</p>';
-        return;
-      }
-      let diff = Math.max(target - now, 0);
+      let diff = Math.max(target - new Date(), 0);
       const days = Math.floor(diff / 86400000); diff %= 86400000;
       const hours = Math.floor(diff / 3600000); diff %= 3600000;
       const mins = Math.floor(diff / 60000); diff %= 60000;
       const secs = Math.floor(diff / 1000);
-      dEl.textContent = String(days);
-      hEl.textContent = pad(hours);
-      mEl.textContent = pad(mins);
-      sEl.textContent = pad(secs);
+      if (dEl) dEl.textContent = String(days);
+      if (hEl) hEl.textContent = pad(hours);
+      if (mEl) mEl.textContent = pad(mins);
+      if (sEl) sEl.textContent = pad(secs);
     }
 
     tick();
