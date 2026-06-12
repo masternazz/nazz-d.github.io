@@ -143,20 +143,16 @@
       <p class="eyebrow">Project | Monitoring</p>
       <h1>Live Service Status</h1>
       <p class="lead">
-        Real-time uptime monitoring for public-facing services - powered by a self-hosted
-        Uptime Kuma instance running inside a Proxmox LXC container. The data below is live
-        and intentionally high-level.
+        Uptime monitoring across public-facing homelab services — self-hosted Uptime Kuma on Proxmox, with a GitHub Actions cloud fallback when the lab link is unreachable.
       </p>
-      <div class="hero-actions">
-        <a href="https://status.masternazz.com/status/public" class="button" target="_blank" rel="noopener noreferrer">Raw Kuma Page</a>
-      </div>
       <div class="chip-row">
         <span class="chip">Uptime Kuma</span>
         <span class="chip">Proxmox LXC</span>
         <span class="chip">Self-Hosted</span>
-        <span class="chip">Cloudflare Tunnel</span>
+        <span class="chip">OPNsense</span>
         <span class="chip">NPMplus</span>
         <span class="chip">SQLite</span>
+        <span class="chip">GitHub Actions</span>
       </div>
     </section>
 
@@ -174,7 +170,7 @@
           <li>Deployed Uptime Kuma 2.x on Node.js 20 inside a Proxmox LXC, with SQLite as the backend — no external database dependencies.</li>
           <li>Wrote Node.js scripts using the Uptime Kuma socket.io API to bulk-provision all monitors programmatically rather than clicking through the UI.</li>
           <li>Created a curated public status page exposing only sanitized, generic service names — no internal IPs, hostnames, or network topology leaked.</li>
-          <li>Proxied the status page through NPMplus reverse proxy with a valid wildcard TLS certificate, then published it externally via Cloudflare Tunnel in the DMZ VLAN.</li>
+          <li>Proxied the status page through NPMplus reverse proxy with a valid wildcard TLS certificate, published externally via OPNsense WAN port-forward — no tunnel dependency.</li>
           <li>Monitors cover HTTP services, ping targets, and public DNS endpoints — 30+ services across the homelab checked every 60 seconds.</li>
         </ul>
       </div>
@@ -187,7 +183,7 @@
           <li>Socket.io API automation for bulk service provisioning</li>
           <li>SQLite schema navigation and direct database management</li>
           <li>Reverse proxy configuration with TLS termination</li>
-          <li>Secure public exposure via Cloudflare Tunnel while management ports stay off WAN</li>
+          <li>Secure public exposure via OPNsense NAT → NPMplus while management ports stay off WAN</li>
           <li>Operational security — sanitizing public-facing data to avoid info leakage</li>
         </ul>
       </div>
@@ -209,7 +205,7 @@
       <article class="detail-card glass-panel">
         <span class="mini-label">Security</span>
         <h2>Public Without Exposure</h2>
-        <p>The status page is publicly reachable at status.masternazz.com but reveals nothing about the internal network. Service names are generic ("Media Streaming", "Authentication"), no internal IPs or hostnames appear, and this status path is served through Cloudflare Tunnel. Other operational services may use documented WAN forwards, but the monitoring backend itself is only accessible from inside the LAN.</p>
+        <p>The status page is publicly reachable at status.masternazz.com but reveals nothing about the internal network. Service names are generic ("Media Streaming", "Authentication"), no internal IPs or hostnames appear, and access to the monitoring backend is restricted to internal IPs via NPMplus access lists. The management UI never reaches the WAN.</p>
       </article>
     </section>
 
@@ -228,7 +224,7 @@
           <tbody>
             <tr><td>Monitor</td><td>Uptime Kuma 2.x</td><td>HTTP &amp; ping checks every 60s, SQLite storage</td></tr>
             <tr><td>Reverse Proxy</td><td>NPMplus</td><td>TLS termination, routes status.masternazz.com → Kuma LXC</td></tr>
-            <tr><td>Public Ingress</td><td>Cloudflare Tunnel</td><td>Publishes the status path without exposing management ports</td></tr>
+            <tr><td>Public Ingress</td><td>OPNsense → NPMplus</td><td>WAN port-forward to NPMplus, TLS termination with wildcard cert</td></tr>
             <tr><td>DNS</td><td>Technitium + Cloudflare</td><td>Internal rewrites for LAN, public DNS via Cloudflare</td></tr>
             <tr><td>Compute</td><td>Proxmox LXC</td><td>Lightweight container hosting the Node.js app</td></tr>
           </tbody>
@@ -288,7 +284,7 @@
             <span class="project-type">Network</span>
           </div>
           <h3>Zero-Trust Remote Access</h3>
-          <p>Cloudflare Tunnel in the DMZ VLAN — the same tunnel that serves this status page.</p>
+          <p>Remote admin access patterns, OPNsense firewall rules, and NPMplus access control that secure the homelab perimeter.</p>
           <span class="card-link">View project -&gt;</span>
         </a>
 
@@ -330,10 +326,13 @@
 
     async function loadStatus() {
       try {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 8000);
         const [pageRes, hbRes] = await Promise.all([
-          fetch(BASE + "/api/status-page/public"),
-          fetch(BASE + "/api/status-page/heartbeat/public"),
+          fetch(BASE + "/api/status-page/public", { signal: ctrl.signal }),
+          fetch(BASE + "/api/status-page/heartbeat/public", { signal: ctrl.signal }),
         ]);
+        clearTimeout(timer);
         
         if (!pageRes.ok || !hbRes.ok) {
           throw new Error(`API returned status ${pageRes.status} / ${hbRes.status}`);
