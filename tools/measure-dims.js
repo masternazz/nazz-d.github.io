@@ -7,8 +7,7 @@ const root = path.resolve(__dirname, '..');
   const page = await browser.newPage();
 
   const files = [
-    'pages/Massoom_Dickey_Nazeem_Resume_Styled.html',
-    'pages/Massoom_Dickey_Nazeem_Resume_ATS.html',
+    'pages/Massoom_Dickey_Nazeem_Resume.html',
   ];
 
   for (const file of files) {

@@ -10,16 +10,10 @@ const root = path.resolve(__dirname, '..');
 
   const files = [
     {
-      name: 'resume-ats',
-      html: 'pages/Massoom_Dickey_Nazeem_Resume_ATS.html',
-      pdf: 'assets/resumes/Massoom_Dickey_Nazeem_Resume_ATS.pdf',
+      name: 'resume',
+      html: 'pages/Massoom_Dickey_Nazeem_Resume.html',
+      pdf: 'assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
       margin: { top: '0.3in', right: '0.45in', bottom: '0.25in', left: '0.45in' },
-    },
-    {
-      name: 'resume-styled',
-      html: 'pages/Massoom_Dickey_Nazeem_Resume_Styled.html',
-      pdf: 'assets/resumes/Massoom_Dickey_Nazeem_Resume_Styled.pdf',
-      margin: { top: '0', right: '0', bottom: '0', left: '0' },
     },
   ];
 

@@ -6,8 +6,7 @@ const root = path.resolve(__dirname, '..');
   const browser = await chromium.launch();
 
   const files = [
-    { name: 'styled', html: 'pages/Massoom_Dickey_Nazeem_Resume_Styled.html' },
-    { name: 'ats', html: 'pages/Massoom_Dickey_Nazeem_Resume_ATS.html' },
+    { name: 'resume', html: 'pages/Massoom_Dickey_Nazeem_Resume.html' },
   ];
 
   for (const file of files) {

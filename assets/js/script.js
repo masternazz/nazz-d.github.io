@@ -267,18 +267,11 @@ const INDEX = [
     "keywords": "remote access headscale wireguard vpn mesh cloudflare tunnel zero trust dmz vlan public ingress headplane tailscale-compatible no management ports admin access operational forwards"
   },
   {
-    "title": "Nazeem Massoom Dickey — Resume (ATS)",
-    "url": "pages/Massoom_Dickey_Nazeem_Resume_ATS.html",
-    "icon": "📄",
-    "desc": "ATS-friendly resume for Nazeem Massoom Dickey, IT and cybersecurity candidate.",
-    "keywords": "resume ats plain text applicant tracking system download pdf it cybersecurity networking junior roles"
-  },
-  {
     "title": "Nazeem Massoom Dickey — Resume",
-    "url": "pages/Massoom_Dickey_Nazeem_Resume_Styled.html",
+    "url": "pages/Massoom_Dickey_Nazeem_Resume.html",
     "icon": "📄",
-    "desc": "Styled resume for Nazeem Massoom Dickey, IT and cybersecurity candidate.",
-    "keywords": "resume styled dark theme download pdf it cybersecurity networking junior roles visual portfolio"
+    "desc": "Resume for Nazeem Massoom Dickey, IT and cybersecurity candidate.",
+    "keywords": "resume download pdf it cybersecurity networking junior roles noc soc msp help desk applicant tracking"
   },
   {
     "title": "Resume",

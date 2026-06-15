@@ -17,3 +17,19 @@ import { site } from '../data/site';
   </section>
   <ContactCTA />
 </BaseLayout>
+
+<script>
+  const redirects: Record<string, string> = {
+    '/resume-ats.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
+    '/resume-styled.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
+    '/resume.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
+    '/resume-ats.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
+    '/resume-styled.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
+    '/pages/Massoom_Dickey_Nazeem_Resume_ATS.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
+    '/pages/Massoom_Dickey_Nazeem_Resume_Styled.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
+    '/assets/resumes/Massoom_Dickey_Nazeem_Resume_ATS.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
+    '/assets/resumes/Massoom_Dickey_Nazeem_Resume_Styled.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
+  };
+  const target = redirects[window.location.pathname];
+  if (target) window.location.replace(target);
+</script>
