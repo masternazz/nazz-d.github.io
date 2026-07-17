@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { timeline } from '../data/portfolio';
+---
+
+<BaseLayout
+  title="About | Nazeem Dickey"
+  description="Nazeem Dickey's path from a first rack server to freelance IT support, operated infrastructure, certifications, and networking competitions."
+>
+  <main id="main" tabindex="-1">
+    <header class="page-hero">
+      <div class="page-hero__side">
+        <p class="eyebrow eyebrow--signal">About / Boynton Beach, FL</p>
+        <p>SouthTech Academy graduate, freelance IT support technician, homelab operator, and SkillsUSA competitor.</p>
+      </div>
+      <h1>I started with one server behind a bookshelf.</h1>
+    </header>
+
+    <section class="content-section about-grid" aria-labelledby="story-title">
+      <aside class="about-schematic">
+        <p class="eyebrow">What I spend time on</p>
+        <h2>Learning the support fundamentals, then going deeper into networks and systems.</h2>
+        <ul>
+          <li>Based in Boynton Beach, Florida</li>
+          <li>SouthTech Academy, class of 2026</li>
+          <li>Homelab owner since 2025</li>
+          <li>Seeking an entry-level IT support or network role</li>
+        </ul>
+      </aside>
+      <div class="about-story">
+        <h2 id="story-title">I did not start with a perfect plan.</h2>
+        <p>
+          I started with a server behind a bookshelf and a need to understand how everything connected.
+          That machine became game hosting, then a rack, then managed switching, virtualization, storage,
+          firewalling, identity, monitoring, backups, and a documentation system that keeps the whole thing honest.
+        </p>
+        <p>
+          I like the point where frontline support meets networking: checking what the user sees, isolating the
+          failing layer, fixing it, and explaining the result without making the person feel lost.
+        </p>
+        <p>
+          I am early in my career, and I do not treat a homelab as a replacement for business experience.
+          It gives me a place to practice changes, break dependencies, recover services, and build the habits I
+          want to bring to a real support team.
+        </p>
+        <p>
+          One of my best lessons came during a switch migration when my Proxmox cluster lost quorum.
+          I had to stop, trace what changed, restore connectivity, and document the recovery steps.
+          That failure taught me more than the clean final diagram ever could.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="principles-title">
+      <div class="section-heading">
+        <div class="section-heading__side"><p class="eyebrow">Working principles</p></div>
+        <div class="section-heading__main"><h2 id="principles-title">How I approach <em>the work.</em></h2></div>
+      </div>
+      <div class="principle-grid">
+        <article class="principle">
+          <strong>01 / VERIFY</strong>
+          <h3>Check the live thing.</h3>
+          <p>Old notes are clues, not truth. Establish current state before making a confident claim.</p>
+        </article>
+        <article class="principle">
+          <strong>02 / RECOVER</strong>
+          <h3>Leave a way back.</h3>
+          <p>A change is not ready until validation, rollback, and affected dependencies are understood.</p>
+        </article>
+        <article class="principle">
+          <strong>03 / EXPLAIN</strong>
+          <h3>Write for the next person.</h3>
+          <p>Useful documentation lets someone act. It does not merely prove that work happened.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="timeline-title">
+      <div class="section-heading">
+        <div class="section-heading__side">
+          <p class="eyebrow">Timeline</p>
+          <p>The wins matter, but the mistakes usually taught me more.</p>
+        </div>
+        <div class="section-heading__main"><h2 id="timeline-title">The last two years, honestly.</h2></div>
+      </div>
+      <div class="timeline">
+        {timeline.map((item) => (
+          <article class="timeline-item">
+            <time>{item.date}</time>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { orderedProjects, projects, type Project } from '../../data/portfolio';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const currentIndex = orderedProjects.findIndex((item) => item.slug === project.slug);
+const nextProject = orderedProjects[(currentIndex + 1) % orderedProjects.length];
+---
+
+<BaseLayout title={project.title + ' | Nazeem Dickey'} description={project.summary}>
+  <main id="main" tabindex="-1">
+    <header class="case-hero">
+      <div class="case-hero__copy">
+        <div>
+          <p class="eyebrow eyebrow--signal">{project.index} / {project.category}</p>
+          <h1>{project.title}</h1>
+          <p>{project.summary}</p>
+        </div>
+        <dl class="case-meta">
+          <div><dt>Status</dt><dd>{project.status}</dd></div>
+          <div><dt>Period</dt><dd>{project.period}</dd></div>
+          <div><dt>Role</dt><dd>{project.role}</dd></div>
+        </dl>
+      </div>
+      <aside class="case-hero__visual">
+        <p class="eyebrow">Project snapshot</p>
+        <h2>{project.statement}</h2>
+        <ul class="snapshot-list">{project.proof.map((item) => <li>{item}</li>)}</ul>
+      </aside>
+    </header>
+
+    <section class="case-body">
+      <aside class="case-body__rail">
+        <nav class="case-jump" aria-label="Case study sections">
+          <p class="eyebrow">On this page</p>
+          <ol>
+            <li><a href="#starting-point">Starting point</a></li>
+            <li><a href="#what-i-did">What I did</a></li>
+            {project.evidence && <li><a href="#evidence">Evidence</a></li>}
+            <li><a href="#result">Result</a></li>
+            <li><a href="#lessons">What I learned</a></li>
+          </ol>
+        </nav>
+        <div class="case-tools">
+          <p class="eyebrow">Technology</p>
+          <ul class="tag-list">{project.stack.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        {project.repo && (
+          <div class="button-row">
+            <a class="button" href={project.repo} target="_blank" rel="noreferrer">{project.repoLabel} ↗</a>
+          </div>
+        )}
+        {project.artifact && (
+          <div class="button-row">
+            <a class="button" href={project.artifact.href}>{project.artifact.label} →</a>
+          </div>
+        )}
+      </aside>
+
+      <div class="case-body__main">
+        <section class="case-section" id="starting-point">
+          <p class="eyebrow">Starting point</p>
+          <h2>Where it started</h2>
+          <p>{project.problem}</p>
+        </section>
+
+        <section class="case-section" id="what-i-did">
+          <p class="eyebrow">What I did</p>
+          <h2>What I worked on</h2>
+          <ol class="step-list">
+            {project.actions.map((action) => <li>{action}</li>)}
+          </ol>
+        </section>
+
+        {project.evidence && (
+          <section class="case-section" id="evidence">
+            <p class="eyebrow">Evidence</p>
+            <h2>What I checked and recorded</h2>
+            <div class="evidence-list">
+              {project.evidence.map((item) => (
+                <article class="evidence-item">
+                  <h3>{item.title}</h3>
+                  <p>{item.detail}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="case-section" id="result">
+          <p class="eyebrow">Result</p>
+          <h2>What changed</h2>
+          <p>{project.outcome}</p>
+        </section>
+
+        <section class="case-section" id="lessons">
+          <p class="eyebrow">What I learned</p>
+          <h2>What I took from it</h2>
+          <ul class="lesson-list">
+            {project.lessons.map((lesson) => <li>{lesson}</li>)}
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <a class="next-project" href={'/work/' + nextProject.slug}>
+      <p>Next case study / {nextProject.index}</p>
+      <h2>{nextProject.title}</h2>
+      <span aria-hidden="true">↗</span>
+    </a>
+  </main>
+</BaseLayout>

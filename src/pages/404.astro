@@ -1,35 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
-import { site } from '../data/site';
 ---
 
-<BaseLayout title={`Page Not Found | ${site.name}`} description="Portfolio page not found.">
-  <section class="page-hero">
-    <span class="eyebrow">404</span>
-    <h1>That page moved or never existed.</h1>
-    <p class="lead">The cleaned-up portfolio now routes most proof through the project hub, writeups, certifications, and resume pages.</p>
-    <div class="button-row">
-      <a class="button" href="/pages/projects.html">Project hub</a>
-      <a class="button secondary" href="/">Home</a>
-      <button class="button secondary" type="button" data-search-trigger>Search</button>
+<BaseLayout title="404 | Page not found" description="This portfolio route could not be found.">
+  <main id="main" class="error-page" tabindex="-1">
+    <div>
+      <strong>404</strong>
+      <h1>That page isn’t here.</h1>
+      <p>It may have moved, or the address may be wrong.</p>
+      <div class="button-row" style="justify-content:center">
+        <a class="button button--signal" href="/">Return home ↗</a>
+        <a class="button" href="/work">Browse work ↗</a>
+      </div>
     </div>
-  </section>
-  <ContactCTA />
+  </main>
 </BaseLayout>
-
-<script>
-  const redirects: Record<string, string> = {
-    '/resume-ats.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
-    '/resume-styled.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
-    '/resume.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
-    '/resume-ats.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
-    '/resume-styled.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
-    '/pages/Massoom_Dickey_Nazeem_Resume_ATS.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
-    '/pages/Massoom_Dickey_Nazeem_Resume_Styled.html': '/pages/Massoom_Dickey_Nazeem_Resume.html',
-    '/assets/resumes/Massoom_Dickey_Nazeem_Resume_ATS.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
-    '/assets/resumes/Massoom_Dickey_Nazeem_Resume_Styled.pdf': '/assets/resumes/Massoom_Dickey_Nazeem_Resume.pdf',
-  };
-  const target = redirects[window.location.pathname];
-  if (target) window.location.replace(target);
-</script>

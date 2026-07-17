@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/portfolio';
+---
+
+<BaseLayout
+  title="Resume | Nazeem Dickey"
+  description="Resume for entry-level IT support, help desk, network support, and NOC opportunities."
+>
+  <main id="main" tabindex="-1">
+    <header class="page-hero resume-page-hero">
+      <div class="page-hero__side">
+        <p class="eyebrow eyebrow--signal">Resume / Version 10</p>
+        <p>Rebuilt after reviewing 10 public entry-level IT resumes and the feedback recruiters gave them.</p>
+      </div>
+      <h1>Proof first. One page.</h1>
+    </header>
+
+    <section class="resume-shell">
+      <div class="resume-tools">
+        <p>Single-column reading order, standard section labels, and a print layout sized for US Letter.</p>
+        <div class="button-row">
+          <a class="button button--signal" href="/Nazeem-Dickey-Resume.pdf" download>Download PDF</a>
+          <button class="button" type="button" id="print-resume">Print resume</button>
+        </div>
+      </div>
+
+      <article class="resume-sheet">
+        <header class="resume-head">
+          <h2 class="resume-name">Nazeem Massoom Dickey</h2>
+          <p class="resume-target">IT Support and Network Technician</p>
+          <p class="resume-contact" aria-label="Contact information">
+            <span>Boynton Beach, FL</span><span aria-hidden="true"> | </span>
+            <a href={profile.phoneHref}>{profile.phone}</a><span aria-hidden="true"> | </span>
+            <a href={'mailto:' + profile.email}>{profile.email}</a><span aria-hidden="true"> | </span>
+            <a href={profile.linkedin}>linkedin.com/in/nazeemdickey</a><span aria-hidden="true"> | </span>
+            <a href={profile.site}>masternazz.com</a>
+          </p>
+        </header>
+
+        <section class="resume-summary">
+          <h2>Professional Summary</h2>
+          <p>
+            Entry-level IT support and network technician with freelance experience configuring home routers
+            and resolving Windows, Ethernet, DNS, and PC hardware issues. Operates a documented three-node
+            Proxmox environment and builds Cisco IOS labs focused on switching, routing, and break-fix validation.
+          </p>
+        </section>
+
+        <section class="resume-block resume-skills-block">
+          <h2>Technical Skills</h2>
+          <dl class="resume-skills">
+            <div><dt>Support</dt><dd>Windows 10/11, PC hardware, router setup, user communication, documentation, escalation</dd></div>
+            <div><dt>Networking</dt><dd>TCP/IP, Ethernet, Wi-Fi, DNS, DHCP, VLANs, Cisco IOS, OSPF, NAT/PAT, ACLs</dd></div>
+            <div><dt>Infrastructure</dt><dd>Proxmox VE, OPNsense, Linux, Windows Server, Docker, LXC, managed switching</dd></div>
+            <div><dt>Operations</dt><dd>Troubleshooting, validation, backups, monitoring, recovery planning, change documentation</dd></div>
+          </dl>
+        </section>
+
+        <section class="resume-block">
+          <h2>Technical Experience</h2>
+          <article class="resume-entry">
+            <div class="resume-entry__head">
+              <h3>Freelance IT Support Technician</h3>
+              <time>Jun 2024 - Present</time>
+            </div>
+            <p class="resume-entry__meta">Self-employed | Boynton Beach, FL</p>
+            <ul>
+              <li>Configure home routers and resolve Wi-Fi, Ethernet, DNS, Windows, and PC hardware issues for local clients, then explain fixes in plain language.</li>
+              <li>Restored expected download performance within five minutes by tracing a 100 Mbps negotiated Ethernet link to a faulty cable and validating its replacement.</li>
+              <li>Returned a no-boot PC to service in about one minute by checking the motherboard slot layout and reseating moved memory in a supported paired configuration.</li>
+              <li>Restored domain lookup and browsing within five minutes by separating DNS failure from general connectivity and switching to a working Cloudflare resolver.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-block">
+          <h2>Selected Technical Projects</h2>
+          <article class="resume-entry">
+            <div class="resume-entry__head">
+              <h3><a href="https://masternazz.com/work/operated-homelab">Three-node Segmented Homelab</a></h3>
+              <time>2025 - Present</time>
+            </div>
+            <p class="resume-entry__meta">Proxmox VE | OPNsense | Managed switching | VLANs</p>
+            <ul>
+              <li>Operate a three-node virtualization environment with separate network zones for management, storage, internal services, public services, and guests.</li>
+              <li>Restored cluster quorum after a switch migration, repaired an OPNsense captive-portal binding, and migrated client DNS to Technitium with validation and recovery notes.</li>
+            </ul>
+          </article>
+
+          <article class="resume-entry">
+            <div class="resume-entry__head">
+              <h3><a href="https://masternazz.com/work/cisco-ios-practice-system">Cisco IOS Campus Practice System</a></h3>
+              <time>2026</time>
+            </div>
+            <p class="resume-entry__meta">Cisco CML | IPv4/IPv6 | OSPF | VLANs | NAT/PAT | ACLs</p>
+            <ul>
+              <li>Built a reusable five-node dual-stack campus lab covering VLANs, trunks, EtherChannel, DHCP, NAT/PAT, ACLs, and OSPFv2/v3.</li>
+              <li>Created blank, guided, and answer-key variants plus five break-fix tickets and show-command validation checklists.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-block resume-compact-block">
+          <h2>Education and Certifications</h2>
+          <div class="resume-compact-row">
+            <h3>SouthTech Academy</h3>
+            <p><strong>High School Diploma, May 2026</strong> | Boynton Beach, FL | Honor Roll and honors coursework</p>
+          </div>
+          <div class="resume-compact-row">
+            <h3>Certifications</h3>
+            <p>CompTIA A+, Network+, Security+, CySA+ | Cisco CCST IT Support, Networking, Cybersecurity | Microsoft AZ-900, SC-900</p>
+          </div>
+        </section>
+
+        <section class="resume-bottom-grid">
+          <div class="resume-block resume-compact-block">
+            <h2>Recognition</h2>
+            <ul>
+              <li><strong>1st Place</strong>, SkillsUSA Florida Internetworking, Apr 2026</li>
+              <li>SkillsUSA NLSC National Competitor, Jun 2026</li>
+              <li>CyberLaunch USF State Championship Qualifier</li>
+            </ul>
+          </div>
+          <div class="resume-block resume-compact-block">
+            <h2>Community Involvement</h2>
+            <div class="resume-compact-row">
+              <h3>Center for Child Counseling</h3>
+              <div>
+                <p>Community Event Volunteer | Jun 2024 - Jan 2026</p>
+                <p>Supported inventory, supply distribution, event setup, activities, and guest-facing logistics.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+    </section>
+  </main>
+  <script>
+    document.querySelector('#print-resume')?.addEventListener('click', () => window.print());
+  </script>
+</BaseLayout>

@@ -1,16 +1,7 @@
 node_modules/
-screenshots/
 dist/
 .astro/
+.DS_Store
+*.log
+artifacts/
 
-# Local visual/check artifacts generated during site QA
-tools/check-pdf.js
-tools/check-print-height.js
-tools/mobile-check.png
-tools/print-*.png
-tools/screenshot-full.js
-tools/screenshot-pages.js
-tools/screenshot-pdfs.js
-tools/screenshot-print.js
-tools/screenshot-*.png
-tools/ss-*.png

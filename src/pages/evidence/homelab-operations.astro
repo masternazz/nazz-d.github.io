@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Homelab operations evidence | Nazeem Dickey"
+  description="Sanitized change and incident evidence from Nazeem Dickey's three-node homelab."
+>
+  <main id="main" tabindex="-1">
+    <header class="page-hero page-hero--compact">
+      <div class="page-hero__side">
+        <p class="eyebrow eyebrow--signal">Evidence / homelab operations</p>
+        <p>Addresses, hostnames, account details, and private configuration are intentionally omitted.</p>
+      </div>
+      <h1>Dated records from changes that did not always go cleanly.</h1>
+    </header>
+
+    <section class="content-section evidence-page" aria-labelledby="scope-title">
+      <div class="section-heading">
+        <div class="section-heading__side">
+          <p class="eyebrow">Environment scope</p>
+          <p>This is a self-run lab, not business production experience.</p>
+        </div>
+        <div class="section-heading__main"><h2 id="scope-title">A place to practice operational habits before the first IT role.</h2></div>
+      </div>
+
+      <dl class="artifact-metrics">
+        <div><dt>Compute</dt><dd>3 Proxmox nodes</dd></div>
+        <div><dt>Network edge</dt><dd>OPNsense firewall</dd></div>
+        <div><dt>Switching</dt><dd>Managed VLAN trunks</dd></div>
+        <div><dt>Recovery</dt><dd>Backups + change notes</dd></div>
+      </dl>
+
+      <div class="artifact-grid">
+        <article class="artifact-panel">
+          <p class="eyebrow">Simplified service path</p>
+          <pre><code>Internet
+   |
+OPNsense firewall
+   |
+Managed switching
+   |
+Proxmox cluster
+   |
+Identity / monitoring / storage / services</code></pre>
+        </article>
+        <article class="artifact-panel">
+          <p class="eyebrow">Separated network roles</p>
+          <ul class="artifact-list">
+            <li>Management and infrastructure</li>
+            <li>Internal applications</li>
+            <li>Public ingress and reverse proxy</li>
+            <li>Storage and backup traffic</li>
+            <li>Guest, IoT, testing, and game services</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section evidence-page" aria-labelledby="record-title">
+      <div class="section-heading">
+        <div class="section-heading__side"><p class="eyebrow">Sanitized record</p></div>
+        <div class="section-heading__main"><h2 id="record-title">Three changes with checks and outcomes.</h2></div>
+      </div>
+      <div class="evidence-list">
+        <article class="evidence-item">
+          <h3>May 10, 2026 / cluster quorum</h3>
+          <p>A switch migration interrupted two Proxmox node paths. I traced the affected ports, restored VLAN reachability, confirmed all three nodes were quorate, saved the switch configuration, and added the recovery order to the change record.</p>
+        </article>
+        <article class="evidence-item">
+          <h3>May 26, 2026 / guest access</h3>
+          <p>The captive portal was bound to the wrong logical interface. I corrected the binding, cleared stale bypass sessions, checked the persisted configuration and service state, then validated the portal with a fresh mobile connection.</p>
+        </article>
+        <article class="evidence-item">
+          <h3>May 31, 2026 / DNS migration</h3>
+          <p>I moved client-facing DNS to Technitium, updated DHCP resolver assignments across VLANs, disabled the old resolver path, and documented the new filtering and split-horizon behavior.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section evidence-page" aria-labelledby="limits-title">
+      <div class="section-heading">
+        <div class="section-heading__side"><p class="eyebrow">What this proves</p></div>
+        <div class="section-heading__main"><h2 id="limits-title">Hands-on practice, with the limits stated clearly.</h2></div>
+      </div>
+      <div class="artifact-callout">
+        <p>This evidence shows repeated practice with dependencies, validation, rollback thinking, and documentation. It does not claim enterprise scale, customer impact, uptime guarantees, or production ownership.</p>
+        <a class="button button--signal" href="/work/operated-homelab">Return to the case study →</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

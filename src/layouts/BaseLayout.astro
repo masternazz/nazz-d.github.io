@@ -1,54 +1,144 @@
 ---
-import Nav from '../components/Nav.astro';
-import SearchOverlay from '../components/SearchOverlay.astro';
-import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
 import '../styles/global.css';
+import { nav, profile } from '../data/portfolio';
 
-type Props = {
+interface Props {
   title?: string;
   description?: string;
-  canonical?: string;
-  ogImage?: string;
-};
+  image?: string;
+}
 
-const rawPath = Astro.url.pathname.replace(/\/index\.html$/, '/');
 const {
-  title = site.title,
-  description = site.description,
-  canonical = new URL(rawPath, site.url).toString(),
-  ogImage = site.ogImage,
+  title = profile.shortName + ' | ' + profile.role,
+  description = profile.description,
+  image,
 } = Astro.props;
 
-const imageUrl = new URL(ogImage, site.url).toString();
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(Astro.url.pathname, profile.site);
+const year = new Date().getFullYear();
+const isActive = (href: string) => href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f3ef" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={imageUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
+    {image && <meta property="og:image" content={new URL(image, profile.site)} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        document.documentElement.classList.add('js');
+        const saved = localStorage.getItem('theme');
+        const theme = saved || 'light';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Nav />
-    <main id="main" class="page">
-      <slot />
-    </main>
-    <SearchOverlay />
-    <Footer />
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label={profile.shortName + ' home'}>
+        <span class="wordmark__mark">ND</span>
+        <span class="wordmark__text">
+          <strong>Nazeem Dickey</strong>
+          <small>IT support + networks</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        {nav.map((item) => (
+          <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" aria-label="Switch color theme">
+          <span class="theme-toggle__dark" aria-hidden="true">☼</span>
+          <span class="theme-toggle__light" aria-hidden="true">◐</span>
+        </button>
+        <a class="header-contact" href={'mailto:' + profile.email}>Email <span>↗</span></a>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div>
+        <strong>Nazeem Dickey</strong>
+        <p>IT support, networks, and systems.</p>
+      </div>
+      <div class="footer-links">
+        <a href={profile.github} rel="me">GitHub <span>↗</span></a>
+        <a href={profile.linkedin} rel="me">LinkedIn <span>↗</span></a>
+        <a href={'mailto:' + profile.email}>Email <span>↗</span></a>
+      </div>
+      <p class="footer-meta">Version 10.0<br />© {year} · Boynton Beach, Florida</p>
+    </footer>
+
+    <script>
+      const root = document.documentElement;
+      const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+      const menuButton = document.querySelector<HTMLButtonElement>('.nav-toggle');
+      const navElement = document.querySelector<HTMLElement>('.site-nav');
+
+      themeButton?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        localStorage.setItem('theme', next);
+      });
+
+      menuButton?.addEventListener('click', () => {
+        const open = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!open));
+        navElement?.classList.toggle('is-open', !open);
+        document.body.classList.toggle('menu-open', !open);
+      });
+
+      navElement?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          navElement.classList.remove('is-open');
+          document.body.classList.remove('menu-open');
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || menuButton?.getAttribute('aria-expanded') !== 'true') return;
+        menuButton.setAttribute('aria-expanded', 'false');
+        navElement?.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        menuButton.focus();
+      });
+
+      document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const email = button.dataset.copyEmail;
+          if (!email) return;
+          await navigator.clipboard.writeText(email);
+          const original = button.textContent;
+          button.textContent = 'Email copied';
+          setTimeout(() => { button.textContent = original; }, 1600);
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,58 +1,31 @@
-# Nazeem Massoom Dickey Portfolio
+# Nazeem Dickey Portfolio: v10
 
-Public portfolio for Nazeem Massoom Dickey — SkillsUSA Florida Internetworking Gold Medal Champion, focused on junior network administrator, SOC analyst, NOC, MSP, IT support, and cybersecurity internship opportunities.
+A from-scratch Astro portfolio for masternazz.com.
 
-Live site: https://masternazz.com
+## Direction
 
-## What This Shows
+Version 10 keeps the version 9 portfolio intact and rebuilds the resume around a review of 10 public entry-level IT resumes and their critique. The PDF now uses a single-column, recruiter-first reading order, places truthful freelance support above projects, uses concrete troubleshooting outcomes, and separates community volunteering from technical experience. Version 9 remains unchanged in its own directory.
 
-- SkillsUSA Florida Internetworking Gold Medal Champion (April 2026) — qualifying for NLSC Nationals in Atlanta, GA.
-- Enterprise-style homelab architecture using Proxmox, OPNsense, Cisco SG300 + Netgear GS728TP switching, Synology storage, Cloudflare, Authentik, Wazuh, and NPMplus.
-- Public-safe project writeups for firewalling, virtualization, secure remote access, identity, and SIEM workflows.
-- Resume and certification material aimed at helping employers verify hands-on infrastructure work.
+The portfolio research is in [PORTFOLIO-RESEARCH.md](./PORTFOLIO-RESEARCH.md). The version 10 resume review is in [RESUME-RESEARCH.md](./RESUME-RESEARCH.md).
 
-## Site Stack
+No images, badges, diagrams, PDFs, or other visual assets from earlier portfolio versions are used. The resume PDF is newly generated from this version.
 
-- Vanilla HTML, CSS, JavaScript — no frameworks
-- GitHub Pages with custom domain via `masternazz.com`
-- Playwright for PDF and image generation
+## Commands
 
-## Project Layout
+- npm install
+- npm run dev
+- npm run check
+- npm run preview
 
-- `index.html` - homepage and main entry point.
-- `pages/` - secondary site pages and resume HTML sources.
-- `assets/css/` - shared stylesheet.
-- `assets/js/` - shared JavaScript.
-- `assets/images/` - rack photos and certification logos.
-- `assets/diagrams/` - architecture diagrams and OG social card.
-- `assets/resumes/` - generated PDF resumes.
-- `tools/` - local Playwright maintenance scripts.
-- `screenshots/` - generated visual-check output, ignored by git.
+## Main routes
 
-## Maintenance Tools
+- Home: /
+- Case studies: /work and /work/[slug]
+- Story: /about
+- Certification record: /credentials
+- Public-safe evidence: /evidence/cisco-ios and /evidence/homelab-operations
+- Print-ready resume: /resume
 
-Install local tooling once:
+## Public-safety boundary
 
-```powershell
-npm install
-```
-
-Useful commands:
-
-```powershell
-npm run visual:check
-npm run resume:measure
-npm run resume:export
-node tools/export-og-card.js
-node tools/check-mobile.js
-```
-
-- `visual:check` captures local page screenshots into `screenshots/`.
-- `resume:measure` checks resume page height and PDF page count.
-- `resume:export` regenerates PDFs in `assets/resumes/`.
-- `export-og-card` regenerates the OG social preview card at `assets/diagrams/network-diagram.png`.
-- `check-mobile` takes a mobile-viewport screenshot for quick visual QA.
-
-## Public-Safe Boundary
-
-This site intentionally avoids publishing private configuration exports, secrets, exact firewall rule details, credential material, MAC addresses, and full internal addressing.
+Infrastructure descriptions intentionally omit internal addressing, MAC addresses, credentials, precise firewall rules, and real alert data. Public claims are based on the sanitized source material in homelab-docs.

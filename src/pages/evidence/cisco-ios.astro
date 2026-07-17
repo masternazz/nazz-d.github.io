@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Cisco IOS lab evidence | Nazeem Dickey"
+  description="Public-safe evidence from Nazeem Dickey's Cisco IOS and CML practice system."
+>
+  <main id="main" tabindex="-1">
+    <header class="page-hero page-hero--compact">
+      <div class="page-hero__side">
+        <p class="eyebrow eyebrow--signal">Evidence / Cisco IOS</p>
+        <p>Built after SkillsUSA Nationals exposed a specific weakness: console speed under time pressure.</p>
+      </div>
+      <h1>A practice package designed to be repeated, checked, and broken.</h1>
+    </header>
+
+    <section class="content-section evidence-page" aria-labelledby="package-title">
+      <div class="section-heading">
+        <div class="section-heading__side">
+          <p class="eyebrow">Package at a glance</p>
+          <p>All numbers come from the local package inventory and validation report.</p>
+        </div>
+        <div class="section-heading__main"><h2 id="package-title">More than a finished configuration.</h2></div>
+      </div>
+
+      <dl class="artifact-metrics">
+        <div><dt>Core topology</dt><dd>5 nodes / 5 links</dd></div>
+        <div><dt>Practice states</dt><dd>Blank / hints / answer</dd></div>
+        <div><dt>Break-fix tickets</dt><dd>5 documented scenarios</dd></div>
+        <div><dt>Full package</dt><dd>12 topology files</dd></div>
+      </dl>
+
+      <div class="artifact-grid">
+        <article class="artifact-panel">
+          <p class="eyebrow">Core topology</p>
+          <pre><code>PC1-DESKTOP
+     |
+SW2-ACCESS == LACP == SW1-DIST
+                            |
+                       R1-CAMPUS
+                            |
+                        ISP-FAKE</code></pre>
+          <p>The guided lab stays within the CML-Free five-node limit and uses IOL/IOL-L2-friendly definitions.</p>
+        </article>
+
+        <article class="artifact-panel">
+          <p class="eyebrow">Skills practiced</p>
+          <ul class="artifact-list">
+            <li>VLANs, access ports, trunks, and router-on-a-stick</li>
+            <li>LACP EtherChannel and mismatch troubleshooting</li>
+            <li>DHCP, NAT/PAT, ACLs, and default routing</li>
+            <li>IPv4, IPv6, OSPFv2, and OSPFv3</li>
+            <li>Show-command verification and self-grading</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section evidence-page" aria-labelledby="tickets-title">
+      <div class="section-heading">
+        <div class="section-heading__side"><p class="eyebrow">Break-fix coverage</p></div>
+        <div class="section-heading__main"><h2 id="tickets-title">Five failures with a defined check path.</h2></div>
+      </div>
+      <div class="evidence-list">
+        <article class="evidence-item"><h3>PC receives no address</h3><p>Check the access VLAN, trunk state, EtherChannel, DHCP pool, and lease table.</p></article>
+        <article class="evidence-item"><h3>EtherChannel will not bundle</h3><p>Compare LACP mode, native VLAN, allowed VLANs, and member-interface configuration.</p></article>
+        <article class="evidence-item"><h3>NAT does not work</h3><p>Verify the default route, inside and outside designations, and the source-matching ACL.</p></article>
+        <article class="evidence-item"><h3>IPv6 route is missing</h3><p>Check unicast routing, OSPFv3 interface activation, addressing, and unique router IDs.</p></article>
+        <article class="evidence-item"><h3>Switch management is unreachable</h3><p>Verify the management VLAN, trunk allowance, SVI state, and switch default gateway.</p></article>
+      </div>
+    </section>
+
+    <section class="content-section evidence-page" aria-labelledby="validation-title">
+      <div class="section-heading">
+        <div class="section-heading__side"><p class="eyebrow">Validation boundary</p></div>
+        <div class="section-heading__main"><h2 id="validation-title">What the local checks do and do not prove.</h2></div>
+      </div>
+      <div class="artifact-callout">
+        <p>The package passed local checks for YAML syntax, node and link consistency, duplicate IDs, and documentation presence. Those checks do not guarantee every file will import on every CML server because installed node definitions and licensed images still matter.</p>
+        <a class="button button--signal" href="/work/cisco-ios-practice-system">Return to the case study →</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
