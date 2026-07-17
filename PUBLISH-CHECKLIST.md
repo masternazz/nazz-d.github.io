@@ -1,4 +1,4 @@
-# Version 10.1 publishing checklist
+# Version 10.2 publishing checklist
 
 Do not publish this directory until Nazeem explicitly approves it.
 
@@ -17,7 +17,7 @@ Suggested bio:
 
 Suggested pinned order:
 
-1. Portfolio version 10.1
+1. Portfolio version 10.2
 2. A public-safe Cisco IOS lab repository, after it is ready
 3. Technitium Dynamic Split Horizon, after its public documentation is reviewed
 

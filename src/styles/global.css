@@ -922,6 +922,42 @@ a {
   padding-top: 1.5rem;
 }
 
+.additional-work {
+  padding-top: clamp(4.5rem, 8vw, 7rem);
+}
+
+.additional-work__item {
+  display: grid;
+  grid-template-columns: 155px minmax(240px, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: start;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.additional-work__meta {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.additional-work__title h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+}
+
+.additional-work__title .tag-list {
+  margin-top: 0.75rem;
+}
+
+.additional-work__item > p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
 .case-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
@@ -1703,6 +1739,14 @@ a {
     grid-template-columns: 125px minmax(0, 1fr);
   }
 
+  .additional-work__item {
+    grid-template-columns: 125px minmax(0, 1fr);
+  }
+
+  .additional-work__item > p {
+    grid-column: 2;
+  }
+
   .project-card__actions {
     grid-column: 2;
     flex-direction: row;
@@ -1841,8 +1885,17 @@ a {
   }
 
   .project-card__layout,
-  .project-card__body {
+  .project-card__body,
+  .additional-work__item {
     grid-template-columns: 1fr;
+  }
+
+  .additional-work__item > p {
+    grid-column: auto;
+  }
+
+  .additional-work__meta {
+    grid-template-columns: 1fr auto;
   }
 
   .project-card__actions,

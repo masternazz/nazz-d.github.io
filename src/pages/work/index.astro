@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { orderedProjects } from '../../data/portfolio';
+import { additionalWork, orderedProjects } from '../../data/portfolio';
 ---
 
 <BaseLayout
@@ -20,6 +20,36 @@ import { orderedProjects } from '../../data/portfolio';
     <section class="work-index" aria-label="Portfolio case studies">
       <div class="project-grid">
         {orderedProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </section>
+
+    <section class="content-section additional-work" aria-labelledby="additional-work-title">
+      <div class="section-heading">
+        <div class="section-heading__side">
+          <p class="eyebrow">Additional technical work</p>
+          <p>Useful supporting work, kept compact so the six strongest case studies stay easy to scan.</p>
+        </div>
+        <div class="section-heading__main">
+          <h2 id="additional-work-title">More depth without another wall of project cards.</h2>
+        </div>
+      </div>
+
+      <div class="additional-work__list">
+        {additionalWork.map((item) => (
+          <article class="additional-work__item">
+            <div class="additional-work__meta">
+              <span>{item.category}</span>
+              <span>{item.period}</span>
+            </div>
+            <div class="additional-work__title">
+              <h3>{item.title}</h3>
+              <ul class="tag-list" aria-label={item.title + ' technologies'}>
+                {item.skills.map((skill) => <li>{skill}</li>)}
+              </ul>
+            </div>
+            <p>{item.summary}</p>
+          </article>
+        ))}
       </div>
     </section>
   </main>

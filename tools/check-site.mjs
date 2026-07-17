@@ -75,9 +75,11 @@ if (publicRasterAssets.length) {
 }
 
 const homeHtml = existsSync(join(dist, 'index.html')) ? readFileSync(join(dist, 'index.html'), 'utf8') : '';
+const workHtml = existsSync(join(dist, 'work', 'index.html')) ? readFileSync(join(dist, 'work', 'index.html'), 'utf8') : '';
 if (!homeHtml.includes('nazeemdickey@gmail.com')) errors.push('Visible contact email is missing from the home page.');
 if (!homeHtml.includes('Read case study')) errors.push('Explicit case study actions are missing from the home page.');
 if (!homeHtml.includes('View evidence')) errors.push('Explicit evidence action is missing from the featured work.');
+if (!workHtml.includes('Additional technical work')) errors.push('The compact additional technical work section is missing.');
 
 const caseFiles = htmlFiles.filter((file) => /work[\\/][^\\/]+[\\/]index[.]html$/i.test(file));
 for (const file of caseFiles) {

@@ -78,6 +78,49 @@ export type Project = {
   repoLabel?: string;
 };
 
+export type AdditionalWork = {
+  title: string;
+  category: string;
+  period: string;
+  summary: string;
+  skills: string[];
+};
+
+export const additionalWork: AdditionalWork[] = [
+  {
+    title: 'OPNsense OIDC and service-name recovery',
+    category: 'Identity / firewall',
+    period: 'May 2026',
+    summary:
+      'Diagnosed a disappearing OIDC login option after LDAP was added, corrected the identity-provider redirect path, installed a patched plugin package, and moved firewall integrations from hardcoded addresses to service DNS names.',
+    skills: ['OPNsense', 'Authentik', 'OIDC', 'LDAP', 'DNS'],
+  },
+  {
+    title: 'Dynamic split-horizon DNS updater',
+    category: 'DNS / Python',
+    period: 'May 2026',
+    summary:
+      'Built a Python job that detects residential public-IP changes, updates Technitium Split Horizon address translation only when the value changes, restarts the DNS service, and records the result.',
+    skills: ['Technitium', 'Python', 'Split-horizon DNS', 'Cron', 'Change detection'],
+  },
+  {
+    title: 'Private remote administration path',
+    category: 'Remote access / security',
+    period: '2025–present',
+    summary:
+      'Used encrypted mesh networking and separated public application ingress from administration so firewall, hypervisor, switch, and storage management interfaces stay off the public internet.',
+    skills: ['Mesh VPN', 'Access boundaries', 'Private administration', 'Documentation'],
+  },
+  {
+    title: 'Storage and backup network operations',
+    category: 'Systems / recovery',
+    period: '2026–present',
+    summary:
+      'Moved NAS and backup roles into dedicated network paths, restored Proxmox storage targets after addressing changes, and documented boot order, backup validation, dependencies, and rollback steps.',
+    skills: ['Proxmox Backup Server', 'NFS', 'NAS', 'Storage VLAN', 'Recovery checks'],
+  },
+];
+
 export const projects: Project[] = [
   {
     slug: 'operated-homelab',
