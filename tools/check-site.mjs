@@ -40,6 +40,9 @@ const forbidden = [
   /Version 7[.]0/i,
   /Version 8[.]0/i,
   /Version 9[.]0/i,
+  /AI gateway/i,
+  /homelab-mcp/i,
+  /chess-ultimate/i,
   /—/,
 ];
 

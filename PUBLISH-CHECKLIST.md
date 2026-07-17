@@ -1,4 +1,4 @@
-# Version 10 publishing checklist
+# Version 10.1 publishing checklist
 
 Do not publish this directory until Nazeem explicitly approves it.
 
@@ -17,10 +17,9 @@ Suggested bio:
 
 Suggested pinned order:
 
-1. Portfolio version 10, after publishing is approved
-2. A public-safe Cisco IOS lab repository
-3. AI gateway
-4. Chess Ultimate, with the collaboration role stated clearly
+1. Portfolio version 10.1
+2. A public-safe Cisco IOS lab repository, after it is ready
+3. Technitium Dynamic Split Horizon, after its public documentation is reviewed
 
 Avoid calling a homelab `production-grade`. Use `production-style` or `operated homelab` instead.
 

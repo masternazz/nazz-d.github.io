@@ -1,10 +1,10 @@
-# Nazeem Dickey Portfolio: v10
+# Nazeem Dickey Portfolio: v10.1
 
 A from-scratch Astro portfolio for masternazz.com.
 
 ## Direction
 
-Version 10 keeps the version 9 portfolio intact and rebuilds the resume around a review of 10 public entry-level IT resumes and their critique. The PDF now uses a single-column, recruiter-first reading order, places truthful freelance support above projects, uses concrete troubleshooting outcomes, and separates community volunteering from technical experience. Version 9 remains unchanged in its own directory.
+Version 10.1 keeps the recruiter-first resume and replaces unrelated software projects with six targeted case studies for IT support, networking, NOC, systems, and SOC conversations. The Work page now focuses on freelance support, VLAN migration, homelab operations, Cisco IOS practice, guest-network recovery, and Wazuh monitoring.
 
 The portfolio research is in [PORTFOLIO-RESEARCH.md](./PORTFOLIO-RESEARCH.md). The version 10 resume review is in [RESUME-RESEARCH.md](./RESUME-RESEARCH.md).
 

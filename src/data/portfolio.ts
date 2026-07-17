@@ -81,7 +81,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: 'operated-homelab',
-    index: '02',
+    index: '03',
     title: 'Operating a segmented three-node homelab',
     category: 'Infrastructure / networking',
     summary:
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     statement: 'I wanted a lab I could maintain and recover, not just a collection of services that happened to be running.',
     status: 'Operating',
     period: '2025–present',
-    featured: true,
+    featured: false,
     role: 'Designer, operator, and documentarian',
     stack: ['Proxmox VE', 'OPNsense', 'VLANs', 'Linux', 'Docker', 'Wazuh', 'Authentik'],
     proof: ['3-node cluster', 'Role-based segmentation', 'Dated change records', 'Layered backups'],
@@ -126,7 +126,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'cisco-ios-practice-system',
-    index: '03',
+    index: '04',
     title: 'Turning a competition loss into Cisco IOS practice',
     category: 'Cisco / competition',
     summary:
@@ -170,98 +170,138 @@ export const projects: Project[] = [
     artifact: { href: '/evidence/cisco-ios', label: 'Review the Cisco lab evidence' },
   },
   {
-    slug: 'ai-gateway',
-    index: '04',
-    title: 'A remote gateway for the AI tools I already use',
-    category: 'Automation / self-hosting',
+    slug: 'vlan-segmentation-migration',
+    index: '02',
+    title: 'Migrating a flat lab into role-based VLANs',
+    category: 'Network operations / migration',
     summary:
-      'I built a Node.js service that lets me reach several command-line assistants through Telegram or email while keeping history, memory, and repository access in one place.',
-    statement: 'The project started because I wanted to use my workstation tools when I was away from my desk.',
-    status: 'Built',
-    period: '2026',
-    featured: false,
-    role: 'Developer and operator',
-    stack: ['Node.js', 'Express', 'Telegram', 'IMAP/SMTP', 'Git', 'systemd'],
-    proof: ['3 engine routes', '2 message channels', 'Shared context', 'Allow-listed access'],
+      'I moved a flat homelab into 10 role-based VLANs, migrated more than 20 virtual workloads, and restored three-node Proxmox quorum after a switching cutover broke two node paths.',
+    statement: 'The hard part was not creating VLANs. It was preserving every dependency during the cutover.',
+    status: 'Completed and operating',
+    period: 'May 2026',
+    featured: true,
+    role: 'Network designer and operator',
+    stack: ['OPNsense', 'Cisco SG300', 'Netgear GS728TP', '802.1Q', 'Proxmox VE', 'DNS/DHCP'],
+    proof: ['10 role-based VLANs', '3/3 cluster quorum restored', '20+ workloads migrated', 'Validation and rollback notes'],
     problem:
-      'Useful CLI assistants were tied to a workstation and split across separate interfaces, histories, and repository contexts.',
+      'The lab had grown around one flat network. Management, storage, public services, guests, testing, and internal applications shared the same trust boundary, and replacing the switching fabric exposed how many services depended on the old path.',
     actions: [
-      'Built command parsing and routing for three CLI-based assistants.',
-      'Added Telegram webhooks, email polling and replies, per-channel history, and shared memory.',
-      'Integrated controlled repository operations and sender allow-listing.',
-      'Separated credentials from source and documented deployment, service management, and failure modes.',
+      'Mapped network roles, service dependencies, migration order, validation checks, and rollback points before the cutover.',
+      'Replaced the legacy switching path with a Cisco SG300 core and Netgear managed access switch, then audited tagged membership and physical links.',
+      'Restored Proxmox quorum by tracing the affected node ports and correcting management-VLAN reachability across the trunks.',
+      'Moved virtual workloads in phases and updated their DHCP reservations, DNS records, reverse-proxy targets, storage paths, and required firewall policy.',
     ],
     outcome:
-      'One remote interface can dispatch work to multiple assistants while preserving useful context and keeping the operational boundary visible.',
+      'The lab now separates network roles, the three-node cluster is healthy, dependent services resolve through the correct paths, and the recovery order is documented for the next change.',
     lessons: [
-      'Remote convenience makes narrow authorization more important.',
-      'Memory needs limits, compaction, and explicit ownership.',
-      'Operational documentation is part of the feature.',
+      'A switch can be online while one required VLAN is still missing from the path.',
+      'Service migrations fail at dependencies such as DNS, storage, and proxy targets more often than at the new address itself.',
+      'Keep the previous management path until the replacement has been verified end to end.',
     ],
-    repo: 'https://github.com/masternazz/ai-gateway',
-    repoLabel: 'View the repository',
+    evidence: [
+      {
+        title: 'Switching cutover / May 8, 2026',
+        detail: 'Replaced the old switching path, restored the public-service VLAN, verified gigabit links, and documented the new core and access roles.',
+      },
+      {
+        title: 'Cluster recovery / May 10, 2026',
+        detail: 'Used neighbor and port mapping to find two Proxmox trunks missing the management VLAN, corrected the allowed membership, confirmed three nodes and three votes, then saved the switch state.',
+      },
+      {
+        title: 'Dependency validation',
+        detail: 'Checked workload addressing, DNS, proxy backends, storage reachability, required inter-VLAN paths, and the cluster state before retiring the old route.',
+      },
+    ],
+    artifact: { href: '/evidence/homelab-operations', label: 'Review sanitized operations evidence' },
   },
   {
-    slug: 'homelab-mcp',
+    slug: 'guest-network-recovery',
     index: '05',
-    title: 'Safer infrastructure checks with named tools',
-    category: 'AI operations / APIs',
+    title: 'Repairing a guest network from client to firewall',
+    category: 'Network support / firewall',
     summary:
-      'A typed Model Context Protocol service that turns common API and SSH checks into smaller operations with clear names and inputs.',
-    statement: 'I wanted routine checks to be easier to understand than a block of shell commands.',
-    status: 'Operating',
-    period: '2026',
+      'A guest SSID connected but skipped the captive portal. I followed the path through VLAN tagging, DHCP, DNS, OPNsense sessions, and firewall policy until the wrong interface binding surfaced.',
+    statement: 'The Wi-Fi name looked right. The live interface state did not.',
+    status: 'Resolved',
+    period: 'May 2026',
     featured: false,
-    role: 'Developer and operator',
-    stack: ['Node.js', 'MCP', 'Zod', 'REST APIs', 'SSH'],
-    proof: ['Typed schemas', 'Multiple service adapters', 'Credential separation', 'Repeatable checks'],
+    role: 'Network operator and troubleshooter',
+    stack: ['OPNsense', 'VLANs', 'Managed switching', 'Wi-Fi', 'DHCP', 'DNS'],
+    proof: ['Wrong interface isolated', 'Fresh mobile validation', 'Internet-only guest policy', 'Stale sessions removed'],
     problem:
-      'Broad shell access makes routine infrastructure work difficult to constrain, explain, and audit.',
+      'Guest clients could join the wireless network, but the expected portal flow did not appear consistently. The SSID label alone could not show whether the client VLAN, resolver path, portal zone, session state, and firewall rules agreed.',
     actions: [
-      'Created named tools for virtualization, firewall, proxy, mail, monitoring, and service checks.',
-      'Defined typed inputs and predictable responses for each operation.',
-      'Separated credentials from code and kept public descriptions sanitized.',
-      'Paired the tools with source-of-truth documentation and outcome verification.',
+      'Verified the guest SSID tag across the access point, managed switching path, and OPNsense interface.',
+      'Checked the client lease and DNS path separately from captive-portal enforcement.',
+      'Found the portal zone bound to a network-services interface instead of the actual guest interface and corrected the binding.',
+      'Cleared stale bypass sessions, aligned lease and portal timeouts, and repeated the test with a fresh mobile connection.',
     ],
     outcome:
-      'Common infrastructure checks now start from explicit intent, creating a clearer boundary between a request and the system underneath it.',
+      'A fresh client received the expected guest lease, entered the portal flow, established a guest session, reached the internet, and remained isolated from internal network roles.',
     lessons: [
-      'A named tool is easier to review than an arbitrary command.',
-      'Read-only and mutating actions should be visibly distinct.',
-      'Tools still need current context and post-action verification.',
+      'Interface labels are not enough; verify the live handle and generated service state.',
+      'Stale sessions can make a correct fix look broken or a broken configuration look correct.',
+      'Client behavior, DHCP, DNS, portal state, and firewall policy all need to agree before the issue is closed.',
     ],
+    evidence: [
+      {
+        title: 'Path check',
+        detail: 'Confirmed the guest tag traversed the access point and managed switching path to the firewall interface.',
+      },
+      {
+        title: 'Root cause',
+        detail: 'The captive-portal zone referenced the wrong logical interface even though the visible guest-network labels looked plausible.',
+      },
+      {
+        title: 'Validation',
+        detail: 'Retested with a fresh phone, confirmed a guest lease and portal session, then checked that internal network roles remained unreachable.',
+      },
+    ],
+    artifact: { href: '/evidence/homelab-operations', label: 'Review the dated guest-network record' },
   },
   {
-    slug: 'chess-ultimate',
+    slug: 'wazuh-monitoring-operations',
     index: '06',
-    title: 'Building four versions of chess with a friend',
-    category: 'Desktop product / collaboration',
+    title: 'Restoring and operating Wazuh monitoring',
+    category: 'Monitoring / security operations',
     summary:
-      'A collaborative Electron game with four themed editions, more than 11 variants, reactive procedural audio, custom mechanics, and a packaged Windows build.',
-    statement: 'This project pushed me outside infrastructure and into interaction design, audio, game state, testing, and release work.',
-    status: 'Shipped',
-    period: '2026',
+      'I use Wazuh as a lab monitoring and SIEM environment, including cross-VLAN agent paths, service recovery, endpoint visibility, and a repeatable alert-review workflow.',
+    statement: 'A dashboard is not useful if the manager is unhealthy or the endpoints stopped reporting.',
+    status: 'Operating',
+    period: '2026–present',
     featured: false,
-    role: 'Collaborator',
-    stack: ['Electron', 'JavaScript', 'Web Audio API', 'Desktop packaging', 'QA'],
-    proof: ['4 themed editions', '11+ variants', 'Procedural audio', 'Windows release'],
+    role: 'Lab operator and analyst',
+    stack: ['Wazuh', 'Linux', 'Windows Server', 'Syslog', 'Endpoint monitoring'],
+    proof: ['22 active lab agents at validation', 'Cross-VLAN monitoring paths', 'Manager recovery record', 'Sanitized triage workflow'],
     problem:
-      'The goal was to make each version of chess feel distinct without depending on a server or bundled audio library.',
+      'Monitoring depended on a healthy central manager and narrow agent paths across separated network roles. A failed manager start and silent reporting gaps could remove visibility without breaking the monitored service itself.',
     actions: [
-      'Collaborated on four editions with separate mechanics and visual identities.',
-      'Built synthesized soundtracks that react to captures, checks, pressure, and game state.',
-      'Added variants, analysis labels, achievements, and optional Discord presence.',
-      'Used smoke tests and build scripts to prepare a desktop release.',
+      'Investigated a manager startup failure, identified stale processes from an earlier crash, restarted the Wazuh control plane, and checked agent state afterward.',
+      'Validated that each network role could reach only the required agent and log-ingestion paths instead of receiving broad inter-VLAN access.',
+      'Documented a review sequence for active alerts, affected endpoint, event context, severity, related activity, notes, and escalation.',
+      'Kept real alert contents, internal addresses, account details, and full firewall policy out of public evidence.',
     ],
     outcome:
-      'The shipped app demonstrates collaboration, product polish, state-heavy front-end work, testing, and release discipline.',
+      'Central monitoring returned with 22 active lab agents at the validation point, the required segmented paths remained narrow, and future reviews have a consistent investigation sequence.',
     lessons: [
-      'State bugs hide in the interactions between systems.',
-      'Procedural audio can create identity without a large asset footprint.',
-      'A launcher has to explain the product before the first move.',
+      'Monitoring needs health checks for the monitoring system itself.',
+      'An agent count is a starting signal, not proof that every source is useful or current.',
+      'A consistent triage record makes escalation easier and prevents the next review from starting from zero.',
     ],
-    repo: 'https://github.com/Flopper1-1/Chess-Ultimate',
-    repoLabel: 'View the collaborative project',
+    evidence: [
+      {
+        title: 'Manager recovery / May 15, 2026',
+        detail: 'Recovered the Wazuh manager after a failed startup caused by stale processes, then confirmed the manager state and 22 active lab agents.',
+      },
+      {
+        title: 'Segmented collection path',
+        detail: 'Used scoped per-network rules for required agent and log traffic without opening general access between network roles.',
+      },
+      {
+        title: 'Public-safety boundary',
+        detail: 'The portfolio describes the workflow and recovery result but does not expose live alert data, addresses, device names, accounts, or exact policy.',
+      },
+    ],
   },
   {
     slug: 'everyday-it-support',
@@ -309,7 +349,14 @@ export const projects: Project[] = [
   },
 ];
 
-const recruiterOrder = ['everyday-it-support', 'operated-homelab', 'cisco-ios-practice-system', 'ai-gateway', 'homelab-mcp', 'chess-ultimate'];
+const recruiterOrder = [
+  'everyday-it-support',
+  'vlan-segmentation-migration',
+  'operated-homelab',
+  'cisco-ios-practice-system',
+  'guest-network-recovery',
+  'wazuh-monitoring-operations',
+];
 export const orderedProjects = recruiterOrder
   .map((slug) => projects.find((project) => project.slug === slug))
   .filter((project): project is Project => Boolean(project));
