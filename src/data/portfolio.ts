@@ -11,7 +11,7 @@ export const profile = {
   site: 'https://masternazz.com',
   availability: 'Open to entry-level IT support, network support, and NOC roles',
   description:
-    'Portfolio of Nazeem Dickey, an entry-level IT support and network technician who troubleshoots user issues and operates a documented homelab.',
+    'Portfolio of Nazeem Massoom Dickey, an entry-level IT support and network technician who troubleshoots user issues and operates a documented homelab.',
 };
 
 export const nav = [
@@ -390,10 +390,56 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    slug: 'active-directory-lab',
+    index: '07',
+    title: 'Standing up a Windows Active Directory and ticketing lab',
+    category: 'Systems / identity',
+    summary:
+      'A home lab where I built a Windows Server 2025 Active Directory domain, added a certificate authority, and connected a self-hosted GLPI ticketing system to it over encrypted LDAPS.',
+    statement:
+      'I wanted hands-on practice with the identity, directory, and ticketing tools that entry IT support roles actually use every day.',
+    status: 'Lab',
+    period: '2026',
+    featured: false,
+    role: 'Builder and troubleshooter',
+    stack: ['Windows Server 2025', 'Active Directory (AD DS)', 'DNS', 'AD Certificate Services', 'GLPI', 'LDAPS'],
+    proof: ['New AD forest', 'DC-hosted DNS', 'Enterprise CA / PKI', 'LDAPS user sync'],
+    problem:
+      'Certifications show you know the concepts, but hiring managers want to see the actual stack: creating and resetting user accounts, running a directory, and working tickets. I did not have a hands-on environment that tied those pieces together the way a small business would.',
+    actions: [
+      'Built a Windows Server 2025 domain controller (AD DS and DNS) as the first server in a new forest, scoping its DNS to the domain and forwarding everything else so it did not disturb the existing network resolver.',
+      'Created organizational units and users, reset passwords, and managed groups, which are the everyday help-desk tasks.',
+      'Stood up a self-hosted GLPI ticketing system and worked sample tickets through intake, prioritization, assignment, resolution, and the solution-approval flow.',
+      'Connected GLPI to Active Directory so users sign in with their domain credentials.',
+    ],
+    outcome:
+      'A working environment where a domain user authenticates once and receives tickets over an encrypted, certificate-secured directory connection, the same shape as a real small-business IT setup.',
+    lessons: [
+      'Modern Active Directory refuses plaintext logins by design; the fix is to encrypt the connection, not to weaken the server.',
+      'A service listening on a port is not the same as a service that works; LDAPS needs a certificate, not just an open port.',
+      'Reading the actual error text pointed straight at each next step: a signing requirement, then a failed handshake, then a missing certificate.',
+    ],
+    evidence: [
+      {
+        title: 'Directory hardening / LDAP signing',
+        detail: 'The first connection was rejected with a "stronger authentication required" error, because the domain controller does not accept plaintext logins. I moved authentication to encrypted LDAPS rather than disabling the protection.',
+      },
+      {
+        title: 'PKI / certificate enrollment',
+        detail: 'The encrypted connection then failed at the TLS handshake because the domain controller had no certificate. I installed Active Directory Certificate Services as an Enterprise certificate authority, which auto-issued the controller a certificate and completed the handshake.',
+      },
+      {
+        title: 'Directory integration',
+        detail: 'With encryption working, the ticketing system authenticated to the directory, read the domain users, and imported them so they can sign in with their existing credentials.',
+      },
+    ],
+  },
 ];
 
 const recruiterOrder = [
   'everyday-it-support',
+  'active-directory-lab',
   'vlan-segmentation-migration',
   'operated-homelab',
   'cisco-ios-practice-system',

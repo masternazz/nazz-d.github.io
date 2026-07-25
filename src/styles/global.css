@@ -2120,29 +2120,29 @@ a {
   }
 
   .resume-summary {
-    padding-top: 0.13in;
+    padding-top: 0.09in;
   }
 
   .resume-summary p {
     margin-top: 0.045in;
     font-size: 9.1pt;
-    line-height: 1.42;
+    line-height: 1.36;
   }
 
   .resume-block {
-    margin-top: 0.13in;
+    margin-top: 0.085in;
   }
 
   .resume-block > h2 {
-    margin-bottom: 0.055in;
-    padding-bottom: 0.035in;
+    margin-bottom: 0.05in;
+    padding-bottom: 0.03in;
     font-size: 7.1pt;
   }
 
   .resume-block ul {
     padding-left: 0.16in;
     font-size: 8.5pt;
-    line-height: 1.38;
+    line-height: 1.32;
   }
 
   .resume-block li + li {

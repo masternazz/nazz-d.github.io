@@ -13,7 +13,7 @@ const required = [
   'evidence/homelab-operations/index.html',
   '404.html',
   'sitemap.xml',
-  'Nazeem-Dickey-Resume.pdf',
+  'Nazeem-Massoom-Dickey-Resume.pdf',
 ];
 
 const errors = [];
