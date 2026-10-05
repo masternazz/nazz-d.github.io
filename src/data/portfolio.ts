@@ -170,14 +170,14 @@ export const projects: Project[] = [
   {
     slug: 'cisco-ios-practice-system',
     index: '04',
-    title: 'Turning a competition loss into Cisco IOS practice',
+    title: 'Turning national competition into Cisco IOS practice',
     category: 'Cisco / competition',
     summary:
-      'I won SkillsUSA Florida Internetworking, then struggled at nationals. That experience showed me exactly where I needed more Cisco IOS practice.',
-    statement: 'I did not place at nationals, so I built a practice system around the part that slowed me down.',
+      'I won SkillsUSA Florida Internetworking, then competed at nationals. That experience showed me exactly where to sharpen my Cisco IOS speed.',
+    statement: 'Nationals showed me where console speed mattered, so I built a practice system around it.',
     status: 'Training',
     period: '2026',
-    featured: true,
+    featured: false,
     role: 'Competitor and lab author',
     stack: ['Cisco IOS', 'Cisco CML', 'IPv4/IPv6', 'OSPF', 'VLANs', 'NAT/PAT', 'ACLs'],
     proof: ['Florida gold medal', '5-node guided lab', '5 break-fix tickets', 'Locally validated files'],
@@ -401,7 +401,7 @@ export const projects: Project[] = [
       'I wanted hands-on practice with the identity, directory, and ticketing tools that entry IT support roles actually use every day.',
     status: 'Lab',
     period: '2026',
-    featured: false,
+    featured: true,
     role: 'Builder and troubleshooter',
     stack: ['Windows Server 2025', 'Active Directory (AD DS)', 'DNS', 'AD Certificate Services', 'GLPI', 'LDAPS'],
     proof: ['New AD forest', 'DC-hosted DNS', 'Enterprise CA / PKI', 'LDAPS user sync'],
@@ -457,7 +457,7 @@ export const experience = [
     period: 'Jun 2024–present',
     role: 'Freelance IT Support Technician',
     organization: 'Self-employed · Boynton Beach, FL',
-    text: 'Set up home routers and provided basic network and computer support, including Ethernet, Wi-Fi, DNS, hardware, and connectivity troubleshooting.',
+    text: 'Set up home routers and supported 10+ local clients with network and computer issues, including Ethernet, Wi-Fi, DNS, hardware, and connectivity troubleshooting.',
   },
   {
     period: 'Jun 2024–Jan 2026',
@@ -508,5 +508,5 @@ export const timeline = [
   { date: 'Mar 2026', title: 'Built a stronger IT foundation', text: 'Earned A+, Network+, and Security+, then continued into security analysis with CySA+.' },
   { date: 'Apr 2026', title: 'SkillsUSA Florida gold', text: 'Placed first in Internetworking and qualified for the national competition.' },
   { date: 'May 2026', title: 'Graduated SouthTech Academy', text: 'Graduated with Honor Roll recognition, honors classes, and Esports Team Captain experience.' },
-  { date: 'Jun 2026', title: 'Nationals defined the next step', text: 'Did not place nationally; turned the gap into a structured Cisco IOS lab program.' },
+  { date: 'Jun 2026', title: 'Nationals defined the next step', text: 'Competed at nationals and turned what I learned into a structured Cisco IOS lab program.' },
 ];
