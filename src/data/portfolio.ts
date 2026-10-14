@@ -454,10 +454,16 @@ export const getProject = (slug: string) => projects.find((project) => project.s
 
 export const experience = [
   {
+    period: 'Sep 2026–present',
+    role: 'Hardware Computer Repair Technician',
+    organization: 'Virtucom, Inc. · Palm Beach, FL',
+    text: 'Diagnose and repair about 15 laptops and Chromebooks a day, replacing keyboards, LCD screens, and internal parts, and log each repair in Autotask. Handle facility upkeep, parts and repair inventory, storage, pickup, and delivery.',
+  },
+  {
     period: 'Jun 2024–present',
     role: 'Freelance IT Support Technician',
     organization: 'Self-employed · Boynton Beach, FL',
-    text: 'Set up home routers and supported 10+ local clients with network and computer issues, including Ethernet, Wi-Fi, DNS, hardware, and connectivity troubleshooting.',
+    text: 'Set up home routers and supported 10+ clients, on site and remotely, with network and computer issues, including Ethernet, Wi-Fi, DNS, hardware, and connectivity troubleshooting.',
   },
   {
     period: 'Jun 2024–Jan 2026',
